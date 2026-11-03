@@ -1,0 +1,552 @@
+/* All new gameplay styles live here; archive styles are preserved. */
+.game-nav {
+  display: grid;
+  gap: 9px;
+}
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #aab0a3;
+  text-decoration: none;
+  font-size: 13px;
+}
+.menu-link.active {
+  background: #293026;
+  border-color: #3c4732;
+  color: var(--lime);
+}
+.menu-link:hover {
+  background: #242a20;
+}
+.explore-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 205px;
+  gap: 28px;
+  align-items: start;
+}
+.explore-main-column {
+  min-width: 0;
+}
+.explore-section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: #89977b;
+  margin-bottom: 16px;
+}
+.field-state {
+  background: #273120;
+  color: var(--lime);
+  border: 1px solid #455337;
+  border-radius: 30px;
+  padding: 5px 12px;
+  letter-spacing: 0;
+}
+.forest-scene {
+  height: 290px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #46503a;
+  border-radius: 15px;
+  background:
+    radial-gradient(ellipse at 65% 20%, #62764e65, transparent 55%),
+    linear-gradient(145deg, #283c2d, #121e1a 70%);
+  margin-bottom: 22px;
+}
+.forest-scene:before,
+.forest-scene:after {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  background: repeating-linear-gradient(
+    102deg,
+    transparent 0 60px,
+    #0819119c 64px 77px,
+    transparent 80px 145px
+  );
+  transform: rotate(-8deg);
+  opacity: 0.7;
+}
+.forest-scene:after {
+  transform: rotate(12deg);
+  opacity: 0.25;
+}
+.forest-mist {
+  position: absolute;
+  inset: 30% 0 0;
+  background: radial-gradient(ellipse, #a5c48225, transparent 70%);
+  z-index: 1;
+}
+.forest-trees {
+  position: absolute;
+  right: 50px;
+  top: 28px;
+  font-size: 160px;
+  color: #a5c67c20;
+  z-index: 1;
+}
+.forest-caption {
+  position: absolute;
+  z-index: 2;
+  left: 28px;
+  bottom: 24px;
+  right: 30px;
+}
+.forest-caption h2 {
+  font-size: 30px;
+  margin: 10px 0;
+}
+.forest-caption p {
+  font-size: 12px;
+  max-width: 380px;
+  color: #c0cdb5;
+  line-height: 1.7;
+  margin: 0;
+}
+.turn-counter {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 10px;
+  color: #b5c8a0;
+  z-index: 2;
+  letter-spacing: 1px;
+}
+.turn-counter strong {
+  font-size: 22px;
+  margin-left: 9px;
+}
+.exploration-start,
+.exploration-turn {
+  padding: 26px;
+}
+.exploration-start h2,
+.exploration-turn h2 {
+  font-size: 23px;
+}
+.exploration-start > p {
+  font-size: 12px;
+}
+.map-loot-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 24px;
+}
+.map-loot-preview span {
+  font-size: 10px;
+  border: 1px solid #38442d;
+  padding: 6px 9px;
+  border-radius: 5px;
+  color: #acb79f;
+}
+.turn-message {
+  font-size: 14px;
+  color: #c4cdbb;
+  min-height: 28px;
+  margin: 18px 0 22px;
+}
+.exploration-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 24px;
+}
+.exploration-actions button {
+  font-size: 12px;
+  padding: 13px 8px;
+}
+.exploration-actions button:last-child {
+  font-size: 11px;
+  color: #adb2a8;
+}
+.discovered-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #242d1e;
+  border: 1px solid #4b5b39;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 22px;
+}
+.item-symbol {
+  font-size: 42px;
+  color: var(--lime);
+}
+.discovered-item h3 {
+  font-size: 15px;
+  margin: 0;
+}
+.discovered-item p {
+  font-size: 12px;
+  margin: 7px 0;
+}
+.discovered-item small {
+  font-size: 11px;
+  color: #b2c39f;
+}
+.discovery-actions {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+.discovery-actions button {
+  font-size: 12px;
+}
+.exploration-history {
+  margin: 30px 0;
+}
+.exploration-history ol {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0;
+}
+.exploration-history li {
+  display: flex;
+  gap: 15px;
+  border-bottom: 1px solid #262d23;
+  align-items: baseline;
+  padding: 9px 0;
+}
+.exploration-history li > span {
+  font-size: 10px;
+  color: #758366;
+}
+.exploration-history li p {
+  font-size: 12px;
+  margin: 0;
+  color: #a1ad96;
+}
+.explore-side-column {
+  position: sticky;
+  top: 24px;
+  padding-top: 2px;
+}
+.explorer-mini-profile {
+  width: 100%;
+  margin-top: 15px;
+  background: #1c221a;
+  border: 1px solid #424e36;
+  padding: 24px 14px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+}
+.explorer-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #475e33, #252e20);
+  border: 1px solid #60764a;
+  color: var(--lime);
+  font-size: 35px;
+}
+.explorer-mini-profile > strong {
+  font-size: 17px;
+}
+.explorer-mini-profile > span {
+  font-size: 10px;
+  color: #a7b597;
+}
+.explorer-mini-profile > small {
+  font-size: 10px;
+  color: var(--lime);
+  margin-top: 6px;
+}
+.explorer-inventory-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 16px;
+  font-size: 12px;
+  padding: 15px 12px;
+}
+.explorer-inventory-button strong {
+  font-size: 11px;
+  color: var(--lime);
+}
+.explorer-weight {
+  text-align: right;
+  color: #97a889;
+  font-size: 11px;
+  margin-top: 10px;
+}
+.explore-subwindow {
+  color: #eceee7;
+  background: #181e17;
+  border: 1px solid #4a583b;
+  padding: 28px;
+  width: min(720px, calc(100% - 32px));
+  max-height: 88dvh;
+  border-radius: 16px;
+  overflow: auto;
+}
+.explore-subwindow::backdrop {
+  background: #050b07b8;
+  backdrop-filter: blur(4px);
+}
+.subwindow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.subwindow-header h2 {
+  font-size: 23px;
+  margin-top: 12px;
+}
+.subwindow-header button {
+  padding: 9px 13px;
+}
+.subwindow-note {
+  font-size: 11px;
+  color: #9bab8e;
+  border-bottom: 1px solid #35422c;
+  padding-bottom: 18px;
+  margin-bottom: 22px;
+}
+.subwindow-return {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  background: #2b3822;
+  border-color: #4c603a;
+  color: var(--lime);
+}
+.inventory-window {
+  position: fixed;
+  inset: auto 0 0;
+  margin: 0 auto;
+  width: min(1080px, 100%);
+  max-height: 75dvh;
+  border-radius: 18px 18px 0 0;
+}
+.inventory-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: #a6b49a;
+}
+.inventory-summary strong {
+  margin-left: 10px;
+  color: var(--lime);
+}
+.inventory-weight-track {
+  height: 5px;
+  border-radius: 8px;
+  background: #303b29;
+  margin: 15px 0 24px;
+  overflow: hidden;
+}
+.inventory-weight-track > span {
+  display: block;
+  height: 100%;
+  background: var(--lime);
+}
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.inventory-slot {
+  border: 1px solid #3b4930;
+  border-radius: 10px;
+  background: #212a1b;
+  padding: 14px;
+  min-height: 155px;
+  overflow-wrap: anywhere;
+}
+.inventory-slot .item-symbol {
+  font-size: 30px;
+}
+.inventory-slot h3 {
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 7px 0;
+}
+.inventory-slot p {
+  font-size: 10px;
+  line-height: 1.7;
+  margin: 5px 0;
+}
+.inventory-slot > div:last-of-type {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 11px;
+}
+.inventory-slot strong {
+  color: var(--lime);
+}
+.inventory-slot small {
+  font-size: 9px;
+  color: #8c9c7d;
+}
+.inventory-slot.vacant {
+  background: #141b12;
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  color: #4e6040;
+}
+.inventory-slot.vacant > span {
+  font-size: 22px;
+}
+.explorer-profile-identity {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin: 20px 0;
+}
+.explorer-profile-identity h2 {
+  font-size: 25px;
+}
+.explorer-profile-identity p {
+  font-size: 12px;
+  margin: 6px 0;
+}
+.explorer-bio {
+  white-space: pre-wrap;
+  font-size: 12px;
+}
+.explorer-profile-detail .stats {
+  margin-top: 22px;
+}
+.explore-home-link {
+  display: inline-block;
+  background: var(--lime);
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #20261c;
+  text-decoration: none;
+  font-weight: 600;
+}
+@media (max-width: 1100px) {
+  .explore-page {
+    grid-template-columns: minmax(0, 1fr) 175px;
+    gap: 18px;
+  }
+  .forest-scene {
+    height: 260px;
+  }
+  .exploration-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .exploration-actions button:last-child {
+    grid-column: 1 / -1;
+  }
+  .inventory-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 780px) {
+  .shell aside nav.game-nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .menu-link {
+    font-size: 12px;
+    padding: 9px 12px;
+  }
+  .explore-page {
+    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+  .explore-main-column {
+    width: 100%;
+    order: 2;
+  }
+  .explore-side-column {
+    position: static;
+    order: 1;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    width: 100%;
+    gap: 10px;
+    align-items: center;
+    padding: 0;
+  }
+  .explore-side-column > .mini,
+  .explore-side-column > .hint {
+    display: none;
+  }
+  .explorer-mini-profile {
+    margin: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 10px;
+  }
+  .explorer-mini-profile > .explorer-avatar {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+  }
+  .explorer-mini-profile > strong {
+    font-size: 14px;
+  }
+  .explorer-mini-profile > span {
+    display: none;
+  }
+  .explorer-mini-profile > small {
+    font-size: 9px;
+    margin: 0;
+  }
+  .explorer-inventory-button {
+    margin: 0;
+    gap: 15px;
+  }
+  .explorer-weight {
+    grid-column: 2;
+    margin: 0;
+  }
+  .forest-scene {
+    height: 230px;
+  }
+  .forest-caption {
+    left: 22px;
+    bottom: 22px;
+  }
+  .forest-caption h2 {
+    font-size: 26px;
+  }
+  .inventory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .explore-subwindow {
+    padding: 22px;
+  }
+  .inventory-summary {
+    flex-wrap: wrap;
+  }
+  .inventory-window {
+    max-height: 82dvh;
+  }
+  .exploration-start,
+  .exploration-turn {
+    padding: 22px;
+  }
+  .discovered-item {
+    padding: 16px;
+    gap: 14px;
+  }
+}

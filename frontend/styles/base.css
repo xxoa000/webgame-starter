@@ -1,0 +1,105 @@
+:root {
+  color-scheme: dark;
+  --bg: #101112;
+  --panel: #191b1c;
+  --line: #303233;
+  --lime: #d1eb92;
+  --muted: #969b96;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: #eceee7;
+  font-family: "Noto Sans KR", Arial, sans-serif;
+  font-size: 14px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: #242727;
+  color: #eceee7;
+  border-radius: 8px;
+  padding: 11px 15px;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+h1 {
+  font-size: 34px;
+  letter-spacing: -1.5px;
+  margin: 15px 0 12px;
+}
+
+p {
+  line-height: 1.9;
+  color: var(--muted);
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+  padding: 30px;
+}
+
+h2 {
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: #d0d4cc;
+  margin: 19px 0;
+}
+
+input,
+select,
+textarea {
+  display: block;
+  background: #111414;
+  border: 1px solid #353a35;
+  border-radius: 7px;
+  color: #eceee7;
+  padding: 13px;
+  width: 100%;
+  margin-top: 9px;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--lime);
+}
+
+textarea {
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #697068;
+  font-size: 12px;
+}

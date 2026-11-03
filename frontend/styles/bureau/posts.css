@@ -1,0 +1,62 @@
+/* 게시글 목록·본문·편집 폼과 간결한 운영 조작을 배치한다. */
+.post-board {
+  display: grid;
+  gap: 16px;
+}
+.post-list {
+  display: grid;
+  padding: 12px 20px;
+}
+.post-list > button {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid #687b7255;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.post-list > button span {
+  overflow-wrap: anywhere;
+}
+.post-list small {
+  flex-shrink: 0;
+  font-size: 11px;
+  opacity: 0.7;
+}
+.post-content {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+  margin: 18px 0;
+}
+.post-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.post-actions h2 {
+  margin-right: auto;
+}
+.post-editor {
+  display: grid;
+  gap: 16px;
+}
+.post-checkbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.post-checkbox input {
+  width: auto;
+}
+@media (max-width: 700px) {
+  .post-list > button {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

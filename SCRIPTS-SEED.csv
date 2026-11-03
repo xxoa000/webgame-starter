@@ -1,0 +1,179 @@
+﻿code,situation_code,action_code,layer,visibility,content,priority,weight,is_active
+empty_COMMON_SPEECH,empty,,SPEECH,PUBLIC,회수할 물자를 찾지 못했다.,0,100,1
+empty_COMMON_THOUGHT,empty,,THOUGHT,OWNER,여긴 텅 비었어.,0,100,1
+empty_COMMON_NARRATION,empty,,NARRATION,OWNER,이 근처엔 아무것도 없는 듯 하다.,0,100,1
+empty_K1_1,empty,,SPEECH,PUBLIC,저기… 회수할 물자를 찾지 못했다.,10,100,1
+empty_K1_2,empty,,SPEECH,PUBLIC,"으음, 확인했어. 회수할 물자를 찾지 못했다.",10,100,1
+empty_K2_1,empty,,SPEECH,PUBLIC,"좋아, 보고할게! 회수할 물자를 찾지 못했다.",10,100,1
+empty_K2_2,empty,,SPEECH,PUBLIC,확인 완료! 회수할 물자를 찾지 못했다.,10,100,1
+empty_K3_1,empty,,SPEECH,PUBLIC,참 성가시네. 회수할 물자를 찾지 못했다.,10,100,1
+empty_K3_2,empty,,SPEECH,PUBLIC,상황 한번 훌륭하군. 회수할 물자를 찾지 못했다.,10,100,1
+empty_K4_1,empty,,SPEECH,PUBLIC,"잠깐, 집중해. 회수할 물자를 찾지 못했다.",10,100,1
+empty_K4_2,empty,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 회수할 물자를 찾지 못했다.,10,100,1
+empty_K11_1,empty,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
+empty_K11_2,empty,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
+empty_K12_1,empty,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
+empty_K12_2,empty,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
+empty_K13_1,empty,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
+empty_K13_2,empty,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
+empty_K14_1,empty,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
+empty_K14_2,empty,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
+empty_K21_1,empty,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
+empty_K21_2,empty,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
+empty_K22_1,empty,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
+empty_K22_2,empty,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
+empty_K23_1,empty,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
+empty_K23_2,empty,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
+found_COMMON_SPEECH,found,,SPEECH,PUBLIC,{item_name}을 발견했다.,0,100,1
+found_COMMON_THOUGHT,found,,THOUGHT,OWNER,{item_name}을 발견했다.,0,100,1
+found_COMMON_NARRATION,found,,NARRATION,OWNER,{item_name}을 발견했다.,0,100,1
+found_K1_1,found,,SPEECH,PUBLIC,저기… {item_name}을 발견했다.,10,100,1
+found_K1_2,found,,SPEECH,PUBLIC,"으음, 확인했어. {item_name}을 발견했다.",10,100,1
+found_K2_1,found,,SPEECH,PUBLIC,"좋아, 보고할게! {item_name}을 발견했다.",10,100,1
+found_K2_2,found,,SPEECH,PUBLIC,확인 완료! {item_name}을 발견했다.,10,100,1
+found_K3_1,found,,SPEECH,PUBLIC,참 성가시네. {item_name}을 발견했다.,10,100,1
+found_K3_2,found,,SPEECH,PUBLIC,상황 한번 훌륭하군. {item_name}을 발견했다.,10,100,1
+found_K4_1,found,,SPEECH,PUBLIC,"잠깐, 집중해. {item_name}을 발견했다.",10,100,1
+found_K4_2,found,,SPEECH,PUBLIC,작은 소리도 놓치지 마. {item_name}을 발견했다.,10,100,1
+found_K11_1,found,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
+found_K11_2,found,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
+found_K12_1,found,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
+found_K12_2,found,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
+found_K13_1,found,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
+found_K13_2,found,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
+found_K14_1,found,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
+found_K14_2,found,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
+found_K21_1,found,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
+found_K21_2,found,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
+found_K22_1,found,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
+found_K22_2,found,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
+found_K23_1,found,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
+found_K23_2,found,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
+rest_COMMON_SPEECH,rest,,SPEECH,PUBLIC,조금만 쉬었다 가자.,0,100,1
+rest_COMMON_THOUGHT,rest,,THOUGHT,OWNER,휴...,0,100,1
+rest_COMMON_NARRATION,rest,,NARRATION,OWNER,잠시 안전한 곳에서 쉬었다.,0,100,1
+rest_K1_1,rest,,SPEECH,PUBLIC,저기… 잠시 안전한 곳에서 쉬었다.,10,100,1
+rest_K1_2,rest,,SPEECH,PUBLIC,"으음, 확인했어. 잠시 안전한 곳에서 쉬었다.",10,100,1
+rest_K2_1,rest,,SPEECH,PUBLIC,"좋아, 보고할게! 잠시 안전한 곳에서 쉬었다.",10,100,1
+rest_K2_2,rest,,SPEECH,PUBLIC,확인 완료! 잠시 안전한 곳에서 쉬었다.,10,100,1
+rest_K3_1,rest,,SPEECH,PUBLIC,참 성가시네. 잠시 안전한 곳에서 쉬었다.,10,100,1
+rest_K3_2,rest,,SPEECH,PUBLIC,상황 한번 훌륭하군. 잠시 안전한 곳에서 쉬었다.,10,100,1
+rest_K4_1,rest,,SPEECH,PUBLIC,"잠깐, 집중해. 잠시 안전한 곳에서 쉬었다.",10,100,1
+rest_K4_2,rest,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 잠시 안전한 곳에서 쉬었다.,10,100,1
+rest_K11_1,rest,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
+rest_K11_2,rest,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
+rest_K12_1,rest,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
+rest_K12_2,rest,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
+rest_K13_1,rest,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
+rest_K13_2,rest,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
+rest_K14_1,rest,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
+rest_K14_2,rest,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
+rest_K21_1,rest,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
+rest_K21_2,rest,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
+rest_K22_1,rest,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
+rest_K22_2,rest,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
+rest_K23_1,rest,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
+rest_K23_2,rest,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
+encounter_COMMON_SPEECH,encounter,,SPEECH,PUBLIC,{monster_name}과 마주쳤다.,0,100,1
+encounter_COMMON_THOUGHT,encounter,,THOUGHT,OWNER,{monster_name}과 마주쳤다.,0,100,1
+encounter_COMMON_NARRATION,encounter,,NARRATION,OWNER,{monster_name}과 마주쳤다.,0,100,1
+encounter_K1_1,encounter,,SPEECH,PUBLIC,저기… {monster_name}과 마주쳤다.,10,100,1
+encounter_K1_2,encounter,,SPEECH,PUBLIC,"으음, 확인했어. {monster_name}과 마주쳤다.",10,100,1
+encounter_K2_1,encounter,,SPEECH,PUBLIC,"좋아, 보고할게! {monster_name}과 마주쳤다.",10,100,1
+encounter_K2_2,encounter,,SPEECH,PUBLIC,확인 완료! {monster_name}과 마주쳤다.,10,100,1
+encounter_K3_1,encounter,,SPEECH,PUBLIC,참 성가시네. {monster_name}과 마주쳤다.,10,100,1
+encounter_K3_2,encounter,,SPEECH,PUBLIC,상황 한번 훌륭하군. {monster_name}과 마주쳤다.,10,100,1
+encounter_K4_1,encounter,,SPEECH,PUBLIC,"잠깐, 집중해. {monster_name}과 마주쳤다.",10,100,1
+encounter_K4_2,encounter,,SPEECH,PUBLIC,작은 소리도 놓치지 마. {monster_name}과 마주쳤다.,10,100,1
+encounter_K11_1,encounter,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
+encounter_K11_2,encounter,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
+encounter_K12_1,encounter,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
+encounter_K12_2,encounter,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
+encounter_K13_1,encounter,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
+encounter_K13_2,encounter,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
+encounter_K14_1,encounter,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
+encounter_K14_2,encounter,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
+encounter_K21_1,encounter,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
+encounter_K21_2,encounter,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
+encounter_K22_1,encounter,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
+encounter_K22_2,encounter,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
+encounter_K23_1,encounter,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
+encounter_K23_2,encounter,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
+victory_COMMON_SPEECH,victory,,SPEECH,PUBLIC,위협 개체를 쓰러뜨렸다.,0,100,1
+victory_COMMON_THOUGHT,victory,,THOUGHT,OWNER,위협 개체를 쓰러뜨렸다.,0,100,1
+victory_COMMON_NARRATION,victory,,NARRATION,OWNER,위협 개체를 쓰러뜨렸다.,0,100,1
+victory_K1_1,victory,,SPEECH,PUBLIC,저기… 위협 개체를 쓰러뜨렸다.,10,100,1
+victory_K1_2,victory,,SPEECH,PUBLIC,"으음, 확인했어. 위협 개체를 쓰러뜨렸다.",10,100,1
+victory_K2_1,victory,,SPEECH,PUBLIC,"좋아, 보고할게! 위협 개체를 쓰러뜨렸다.",10,100,1
+victory_K2_2,victory,,SPEECH,PUBLIC,확인 완료! 위협 개체를 쓰러뜨렸다.,10,100,1
+victory_K3_1,victory,,SPEECH,PUBLIC,참 성가시네. 위협 개체를 쓰러뜨렸다.,10,100,1
+victory_K3_2,victory,,SPEECH,PUBLIC,상황 한번 훌륭하군. 위협 개체를 쓰러뜨렸다.,10,100,1
+victory_K4_1,victory,,SPEECH,PUBLIC,"잠깐, 집중해. 위협 개체를 쓰러뜨렸다.",10,100,1
+victory_K4_2,victory,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 위협 개체를 쓰러뜨렸다.,10,100,1
+victory_K11_1,victory,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
+victory_K11_2,victory,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
+victory_K12_1,victory,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
+victory_K12_2,victory,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
+victory_K13_1,victory,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
+victory_K13_2,victory,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
+victory_K14_1,victory,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
+victory_K14_2,victory,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
+victory_K21_1,victory,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
+victory_K21_2,victory,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
+victory_K22_1,victory,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
+victory_K22_2,victory,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
+victory_K23_1,victory,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
+victory_K23_2,victory,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
+flee_COMMON_SPEECH,flee,,SPEECH,PUBLIC,위협으로부터 벗어났다.,0,100,1
+flee_COMMON_THOUGHT,flee,,THOUGHT,OWNER,위협으로부터 벗어났다.,0,100,1
+flee_COMMON_NARRATION,flee,,NARRATION,OWNER,위협으로부터 벗어났다.,0,100,1
+flee_K1_1,flee,,SPEECH,PUBLIC,저기… 위협으로부터 벗어났다.,10,100,1
+flee_K1_2,flee,,SPEECH,PUBLIC,"으음, 확인했어. 위협으로부터 벗어났다.",10,100,1
+flee_K2_1,flee,,SPEECH,PUBLIC,"좋아, 보고할게! 위협으로부터 벗어났다.",10,100,1
+flee_K2_2,flee,,SPEECH,PUBLIC,확인 완료! 위협으로부터 벗어났다.,10,100,1
+flee_K3_1,flee,,SPEECH,PUBLIC,참 성가시네. 위협으로부터 벗어났다.,10,100,1
+flee_K3_2,flee,,SPEECH,PUBLIC,상황 한번 훌륭하군. 위협으로부터 벗어났다.,10,100,1
+flee_K4_1,flee,,SPEECH,PUBLIC,"잠깐, 집중해. 위협으로부터 벗어났다.",10,100,1
+flee_K4_2,flee,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 위협으로부터 벗어났다.,10,100,1
+flee_K11_1,flee,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
+flee_K11_2,flee,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
+flee_K12_1,flee,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
+flee_K12_2,flee,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
+flee_K13_1,flee,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
+flee_K13_2,flee,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
+flee_K14_1,flee,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
+flee_K14_2,flee,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
+flee_K21_1,flee,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
+flee_K21_2,flee,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
+flee_K22_1,flee,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
+flee_K22_2,flee,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
+flee_K23_1,flee,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
+flee_K23_2,flee,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
+damage_COMMON_SPEECH,damage,,SPEECH,PUBLIC,공격을 받아 다쳤다.,0,100,1
+damage_COMMON_THOUGHT,damage,,THOUGHT,OWNER,공격을 받아 다쳤다.,0,100,1
+damage_COMMON_NARRATION,damage,,NARRATION,OWNER,공격을 받아 다쳤다.,0,100,1
+damage_K1_1,damage,,SPEECH,PUBLIC,저기… 공격을 받아 다쳤다.,10,100,1
+damage_K1_2,damage,,SPEECH,PUBLIC,"으음, 확인했어. 공격을 받아 다쳤다.",10,100,1
+damage_K2_1,damage,,SPEECH,PUBLIC,"좋아, 보고할게! 공격을 받아 다쳤다.",10,100,1
+damage_K2_2,damage,,SPEECH,PUBLIC,확인 완료! 공격을 받아 다쳤다.,10,100,1
+damage_K3_1,damage,,SPEECH,PUBLIC,참 성가시네. 공격을 받아 다쳤다.,10,100,1
+damage_K3_2,damage,,SPEECH,PUBLIC,상황 한번 훌륭하군. 공격을 받아 다쳤다.,10,100,1
+damage_K4_1,damage,,SPEECH,PUBLIC,"잠깐, 집중해. 공격을 받아 다쳤다.",10,100,1
+damage_K4_2,damage,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 공격을 받아 다쳤다.,10,100,1
+damage_K11_1,damage,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
+damage_K11_2,damage,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
+damage_K12_1,damage,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
+damage_K12_2,damage,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
+damage_K13_1,damage,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
+damage_K13_2,damage,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
+damage_K14_1,damage,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
+damage_K14_2,damage,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
+damage_K21_1,damage,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
+damage_K21_2,damage,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
+damage_K22_1,damage,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
+damage_K22_2,damage,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
+damage_K23_1,damage,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
+damage_K23_2,damage,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
+death_COMMON_NARRATION,death,,NARRATION,OWNER,피계약자의 생체 신호가 끊겼다.,0,100,1
+encounter_COMBO_1,encounter,,SPEECH,PUBLIC,무섭지만… 누군가 다치기 전에 방법을 찾아야 해.,30,100,1
+encounter_COMBO_2,encounter,,SPEECH,PUBLIC,저기… 다 같이 무사할 방법부터 생각해 보자.,30,100,1

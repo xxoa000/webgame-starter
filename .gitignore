@@ -1,0 +1,42 @@
+# Next.js
+node_modules/
+.next/
+**/node_modules/
+**/.next/
+
+# Python
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+**/.pytest_cache/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+**/.venv/
+
+# 환경 변수 — .env.example 만 커밋한다 (실제 비밀값은 절대 커밋 금지)
+.env
+.env.*
+!.env.example
+
+# 테스트/캐시
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+docs
+*.db
+**/*.db
+*.db-journal
+**/*.tsbuildinfo

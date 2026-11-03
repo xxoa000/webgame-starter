@@ -1,0 +1,12 @@
+﻿category,code,name,description
+OUTER,OUTER_SHY,소심함,말을 조심스럽게 고르고 타인의 반응을 살핀다.
+OUTER,OUTER_CHEERFUL,쾌활함,밝고 적극적인 태도로 말한다.
+OUTER,OUTER_CYNICAL,냉소적,비꼬는 말투로 거리를 둔다.
+OUTER,OUTER_SENSITIVE,예민함,작은 변화에도 날카롭게 반응한다.
+INNER,INNER_FEARFUL,겁많음,위험을 두려워하고 안전을 바란다.
+INNER,INNER_CARING,다정함,주변 사람의 안위를 신경 쓴다.
+INNER,INNER_BRAVE,용감함,두려움보다 행동을 우선한다.
+INNER,INNER_SELFISH,이기적임,자신의 생존과 이익을 우선한다.
+ALIGNMENT,ALIGNMENT_GOOD,선,가능하면 타인에게 도움이 되는 길을 택한다.
+ALIGNMENT,ALIGNMENT_NEUTRAL,중립,상황과 손익을 살펴 판단한다.
+ALIGNMENT,ALIGNMENT_EVIL,악,타인보다 자신의 목적을 앞세운다.

@@ -1,0 +1,23 @@
+변경/신규 파일 목록
+frontend/lib/appearance.ts
+frontend/lib/pixelCharacter.ts
+frontend/lib/types.ts
+frontend/lib/stats.ts
+frontend/components/appearance/PixelCharacter.tsx
+frontend/components/appearance/AppearanceEditor.tsx
+frontend/components/appearance/CharacterCustomization.tsx
+frontend/components/characters/CharacterForm.tsx
+frontend/components/console/ContractorConsole.tsx
+frontend/hooks/useGame.ts
+frontend/app/character/page.tsx
+frontend/app/globals.css
+frontend/styles/bureau/appearance.css
+backend/app/modules/characters/appearance.py
+backend/app/modules/characters/models.py
+backend/app/modules/characters/schemas.py
+backend/app/modules/characters/service.py
+backend/app/modules/characters/router.py
+backend/alembic/versions/0006_character_appearance.py
+backend/tests/test_appearance.py
+backend/tests/test_alembic.py
+backend/tests/test_vitals_encyclopedia.py

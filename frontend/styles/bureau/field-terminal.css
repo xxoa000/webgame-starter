@@ -1,0 +1,113 @@
+/* 탐색 경로에만 붉은 작전 색상을 적용한다. 자원 바의 고유 색상은 유지한다. */
+.field-terminal {
+  --accent: #ee9097;
+  --lime: #ee9097;
+  --line: #453039;
+  --panel: #181418;
+}
+.field-terminal .bureau-sidebar {
+  background: #120f13;
+}
+.field-terminal .bureau-header {
+  border-color: #443039;
+}
+.field-terminal .bureau-main {
+  background: radial-gradient(ellipse at 80% 0, #74233012, transparent 60%);
+}
+.field-terminal .menu-link.active {
+  background: #351b24;
+  border-color: #75434c;
+  box-shadow: inset 3px 0 #f09198;
+  color: #ffc5cb;
+}
+.field-terminal .menu-link:hover {
+  background: #291c24;
+}
+.field-terminal .eyebrow,
+.field-terminal .mini {
+  color: #dba6ae;
+}
+.field-terminal .primary,
+.field-terminal .explore-home-link {
+  background: #e9979f;
+  border-color: #e9979f;
+  color: #281217;
+}
+.field-terminal .primary:hover:not(:disabled) {
+  background: #ffbac0;
+  border-color: #ffbac0;
+}
+.field-terminal .field-state {
+  background: #301b23;
+  border-color: #78404b;
+  color: #f2aeb6;
+}
+.field-terminal .forest-scene {
+  border-color: #72424f;
+  background:
+    radial-gradient(ellipse at 68% 44%, #a82e4740, transparent 48%),
+    linear-gradient(140deg, #2e1b26, #100d13 70%);
+}
+.field-terminal .forest-scene:after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #f4a0a599,
+    #ed6686aa,
+    transparent
+  );
+  box-shadow: 0 0 60px 20px #d3375a26;
+}
+.field-terminal .forest-mist {
+  background: linear-gradient(0deg, #150a12f0, transparent 80%);
+}
+.field-terminal .forest-trees {
+  color: #d7879a33;
+}
+.field-terminal .map-loot-section {
+  background: #20141c;
+  border-color: #51313d;
+}
+.field-terminal .map-loot-preview > span {
+  background: #2b1c26;
+  border-color: #60404e;
+  color: #d8b8c5;
+}
+.field-terminal .map-loot-preview b {
+  color: #efb0ba;
+}
+.field-terminal .discovered-item {
+  background: #301d27;
+  border-color: #81505d;
+}
+.field-terminal .item-symbol {
+  color: #efadb9;
+}
+.field-terminal .exploration-actions {
+  border-color: #563643;
+}
+.field-terminal .exploration-history {
+  background: #171118;
+  border-color: #48313c;
+}
+.field-terminal .explore-side-column {
+  background: #1c141c;
+  border-color: #61404d;
+}
+.field-terminal .explorer-mini-profile {
+  background: #2b1c28;
+  border-color: #6b4656;
+}
+.field-terminal .explorer-avatar {
+  background: linear-gradient(140deg, #583341, #2e1b27);
+  border-color: #8a5b6b;
+}
+.field-terminal .explore-subwindow {
+  background: #1e161e;
+  border-color: #825564;
+}
+.field-terminal .subwindow-return {
+  background: #482532;
+  border-color: #945768;
+  color: #ffd0d8;
+}

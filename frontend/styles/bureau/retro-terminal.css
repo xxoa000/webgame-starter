@@ -1,0 +1,1009 @@
+/* CRT 외장·구형 운영체제·기밀 서류·관측 장비를 통합한 레트로 퓨처리즘 테마.
+ * 외장 안의 화면이 스크롤된다. 주사선은 입력을 막지 않으며 깜빡임을 사용하지 않는다. */
+:root {
+  --bg:#0b100d;
+  --panel:#111b14;
+  --line:#46533d;
+  --text:#d4dbbb;
+  --muted:#a7b099;
+  --accent:#bacb83;
+  --lime:#bacb83;
+  --radius:2px;
+ 
+}
+body {
+  background:radial-gradient(ellipse at 50% 18%,#41433733,transparent 70%),repeating-linear-gradient(90deg,#080b09 0 3px,#0b0e0b 3px 6px);
+  color:var(--text);
+ 
+}
+/* 외부 모니터 하우징과 장식용 물리 조작부. */
+.workstation {
+  padding:22px 28px 0;
+  min-height:100dvh;
+ 
+}
+.monitor-chassis {
+  max-width:1660px;
+  margin:auto;
+  padding:12px 20px 0;
+  border:2px solid #655e4b;
+  border-top-color:#89806b;
+  border-bottom-color:#211f19;
+  border-radius:24px;
+  background:linear-gradient(115deg,#5c5848,#383a31 23%,#45463b 80%,#24281f);
+  box-shadow:inset 0 2px 1px #b6ac7d55,inset -5px -4px 8px #14160e99,0 22px 60px #000b;
+ 
+}
+.chassis-label {
+  display:flex;
+  justify-content:space-between;
+  padding:0 10px 10px;
+  font:9px/1.5 var(--mono);
+  letter-spacing:1.5px;
+  color:#c1b995;
+ 
+}
+.monitor-glass {
+  position:relative;
+  isolation:isolate;
+  height:calc(100dvh - 132px);
+  min-height:420px;
+  overflow:auto;
+  overscroll-behavior:contain;
+  border:9px solid #171e17;
+  border-top-color:#11160f;
+  border-bottom-color:#666653;
+  border-radius:15px;
+  background:#0b100d;
+  box-shadow:0 0 0 2px #77705c,0 0 0 4px #252a21,inset 0 0 40px #0009;
+  scrollbar-color:#687253 #161e16;
+  scrollbar-width:thin;
+ 
+}
+.monitor-glass:after {
+  content:"";
+  position:sticky;
+  display:block;
+  height:calc(100dvh - 150px);
+  min-height:402px;
+  bottom:0;
+  margin-top:calc(-100dvh + 150px);
+  z-index:20;
+  pointer-events:none;
+  background:repeating-linear-gradient(0deg,#0000000b 0 1px,transparent 1px 4px);
+  border-radius:8px;
+  box-shadow:inset 0 0 55px #0005;
+ 
+}
+.chassis-controls {
+  height:49px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 13px;
+ 
+}
+.chassis-maker {
+  font:bold 16px var(--mono);
+  letter-spacing:3px;
+  color:#c6c2a7;
+  text-shadow:0 1px #111;
+ 
+}
+.chassis-maker span {
+  font:8px var(--mono);
+  letter-spacing:1px;
+  color:#aaa68e;
+ 
+}
+.vent-slots {
+  margin-left:auto;
+  width:100px;
+  height:16px;
+  background:repeating-linear-gradient(90deg,#1b221a 0 3px,transparent 3px 7px);
+ 
+}
+.power-light {
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#b5cc79;
+  box-shadow:0 0 8px #b6e47a88;
+ 
+}
+.power-label {
+  font:8px var(--mono);
+  color:#c4bda1;
+  letter-spacing:1px;
+ 
+}
+.hardware-knob {
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  border:2px solid #807e66;
+  background:radial-gradient(circle at 35% 25%,#6d715b,#252b20 70%);
+  box-shadow:1px 2px 3px #0009;
+ 
+}
+.monitor-stand {
+  margin:0 auto;
+  width:190px;
+  height:23px;
+  background:linear-gradient(90deg,#1c2119,#494d3c 50%,#1c2119);
+  clip-path:polygon(22% 0,78% 0,83% 70%,100% 85%,100% 100%,0 100%,0 85%,17% 70%);
+ 
+}
+/* 내부 운영체제와 작업 창. */
+.bureau-shell {
+  min-height:100%;
+  align-items:flex-start;
+ 
+}
+.bureau-sidebar {
+  position:sticky;
+  inset:auto;
+  top:0;
+  height:calc(100dvh - 150px);
+  min-height:402px;
+  width:226px;
+  flex:0 0 226px;
+  padding:23px 15px;
+  background:linear-gradient(90deg,#161e15,#10190f);
+  border-right:1px solid #4d5940;
+  box-shadow:inset -3px 0 #080e08;
+ 
+}
+.bureau-main {
+  margin-left:0;
+  width:calc(100% - 226px);
+  padding:0 28px;
+  max-width:none;
+ 
+}
+.bureau-brand {
+  gap:8px;
+  margin-bottom:28px;
+ 
+}
+.bureau-brand>span:last-child {
+  font-size:13px;
+  letter-spacing:-.6px;
+ 
+}
+.bureau-brand small {
+  color:#8e9c77;
+  font-size:6px;
+ 
+}
+.agency-mark {
+  color:#c2cc92;
+  font-size:33px;
+ 
+}
+.sidebar-section-label,.sidebar-section-label>span {
+  color:#94a17b;
+ 
+}
+.menu-link {
+  border-radius:1px;
+  color:#b7c1a0;
+  font-size:12px;
+  padding:10px 11px;
+ 
+}
+.menu-link.active {
+  background:#35432b;
+  border-color:#81935c;
+  box-shadow:inset 3px 0 #c3d28e;
+  color:#e3e9bf;
+ 
+}
+.menu-link:hover {
+  background:#263322;
+ 
+}
+.menu-link>small {
+  color:#9cae7e;
+ 
+}
+.sidebar-mission,.aside-bottom {
+  border-color:#414f36;
+ 
+}
+.sidebar-mission p,.aside-bottom {
+  color:#aeb89b;
+ 
+}
+.sidebar-mission .mini,.sidebar-mission>small,.aside-bottom>small {
+  color:#8d9c78;
+ 
+}
+.bureau-header {
+  height:54px;
+  border-color:#4c5a3f;
+  color:#acb797;
+  font:10px var(--mono);
+ 
+}
+.bureau-header b {
+  color:#758362;
+ 
+}
+.operator-badge {
+  border-radius:1px;
+  background:#202b1c;
+  border-color:#5b6b48;
+  color:#ced9ad;
+ 
+}
+.heading {
+  padding:25px 0 22px;
+ 
+}
+.heading h1 {
+  font-size:25px;
+ 
+}
+.heading p {
+  color:#a4b095;
+  font-size:12px;
+ 
+}
+.terminal-heading-mark {
+  display:none;
+ 
+}
+.eyebrow,.mini {
+  color:#acbc8b;
+ 
+}
+.panel {
+  border-radius:2px;
+  background:#111c13;
+  border-color:#536145;
+  box-shadow:inset 0 0 0 2px #0b120c,2px 3px 0 #03070366;
+ 
+}
+.console-panel-heading {
+  border-bottom:1px solid #4b5c3d;
+  padding-bottom:10px;
+ 
+}
+.console-panel-heading h2 {
+  font-size:16px;
+ 
+}
+.console-panel-heading>small {
+  color:#a3b387;
+ 
+}
+.home-content {
+  padding-top:22px;
+ 
+}
+.home-summary .notice-board {
+  padding:15px 18px;
+ 
+}
+.notice-rows details {
+  border-color:#35472d;
+ 
+}
+.notice-rows summary:hover {
+  color:#e2eabb;
+ 
+}
+.bulletin-category {
+  border-color:#5d6d47;
+  color:#bdc99d;
+  border-radius:0;
+ 
+}
+.notice-expand {
+  color:#b7c68f;
+ 
+}
+.bulletin-body {
+  border-color:#9caa72;
+ 
+}
+.personnel-monitor {
+  background:#101b13;
+ 
+}
+.monitor-identity,.monitor-link {
+  border-color:#4c5d3e;
+ 
+}
+.monitor-id {
+  background:#283421;
+  border-color:#7f8f5c;
+  color:#d7dfb4;
+ 
+}
+.monitor-identity small,.monitor-link,.monitor-cross,.monitor-empty a {
+  color:#bdcba0;
+ 
+}
+.monitor-empty>span {
+  color:#7e9261;
+ 
+}
+.monitor-empty {
+  min-height:190px;
+ 
+}
+.status-dot {
+  box-shadow:0 0 5px #bcdd7966;
+ 
+}
+.session-controls {
+  color:#b3c19c;
+ 
+}
+footer {
+  border-color:#3f4f32;
+  color:#90a07c;
+ 
+}
+button {
+  border-radius:2px;
+  background:linear-gradient(#37412c,#252f20);
+  border-color:#7f8a63 #3f4d33 #333c2b #7f8a63;
+  color:#e0e5c5;
+  box-shadow:inset 0 1px #a5ac7255,1px 2px #0006;
+ 
+}
+button:hover:not(:disabled) {
+  background:#46573a;
+  border-color:#a5b57d;
+ 
+}
+button:active:not(:disabled) {
+  box-shadow:inset 1px 2px #0006;
+ 
+}
+.primary {
+  background:#c0cc91;
+  border-color:#d6dda9;
+  color:#192214;
+ 
+}
+.primary:hover:not(:disabled) {
+  background:#d3dda4;
+  border-color:#e7edc3;
+ 
+}
+input,select,textarea {
+  border-radius:1px;
+  background:#0a120b;
+  border-color:#65734e;
+  color:#e0e8c7;
+ 
+}
+input:focus,textarea:focus,select:focus {
+  box-shadow:0 0 0 2px #c4d39116;
+ 
+}
+input::placeholder {
+  color:#8f9d7c;
+ 
+}
+label {
+  color:#c0cba6;
+ 
+}
+.tabs {
+  border-color:#566443;
+ 
+}
+.tabs button {
+  color:#a8b992;
+ 
+}
+.tabs button.selected {
+  color:#e0e9bb;
+ 
+}
+.secure {
+  color:#9caa87;
+ 
+}
+.auth-modal {
+  border-radius:4px;
+  background:#121d13;
+  border-color:#7e8e60;
+  border-top:7px solid #5f7047;
+  box-shadow:0 0 0 3px #202b1b,0 20px 70px #000b;
+ 
+}
+.auth-modal::backdrop {
+  background:#030703cc;
+ 
+}
+.auth-classification {
+  background:#2a2a18;
+  border-color:#7c7346;
+  color:#d7ca95;
+ 
+}
+.notice {
+  background:#2a2a18;
+  border-color:#827944;
+  color:#e1d7a0;
+ 
+}
+.department {
+  border-radius:1px;
+  background:#172115;
+  border-color:#536244;
+  border-top-color:#a4b67e;
+ 
+}
+.department h3 {
+  color:#d8e0ba;
+ 
+}
+.department small {
+  color:#b1c395;
+ 
+}
+.department p {
+  color:#a6b293;
+ 
+}
+.department-number,.directory-title,.directory-title small {
+  color:#a9bb86;
+ 
+}
+/* 캐릭터 신원은 모니터에 열린 종이 서류철로 표시한다. */
+.character-grid>.profile {
+  background:linear-gradient(100deg,#bfb395,#d6c8a7 9%,#ccbd99 96%,#a39676);
+  border:1px solid #e2d1a6;
+  border-top:8px solid #9c8b63;
+  box-shadow:4px 5px #0007;
+  color:#2d3227;
+ 
+}
+.profile>.mini {
+  color:#5d5b45;
+  border-color:#8e8667;
+ 
+}
+.profile h2,.profile h3,.profile label {
+  color:#292f26;
+ 
+}
+.profile p,.profile .muted,.profile .hint {
+  color:#515640;
+ 
+}
+.profile .avatar {
+  border-radius:0;
+  border:5px solid #eee2be;
+  background:linear-gradient(135deg,#656d54,#303a2b);
+  color:#c5c7a4;
+  box-shadow:1px 3px 4px #443c2866;
+ 
+}
+.profile .personnel-unit {
+  background:#b7ad8b;
+  border-color:#8b8664;
+  color:#343d2c;
+ 
+}
+.profile .personnel-unit * {
+  color:inherit;
+ 
+}
+.profile .badge {
+  background:transparent;
+  border-color:#855449;
+  color:#793e35;
+  border-radius:0;
+  transform:rotate(-3deg);
+ 
+}
+.profile .bio {
+  color:#3e4534;
+ 
+}
+.profile .field-feedback.success {
+  color:#31572a;
+ 
+}
+.profile .field-feedback.error {
+  color:#852e26;
+ 
+}
+.character-grid>.panel:not(.profile) {
+  background:#152014;
+ 
+}
+.stats-header,.stat-row {
+  border-color:#425337;
+ 
+}
+/* 탐색은 같은 장비의 적색 관측 모드. 자원 바의 고유 색상은 유지한다. */
+.field-terminal {
+  --accent:#e29a83;
+  --lime:#e29a83;
+  --panel:#201815;
+  --line:#694b3e;
+ 
+}
+.field-terminal .bureau-sidebar {
+  background:linear-gradient(90deg,#241c16,#171410);
+  border-color:#70563e;
+ 
+}
+.field-terminal .bureau-main {
+  background:#120f0d;
+ 
+}
+.field-terminal .menu-link.active {
+  background:#4c2d22;
+  border-color:#a66a4f;
+  box-shadow:inset 3px 0 #e5a080;
+  color:#f5c4a1;
+ 
+}
+.field-terminal .menu-link:hover {
+  background:#38271d;
+ 
+}
+.field-terminal .bureau-header {
+  border-color:#664632;
+ 
+}
+.field-terminal .eyebrow,.field-terminal .mini {
+  color:#dbad82;
+ 
+}
+.field-terminal .panel {
+  background:#201813;
+  border-color:#71523a;
+ 
+}
+.field-terminal .forest-scene {
+  border:7px solid #554738;
+  border-top-color:#28251c;
+  border-bottom-color:#817158;
+  border-radius:9px;
+  background:radial-gradient(ellipse at 65% 35%,#8d33212f,transparent 65%),repeating-linear-gradient(0deg,transparent 0 3px,#0002 3px 4px),repeating-linear-gradient(90deg,#bd674b0e 0 1px,transparent 1px 32px),#160e0b;
+  box-shadow:0 0 0 1px #ae9571,inset 0 0 55px #000b;
+ 
+}
+.field-terminal .forest-scene:after {
+  background:linear-gradient(90deg,transparent,#efab6e99,#d34d33aa,transparent);
+ 
+}
+.field-terminal .forest-caption .mini {
+  color:#e3aa75;
+ 
+}
+.field-terminal .forest-mist {
+  background:linear-gradient(0deg,#180d08f0,transparent 85%);
+ 
+}
+.field-terminal .map-loot-section,.field-terminal .explore-side-column {
+  background:#201a13;
+  border-color:#70573a;
+ 
+}
+.field-terminal .map-loot-preview>span {
+  background:#302319;
+  border-color:#80603e;
+  color:#dbc6a2;
+ 
+}
+.field-terminal .explorer-mini-profile {
+  background:#2d2318;
+  border-color:#846749;
+ 
+}
+.field-terminal .primary {
+  background:#d8a07c;
+  border-color:#e9bd95;
+  color:#25140d;
+ 
+}
+.field-terminal .primary:hover:not(:disabled) {
+  background:#edb893;
+ 
+}
+.field-terminal .explore-subwindow {
+  background:#1c1d14;
+  border:6px solid #65634b;
+  border-bottom-color:#a1946b;
+  border-radius:5px;
+  box-shadow:0 0 0 2px #272d20,0 12px 60px #000b;
+ 
+}
+.field-terminal .inventory-slot {
+  background:#293022;
+  border:2px solid #5c6348;
+  border-top-color:#151d12;
+  border-left-color:#151d12;
+  border-radius:2px;
+ 
+}
+.field-terminal .inventory-slot.vacant {
+  background:#1b2217;
+  border-style:solid;
+  color:#697451;
+ 
+}
+.field-terminal .subwindow-return {
+  background:#435035;
+  border-color:#97a676;
+  color:#dce7bc;
+ 
+}
+/* 재난 경보는 붉은 인광 화면과 사선 경고 띠를 사용한다. */
+.rift-alert {
+  background:repeating-linear-gradient(0deg,transparent 0 3px,#0002 3px 4px),#2b100e;
+  border:2px solid #b24f37;
+  border-top:5px solid #db6b49;
+  border-radius:0;
+  box-shadow:inset 0 0 30px #a41d141a,2px 3px #0008;
+ 
+}
+.rift-alert:before {
+  background:repeating-linear-gradient(135deg,#e18455 0 5px,transparent 5px 10px);
+ 
+}
+.alarm-marker {
+  border-radius:0;
+  color:#ffb08a;
+  border-color:#e18455;
+  clip-path:polygon(50% 0,100% 100%,0 100%);
+  background:#713822;
+  border:0;
+  height:38px;
+  padding-top:8px;
+ 
+}
+.alarm-copy .mini {
+  color:#f19168;
+  letter-spacing:2px;
+ 
+}
+.alarm-copy h2 {
+  color:#ffd1ad;
+ 
+}
+.alarm-copy p,.alarm-progress small {
+  color:#d9a48d;
+ 
+}
+.alarm-progress strong {
+  color:#ffc298;
+ 
+}
+.alarm-progress progress {
+  accent-color:#e77b52;
+ 
+}
+@media (max-width:1100px) {
+ .workstation {
+  padding:14px 14px 0;
+ 
+}
+ .monitor-chassis {
+  padding:10px 13px 0;
+  border-radius:18px;
+ 
+}
+ .monitor-glass {
+  height:calc(100dvh - 113px);
+ 
+}
+ .bureau-sidebar {
+  width:195px;
+  flex-basis:195px;
+  height:calc(100dvh - 131px);
+ 
+}
+ .bureau-main {
+  width:calc(100% - 195px);
+  padding:0 20px;
+ 
+}
+ .bureau-brand>span:last-child {
+  font-size:11px;
+ 
+}
+ .bureau-brand small {
+  font-size:5px;
+ 
+}
+ .bureau-brand {
+  gap:5px;
+ 
+}
+ .chassis-maker {
+  font-size:13px;
+ 
+}
+ .chassis-label {
+  font-size:8px;
+ 
+}
+ .monitor-glass:after {
+  height:calc(100dvh - 131px);
+  margin-top:calc(-100dvh + 131px);
+ 
+}
+}
+@media (max-width:680px) {
+ .workstation {
+  padding:7px 6px 0;
+ 
+}
+ .monitor-chassis {
+  padding:8px 8px 0;
+  border-radius:13px;
+ 
+}
+ .monitor-glass {
+  height:auto;
+  min-height:calc(100dvh - 100px);
+  overflow:visible;
+  border-width:5px;
+  border-radius:7px;
+ 
+}
+ .monitor-glass:after {
+  display:none;
+ 
+}
+ .bureau-shell {
+  display:block;
+ 
+}
+ .bureau-sidebar {
+  position:relative;
+  height:auto;
+  min-height:0;
+  width:100%;
+  padding:16px;
+  border-right:0;
+  border-bottom:1px solid #536344;
+ 
+}
+ .bureau-main {
+  width:100%;
+  margin:0;
+  padding:0 15px;
+ 
+}
+ .bureau-brand {
+  margin:0 0 13px;
+ 
+}
+ .bureau-brand>span:last-child {
+  font-size:14px;
+ 
+}
+ .bureau-brand small {
+  font-size:7px;
+ 
+}
+ .game-nav {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:4px;
+  margin:0;
+ 
+}
+ .menu-link {
+  padding:9px 4px;
+  justify-content:center;
+  font-size:10px;
+  gap:4px;
+ 
+}
+ .menu-link>small,.menu-link .nav-symbol,.sidebar-section-label {
+  display:none;
+ 
+}
+ .bureau-header {
+  height:48px;
+  font-size:9px;
+  gap:8px;
+ 
+}
+ .chassis-label {
+  font-size:6px;
+  letter-spacing:.6px;
+  padding:0 3px 7px;
+ 
+}
+ .chassis-controls {
+  height:38px;
+  gap:7px;
+  padding:0 4px;
+ 
+}
+ .chassis-maker {
+  font-size:11px;
+  letter-spacing:1px;
+ 
+}
+ .chassis-maker span,.vent-slots {
+  display:none;
+ 
+}
+ .hardware-knob {
+  width:19px;
+  height:19px;
+ 
+}
+ .power-light {
+  margin-left:auto;
+ 
+}
+ .monitor-stand {
+  height:15px;
+  width:130px;
+ 
+}
+ .heading h1 {
+  font-size:22px;
+ 
+}
+ .auth-modal {
+  padding:18px;
+ 
+}
+ .home-summary .notice-board {
+  padding:13px;
+ 
+}
+ .alarm-copy .mini {
+  letter-spacing:1px;
+ 
+}
+}
+@media (prefers-contrast:more) {
+ .monitor-glass:after {
+  display:none;
+ 
+}
+ .panel {
+  border-color:#a6b989;
+ 
+}
+ p,.muted {
+  color:#cbd6b5;
+ 
+}
+}
+/* 종이 프로필 안의 보조 정보와 별도 대화상자 대비를 보정한다. */
+.profile .profile-id {
+  color:#5b6049;
+  border-color:#918765;
+ 
+}
+.profile .civilian-notice {
+  background:#b9b28e;
+  border-color:#777a50;
+ 
+}
+.profile .civilian-notice span,.profile .civilian-notice strong,.profile .civilian-notice p {
+  color:#414b33;
+ 
+}
+.profile dialog {
+  color:var(--text);
+ 
+}
+.profile dialog p,.profile dialog label {
+  color:#c0cba6;
+ 
+}
+.stat small,.stat-total,.reroll>span {
+  color:#a0b18a;
+ 
+}
+.stat strong,.stat-total strong {
+  color:#d4e0ad;
+ 
+}
+.track {
+  background:#2c3b25;
+ 
+}
+.track>div {
+  background:#afc586;
+ 
+}
+.stat-total,.reroll {
+  border-color:#4a5c3a;
+ 
+}
+.field-terminal .exploration-history {
+  background:#1b1711;
+  border-color:#685139;
+ 
+}
+.field-terminal .exploration-history li {
+  border-color:#4a3b2b;
+ 
+}
+.field-terminal .exploration-history li p {
+  color:#c9b59b;
+ 
+}
+.field-terminal .turn-counter,.field-terminal .explore-section-title {
+  color:#cda986;
+ 
+}
+.field-terminal .inventory-weight-track {
+  background:#333e29;
+ 
+}
+.field-terminal .inventory-weight-track>span {
+  background:#b9c985;
+ 
+}
+
+/* 화면 밀착 모드: 외부 여백·상단 라벨·받침대를 제거하고 내부 화면을 확장한다. */
+.workstation {
+  padding: 0;
+  min-height: 100dvh;
+}
+.monitor-chassis {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  margin: 0;
+  padding: 8px 12px 0;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0 1px 1px #b6ac7d55;
+}
+.chassis-label,
+.monitor-stand {
+  display: none;
+}
+.monitor-glass {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  overflow: auto;
+  border-width: 9px;
+  border-radius: 15px;
+}
+.monitor-glass:after {
+  height: calc(100dvh - 75px);
+  min-height: 0;
+  margin-top: calc(-100dvh + 75px);
+}
+.chassis-controls {
+  height: 49px;
+  flex: 0 0 49px;
+}
+@media (min-width: 681px) {
+  .bureau-sidebar {
+    height: calc(100dvh - 75px);
+    min-height: 0;
+  }
+}
+@media (max-width: 680px) {
+  .monitor-chassis {
+    padding: 6px 6px 0;
+  }
+  .monitor-glass {
+    border-width: 5px;
+    border-radius: 7px;
+  }
+  .chassis-controls {
+    height: 38px;
+    flex-basis: 38px;
+  }
+}

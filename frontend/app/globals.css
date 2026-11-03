@@ -1,0 +1,17 @@
+/* 기능별 기본 스타일 뒤에 레트로 테마와 듀얼 콘솔 배치를 불러온다. */
+@import "../styles/bureau/base.css";
+@import "../styles/bureau/layout.css";
+@import "../styles/bureau/personnel.css";
+@import "../styles/bureau/field.css";
+@import "../styles/bureau/responsive.css";
+@import "../styles/bureau/dashboard.css";
+@import "../styles/bureau/field-terminal.css";
+@import "../styles/bureau/retro-terminal.css";
+@import "../styles/bureau/dual-console.css";
+@import "../styles/bureau/appearance.css";
+
+@import "../styles/bureau/combat.css";
+
+@import "../styles/bureau/posts.css";
+
+@import "../styles/bureau/personality.css";
