@@ -285,8 +285,8 @@
   background: #d7c47a;
 }
 .recoveryTime {
-  display: grid;
-  gap: 3px;
+  display: block;
+  white-space: nowrap;
   font-size: 10px;
   line-height: 1.7;
   color: #83a19c;

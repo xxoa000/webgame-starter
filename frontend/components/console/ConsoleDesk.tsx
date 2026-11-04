@@ -10,6 +10,7 @@ import { AuthPanel } from "../auth/AuthPanel";
 import { usePathname } from "next/navigation";
 import { GameProvider, useGame } from "../../hooks/useGame";
 import { ExplorationProvider } from "../../hooks/useExploration";
+import { AudioProvider } from "../../hooks/useAudio";
 import { HardwareNavigation } from "./HardwareNavigation";
 import { ContractorConsole } from "./ContractorConsole";
 import { MainConsole } from "./MainConsole";
@@ -206,8 +207,10 @@ export function ConsoleDesk({ children }: { children: ReactNode }) {
   /* 공유 계정 상태와 메인·서브 콘솔을 제공한다. */
 
   return (
-    <GameProvider>
-      <ConnectedDesk>{children}</ConnectedDesk>
-    </GameProvider>
+    <AudioProvider>
+      <GameProvider>
+        <ConnectedDesk>{children}</ConnectedDesk>
+      </GameProvider>
+    </AudioProvider>
   );
 }

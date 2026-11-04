@@ -1,0 +1,74 @@
+.trigger {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: 100;
+  padding: 7px 10px;
+  border: 1px solid #707976;
+  border-radius: 4px;
+  background: #222c2a;
+  color: #dedfd3;
+  font-size: 11px;
+  box-shadow: 0 2px 8px #0006;
+}
+.trigger:focus-visible {
+  outline: 2px solid #cbdcbe;
+  outline-offset: 3px;
+}
+.dialog {
+  padding: 0;
+  width: min(340px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  border: 1px solid #87948b;
+  border-radius: 6px;
+  background: #1c2825;
+  color: #e2e4d9;
+  box-shadow: 0 16px 60px #0009;
+}
+.dialog::backdrop {
+  background: #080e0bb3;
+}
+.panel {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+.panel header,
+.panel label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.panel h2 {
+  margin: 0;
+  font-size: 17px;
+}
+.panel p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.panel small {
+  font-size: 11px;
+  line-height: 1.6;
+  color: #b5bfb3;
+}
+.panel label {
+  font-size: 13px;
+}
+.panel output {
+  font-variant-numeric: tabular-nums;
+}
+.panel input[type="range"] {
+  width: 100%;
+  margin: 0;
+  accent-color: #b3ceab;
+}
+.panel header button {
+  padding: 4px 10px;
+  font-size: 20px;
+}
+.preview {
+  padding: 9px;
+}

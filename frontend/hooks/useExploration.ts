@@ -15,6 +15,8 @@ import styles from "../components/console/Console.module.css";
 import { useGame } from "./useGame";
 import { api } from "../lib/api";
 import type { RaidEvent } from "../lib/raids";
+import { useAudio } from "./useAudio";
+import type { SoundEffect } from "../lib/audio";
 import type {
   ExplorationAction,
   ExplorationState,
@@ -25,6 +27,7 @@ import type {
 // Exploration state lives in MySQL; panels only suspend input, never reset this hook.
 function useExplorationState() {
   const accountGame = useGame();
+  const audio = useAudio();
   const [maps, setMaps] = useState<WorldMap[]>([]);
   const [state, setState] = useState<ExplorationState | null>(null);
   const [inventory, setInventory] = useState<InventoryData | null>(null);
@@ -87,6 +90,8 @@ function useExplorationState() {
       const next = await api<RaidEvent>(`/raids/${raid.id}/attack`, {
         version: raid.version,
       });
+      audio.play("attack");
+      if (next.status === "closed") audio.play("victory", 0.25);
       setRaid(next);
       await reload();
       await accountGame.reloadAccount();
@@ -121,6 +126,25 @@ function useExplorationState() {
     setError("");
     try {
       const next = await api<ExplorationState>(path, body);
+      // 성공한 행동으로 새로 생긴 기록만 재생한다. 재조회·과거 기록은 무음이다.
+      const previousKeys = new Set(
+        state?.history.map((event) => event.event_key),
+      );
+      const effects: Partial<Record<string, SoundEffect>> = {
+        encounter: "encounter",
+        attack: "attack",
+        damage: "damage",
+        victory: "victory",
+        flee: "flee",
+      };
+      let delay = 0;
+      for (const event of next.history) {
+        const effect = effects[event.kind];
+        if (event.event_key && !previousKeys.has(event.event_key) && effect) {
+          audio.play(effect, delay);
+          delay += 0.18;
+        }
+      }
       if (alive.current) setState(next);
       if (next.dead) {
         await accountGame.reloadAccount();

@@ -96,21 +96,13 @@ export function ResourceBars({
               />
             </div>
             {resource.key === "stamina" && (
-              <small className={styles.recoveryTime}>
-                {resource.current >= resource.max ? (
-                  "스태미나 최대치 도달"
-                ) : (
-                  <>
-                    <span>
-                      다음 회복까지{" "}
-                      {duration(vitals.next_stamina_seconds - elapsed)}
-                    </span>
-                    <span>
-                      완전 회복까지{" "}
-                      {duration(vitals.full_stamina_seconds - elapsed)}
-                    </span>
-                  </>
-                )}
+              <small
+                className={styles.recoveryTime}
+                title="다음 스태미나 회복까지 / 완전 회복까지"
+              >
+                {resource.current >= resource.max
+                  ? "스태미나 최대치 도달"
+                  : `(${duration(vitals.next_stamina_seconds - elapsed)}/${duration(vitals.full_stamina_seconds - elapsed)})`}
               </small>
             )}
           </div>

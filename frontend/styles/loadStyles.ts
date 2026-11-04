@@ -10,4 +10,5 @@ import "../components/shop/Shop.module.css";
 import "../components/exploration/Observation.module.css";
 import "../components/items/Items.module.css";
 import "../components/exploration/RaidPanel.module.css";
+import "../components/audio/AudioSettings.module.css";
 export {};
