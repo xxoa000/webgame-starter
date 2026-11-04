@@ -21,6 +21,7 @@ import { MapLootPreview } from "./MapLootPreview";
 import { RescueBoard } from "./RescueBoard";
 import { RescuePanel } from "./RescuePanel";
 import { ScriptLines } from "./ScriptLines";
+import { RaidPanel } from "./RaidPanel";
 type Props = {
   character: Character;
   ranges: StatRanges;
@@ -121,6 +122,21 @@ export function ExplorationWorkspace({ character }: Props) {
   return (
     <div className={styles.explorationPage}>
       <div className={styles.mainColumn}>
+        {game.raid && (
+          <RaidPanel
+            raid={game.raid}
+            canAttack={
+              !!active &&
+              stateMapId === game.raid.map_id &&
+              !downed &&
+              !paused &&
+              !combat &&
+              !pending
+            }
+            busy={game.busy}
+            onAttack={() => void game.attackRaid()}
+          />
+        )}
         <div className={styles.observationDesk}>
           <div className={styles.observationSurface} inert={battleWindowOpen}>
             <header className={styles.observationHeader}>

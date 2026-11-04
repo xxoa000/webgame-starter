@@ -7,31 +7,19 @@ export function RiftAlert({ events }: { events: RiftEvent[] }) {
 
   if (!events.length) return null;
   return (
-    <section
-      className={styles.riftAlerts}
-      aria-label="진행 중인 균열 경보"
-    >
+    <section className={styles.riftAlerts} aria-label="진행 중인 균열 경보">
       {events.map((event) => {
         const progress = Math.max(
           0,
           Math.min(100, Number.isFinite(event.progress) ? event.progress : 0),
         );
         return (
-          <article
-            className={styles.riftAlert}
-            key={event.id}
-          >
-            <div
-              className={styles.alarmMarker}
-              aria-hidden="true"
-            >
+          <article className={styles.riftAlert} key={event.id}>
+            <div className={styles.alarmMarker} aria-hidden="true">
               !
             </div>
             <div className={styles.alarmCopy}>
-              <span
-                className={sharedStyles.smallLabel}
-                data-ui="smallLabel"
-              >
+              <span className={sharedStyles.smallLabel} data-ui="smallLabel">
                 WARNING / 재난 경보
               </span>
               <h2>
@@ -46,13 +34,17 @@ export function RiftAlert({ events }: { events: RiftEvent[] }) {
                 value={progress}
                 aria-label={`${event.name} 봉쇄 진행률`}
               />
-              <small>
-                종료{" "}
-                {new Date(event.endsAt).toLocaleString("ko-KR", {
-                  timeZone: "Asia/Seoul",
-                })}{" "}
-                (KST)
-              </small>
+              {event.endsAt ? (
+                <small>
+                  종료{" "}
+                  {new Date(event.endsAt).toLocaleString("ko-KR", {
+                    timeZone: "Asia/Seoul",
+                  })}{" "}
+                  (KST)
+                </small>
+              ) : (
+                <small>공유 보스 처치 시 균열 봉쇄</small>
+              )}
             </div>
           </article>
         );

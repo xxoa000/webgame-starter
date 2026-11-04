@@ -42,6 +42,8 @@ def state_data(db, session):
     pending = db.get(Item, session.pending_item_id) if session.pending_item_id else None
     from ..items.presentation import item_traits
     traits = item_traits(db) if pending else {}
+    if pending and session.pending_raid_id:
+        traits[pending.id] = {'rarity': 'mythic', 'edible': False}
     return {"id": session.id, "map_id": session.map_id, "map_name": world_map.name,
             "downed": db.get(Character,session.character_id).downed, "rescue": rescue_data(db, session.character_id), "position_step": session.position_step, "status": session.status, "turn": session.turn, "version": session.version,
             "pending_item": {**traits[pending.id], "item_id": pending.id, "name": pending.name, "description": pending.description,
@@ -90,6 +92,7 @@ def start(db, user_id, map_id):
         session.map_id, session.status, session.turn = map_id, "active", 0
         session.version += 1  # Never reuse an old version after ending/restarting.
         session.pending_item_id, session.pending_quantity, session.history = None, 0, []
+        session.pending_raid_id = None
         session.position_step = 0
     append_event(session, "start", f"{world_map.name}에 들어섰다. 원격 관측 연결을 확인했다.")
     db.commit()
@@ -112,6 +115,8 @@ def draw(world_map, options):
 
 def act(db, user_id, body):
     """턴 버전과 선택지를 검사하고 탐색 행동을 실행한다."""
+    from ..raids import service as raids
+    raids.lock_cycle(db)
     character = ready_character(db, user_id)
     from ..characters.vitals import require_mobile
     require_mobile(character)
@@ -153,17 +158,29 @@ def act(db, user_id, body):
         world_map = db.get(Map, session.map_id)
         options = farming_options(db, session.map_id)
         enemies = monster_options(db, session.map_id)
-        monster_weight = sum(link.weight for link, _ in enemies)
+        event = raids.active_event(db, session.map_id, lock=True)
+        multiplier = raids.settings.raid_monster_multiplier if event else 1
+        monster_weight = sum(link.weight for link, _ in enemies) * multiplier
         base_weight = world_map.empty_weight + sum(link.weight for link, _ in options)
+        # 매 탐색마다 독립 1% 추첨: 다른 가중치가 이벤트 물자 확률을 희석하지 않는다.
+        if event and secrets.randbelow(100) == 0:
+            session.turn += 1
+            session.pending_item_id, session.pending_quantity = event.item_id, 1
+            session.pending_raid_id = event.id
+            discover(db, character.id, event.item_id, session.map_id)
+            append_event(session, 'found', "'균열 결정'을 발견했다. 회수하면 균열 전용 보관함에 저장된다.")
+            session.version += 1
+            db.commit()
+            return state_data(db, session)
         encounter = secrets.randbelow(base_weight + monster_weight) if enemies else monster_weight
         session.turn += 1
         if encounter < monster_weight:
             for link, monster in enemies:
-                if encounter < link.weight:
+                if encounter < link.weight * multiplier:
                     combat_service.enter(session, monster)
                     append_event(session, 'encounter', f'{monster.name} 출현.')
                     break
-                encounter -= link.weight
+                encounter -= link.weight * multiplier
             session.version += 1
             db.commit()
             return state_data(db, session)
@@ -188,14 +205,20 @@ def act(db, user_id, body):
             raise HTTPException(409, "아직 발견한 아이템이 없어.")
         item = db.get(Item, session.pending_item_id)
         if body.action == "take":
-            add_item(db, inventory, item, session.pending_quantity)
-            append_event(session, "take", f"'{item.name}'을 인벤토리에 넣었다.")
+            if session.pending_raid_id:
+                collected = raids.collect(db, session.pending_raid_id, character, session.pending_quantity)
+                append_event(session, 'take', '균열 결정을 전용 보관함에 회수했다.' if collected else '이미 닫힌 균열의 결정이 소멸했다.')
+            else:
+                add_item(db, inventory, item, session.pending_quantity)
+                append_event(session, "take", f"'{item.name}'을 인벤토리에 넣었다.")
         else:
             append_event(session, "give_up", f"'{item.name}'을 두고 걸음을 옮겼다.")
         session.pending_item_id, session.pending_quantity = None, 0
+        session.pending_raid_id = None
     elif body.action == "end":
         session.status = "ended"
         session.pending_item_id, session.pending_quantity = None, 0
+        session.pending_raid_id = None
         append_event(session, "end", "탐색을 마쳤다. 회수한 아이템은 인벤토리에 남는다.")
     session.version += 1
     db.commit()

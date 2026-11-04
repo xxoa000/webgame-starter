@@ -659,3 +659,27 @@
   margin: 4px 0;
   font-size: 12px;
 }
+.raidZone {
+  outline: 2px solid #f28c9d;
+  background-color: #702837;
+  animation: raidPulse 1.8s ease-in-out infinite;
+}
+.raidZone.droneMapMarker {
+  color: #ffe5eb;
+  border-color: #ff8ba0;
+  background: #702837;
+}
+@keyframes raidPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 4px 2px #ee657844;
+  }
+  50% {
+    box-shadow: 0 0 22px 6px #ee657899;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .raidZone {
+    animation: none;
+  }
+}

@@ -8,6 +8,10 @@ class Settings(BaseSettings):
     cookie_secure: bool = False
     jwt_secret_key: SecretStr = SecretStr("")
     jwt_access_hours: int = Field(default=24, ge=1, le=168)
+    raid_item_threshold: int = Field(default=10, ge=1)
+    raid_boss_hp: int = Field(default=1000, ge=1)
+    raid_monster_multiplier: int = Field(default=3, ge=1)
+    raid_cooldown_seconds: int = Field(default=3600, ge=1)
     model_config = {"env_file": ".env", "extra": "ignore"}
 
     def signing_key(self) -> str:

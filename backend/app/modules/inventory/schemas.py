@@ -1,8 +1,9 @@
 """인벤토리 소지량·무게와 물자 사용 가능 여부의 응답을 정의한다."""
 from pydantic import BaseModel, Field
+from ..items.schemas import ItemTraitsResponse
 
 
-class InventoryItemResponse(BaseModel):
+class InventoryItemResponse(ItemTraitsResponse):
     usable: bool = False
     hp_restore: int = 0
     mp_restore: int = 0

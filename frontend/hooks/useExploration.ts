@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 import styles from "../components/console/Console.module.css";
 import { useGame } from "./useGame";
 import { api } from "../lib/api";
+import type { RaidEvent } from "../lib/raids";
 import type {
   ExplorationAction,
   ExplorationState,
@@ -27,13 +28,27 @@ function useExplorationState() {
   const [maps, setMaps] = useState<WorldMap[]>([]);
   const [state, setState] = useState<ExplorationState | null>(null);
   const [inventory, setInventory] = useState<InventoryData | null>(null);
+  const [raid, setRaid] = useState<RaidEvent | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const inFlight = useRef(false);
   const alive = useRef(true);
+  const reloadVersion = useRef(0);
+  const previousRaid = useRef<string | null>(null);
+
+  useEffect(() => {
+    /* 다른 탐사자가 끝낸 레이드 보상도 캐릭터 창에 반영한다. */
+    const key = raid ? `${raid.id}:${raid.status}` : null;
+    if (raid?.status === "closed" && previousRaid.current !== key) {
+      void accountGame.reloadAccount().catch(() => {});
+    }
+    previousRaid.current = key;
+  }, [raid?.id, raid?.status]);
 
   const reload = useCallback(async () => {
+    const version = ++reloadVersion.current;
+    const raid = await api<RaidEvent | null>("/raids/mine");
     const [maps, state, inventory] = await Promise.all([
       api<WorldMap[]>("/maps"),
       api<ExplorationState | null>("/exploration/state"),
@@ -43,12 +58,46 @@ function useExplorationState() {
         throw error;
       }),
     ]);
-    if (alive.current) {
+    if (alive.current && version === reloadVersion.current) {
       setMaps(maps);
       setState(state);
       setInventory(inventory);
+      setRaid(raid);
     }
   }, [accountGame.account?.character?.status]);
+
+  useEffect(() => {
+    /* 공유 보스 HP와 다른 탐사자의 수집 결과를 주기적으로 동기화한다. */
+    const timer = setInterval(() => {
+      if (!document.hidden && !inFlight.current) {
+        void reload().catch(() => {});
+      }
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [reload]);
+
+  async function attackRaid() {
+    /* 서버 버전으로 중복 공격을 막고 정산 뒤 캐릭터 포인트를 갱신한다. */
+    if (!raid || inFlight.current) return;
+    inFlight.current = true;
+    reloadVersion.current += 1;
+    setBusy(true);
+    setError("");
+    try {
+      const next = await api<RaidEvent>(`/raids/${raid.id}/attack`, {
+        version: raid.version,
+      });
+      setRaid(next);
+      await reload();
+      await accountGame.reloadAccount();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "레이드 공격 실패");
+      await reload().catch(() => {});
+    } finally {
+      inFlight.current = false;
+      setBusy(false);
+    }
+  }
 
   useEffect(() => {
     alive.current = true;
@@ -67,6 +116,7 @@ function useExplorationState() {
   async function mutate(path: string, body: unknown) {
     if (inFlight.current) return;
     inFlight.current = true;
+    reloadVersion.current += 1;
     setBusy(true);
     setError("");
     try {
@@ -105,6 +155,7 @@ function useExplorationState() {
     /* 진행 중 요청이 끝난 뒤 최신 버전으로 확정 도망·종료를 순서대로 처리한다. */
     if (inFlight.current) return false;
     inFlight.current = true;
+    reloadVersion.current += 1;
     setBusy(true);
     try {
       let current = await api<ExplorationState | null>("/exploration/state");
@@ -154,6 +205,7 @@ function useExplorationState() {
     /* 소지품 변경 후 계정·자원·탐색 기록을 함께 새로 읽는다. */
     if (inFlight.current) return;
     inFlight.current = true;
+    reloadVersion.current += 1;
     setBusy(true);
     setError("");
     try {
@@ -189,6 +241,8 @@ function useExplorationState() {
     };
   }, [state?.downed, reload]);
   return {
+    raid,
+    attackRaid,
     maps,
     state,
     inventory,

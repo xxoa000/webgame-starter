@@ -21,3 +21,4 @@ target_metadata = Base.metadata
 from ..modules.personality.models import PersonalityKeyword, CharacterPersonality
 from ..modules.scripts.models import ScriptPack, ScriptPackVersion, GameScript, GameScriptCondition, ScriptSubmission, UserScriptPack, CharacterScriptPack
 from ..modules.rescue.models import RescueRequest
+from ..modules.raids.models import RaidCycle, RaidEvent, RaidMember

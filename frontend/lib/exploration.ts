@@ -15,6 +15,7 @@ export type InventoryItem = ItemTraits & {
 };
 import type { Vitals } from "./types";
 export type WorldMap = {
+  raid_event_id?: number | null;
   monsters: { name: string; probability: number }[];
   id: number;
   name: string;

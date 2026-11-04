@@ -13,23 +13,23 @@ def rarity_for(probability, is_event=False):
     """
 
     if probability is None:
-        return 'Common'
+        return 'common'
 
     # is_event 로 이벤트 아이템 유무를 확인, 1e-12는 아주 작은 값으로 무한 소수점을 예방하기 위함.
     if is_event and probability <= .01 + 1e-12:
-        return 'Mythic'
+        return 'mythic'
 
     # limit: 확률 기준, grade: 등급 이름
     for limit, grade in (
-        (.03, 'Legendary'),
-        (.07, 'Epic'),
-        (.15, 'Rare'),
-        (.30, 'Uncommon')
+        (.03, 'legendary'),
+        (.07, 'epic'),
+        (.15, 'rare'),
+        (.30, 'uncommon')
     ):
         if probability <= limit + 1e-12:
             return grade
 
-    return 'Common'
+    return 'common'
 
 
 # traits : 특성, 특징, 성질
@@ -65,6 +65,8 @@ def item_traits(db):
 
     for item in db.scalars(select(Item)):
         chance = max(probabilities[item.id]) if probabilities[item.id] else None
+        if item.kind == 'event' and item.is_event:
+            chance = .01
         result[item.id] = {'rarity': rarity_for(chance, item.is_event), 'edible': bool(item.edible)}
         
     return result

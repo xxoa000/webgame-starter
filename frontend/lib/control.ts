@@ -5,7 +5,7 @@ export type RiftEvent = {
   location: string;
   active: boolean;
   startsAt: string;
-  endsAt: string;
+  endsAt: string | null;
   progress: number;
   objective: string;
 };
@@ -19,6 +19,6 @@ export function activeRifts(now: number): RiftEvent[] {
     (event) =>
       event.active &&
       Date.parse(event.startsAt) <= now &&
-      now < Date.parse(event.endsAt),
+      (event.endsAt === null || now < Date.parse(event.endsAt)),
   );
 }

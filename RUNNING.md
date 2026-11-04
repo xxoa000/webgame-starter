@@ -359,3 +359,12 @@ docker compose logs -f backend
 https://pyjwt.readthedocs.io/en/stable/api.html
 
 이번 JWT 업데이트는 인증·권한·로그아웃·마이그레이션 및 기존 게임 회귀 테스트 79개를 통과했다. 기존 0012 SQLite 비호환 DDL 관련 2개와 과거 grimoire 이름을 기대하는 1개는 제외했다. 0016 적용·되돌리기는 격리된 SQLite DB에서 검증했다. 실제 MySQL 업그레이드와 브라우저 조작 검증은 수행하지 않았다.
+## 공유 균열 레이드 적용 (0018)
+
+최신 마이그레이션은 `0018_shared_raids`다. 백엔드를 정지한 상태에서 기존 실행 방식에 맞춰 의존성과 이미지를 갱신하고 `alembic upgrade head`를 실행한 뒤 서버를 재시작한다. 호스트 가상환경에서는 backend 폴더에서 `.venv/bin/python -m alembic upgrade head`를 실행한다. Compose 방식에서는 프로젝트 최상위에서 `docker compose run --rm --no-deps backend alembic upgrade head`를 실행한다. 실행 전 기존 DATABASE_URL과 JWT 서명키를 유지한다.
+
+`raid_cycle`, `raid_event`, `raid_member` 테이블과 `exploration.pending_raid_id`를 추가한다. 기존 캐릭터·아이템·탐색 기록은 유지한다. 보상 기록 보존을 위해 자동 downgrade는 제공하지 않는다. 별도의 Redis나 작업 큐는 필요하지 않다.
+
+서버 시작 후 `/health`와 Alembic head를 확인한다. `GET /raids/current`는 공개 이벤트, `GET /raids/mine`은 로그인한 사용자의 결정·보상 현황을 반환한다. 보스 공격은 `POST /raids/{event_id}/attack`에 최신 `version`을 전달한다. 수치·보상 규칙과 조절 가능한 환경변수는 RULE.md의 공유 균열 항목을 따른다. 새 기본값은 다음 이벤트부터 수집 목표·보스 HP에 적용된다.
+
+검증은 backend의 `python -m pytest -q`, frontend의 `npm run typecheck`, `npm run check:styles`, `npm run build`로 수행한다. UI에서는 홈 경보 → 붉은 이벤트 맵 → 결정 회수 → 보스 출현 → 다른 탐사자와 공유 HP 갱신 → 종료 및 캐릭터 미분배 포인트를 확인한다.

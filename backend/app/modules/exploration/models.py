@@ -19,6 +19,7 @@ class Exploration(Base):
     version: Mapped[int] = mapped_column(default=1, comment='동시 요청 검증 번호')
     pending_item_id: Mapped[int | None] = mapped_column(ForeignKey("item.id"), nullable=True, comment='회수 대기 아이템 ID')
     pending_quantity: Mapped[int] = mapped_column(default=0, comment='회수 대기 수량')
+    pending_raid_id: Mapped[int | None] = mapped_column(ForeignKey('raid_event.id'), nullable=True, comment='발견한 이벤트 물자의 소속 균열')
     combat: Mapped[dict | None] = mapped_column(JSON, nullable=True, comment='진행 중인 전투 상태')
     history: Mapped[list] = mapped_column(JSON, default=list, comment='최근 탐색 기록')
 

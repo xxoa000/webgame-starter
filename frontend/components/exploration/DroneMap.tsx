@@ -48,7 +48,12 @@ export function DroneMap({
     MAP_ZONES.findIndex((zone) => zone.name === selected?.name),
   );
   return (
-    <div className={styles.droneMapLayer}>
+    <div
+      className={classNames(
+        styles.droneMapLayer,
+        active && selected?.raid_event_id ? styles.raidZone : "",
+      )}
+    >
       <svg
         className={styles.droneMapSvg}
         viewBox="0 0 1200 720"
@@ -191,6 +196,9 @@ export function DroneMap({
           </g>
         )}
         <rect width="1200" height="720" fill="url(#drone-grid)" />
+        {active && selected?.raid_event_id && (
+          <rect width="1200" height="720" fill="#e35065" fillOpacity=".12" />
+        )}
       </svg>
       {active && (
         <div className={styles.droneMapLabels} aria-hidden="true">
@@ -225,6 +233,7 @@ export function DroneMap({
                 type="button"
                 className={classNames(
                   styles.droneMapMarker,
+                  map.raid_event_id ? styles.raidZone : "",
                   selected?.id === map.id ? styles.isSelected : "",
                 )}
                 style={{
@@ -232,8 +241,8 @@ export function DroneMap({
                   top: `${zone.y / 7.2}%`,
                 }}
                 disabled={blocked}
-                aria-label={map.name}
-                title={map.name}
+                aria-label={`${map.name}${map.raid_event_id ? " · 균열 이벤트 진행 중" : ""}`}
+                title={`${map.name}${map.raid_event_id ? " · 균열 이벤트 진행 중" : ""}`}
                 aria-pressed={selected?.id === map.id}
                 onClick={() => {
                   /* 구역을 선택하고 진입 전 상태는 유지한다. */ onSelect(

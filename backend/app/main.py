@@ -21,13 +21,18 @@ async def lifespan(app):
     settings.signing_key()
     assert_schema_current()
     from .modules.users.maintenance import daily_loop
+    from .modules.raids.scheduler import event_loop
     task = asyncio.create_task(daily_loop())
+    raid_task = asyncio.create_task(event_loop())
     try:
         yield
     finally:
         task.cancel()
+        raid_task.cancel()
         with suppress(asyncio.CancelledError):
             await task
+        with suppress(asyncio.CancelledError):
+            await raid_task
 
 
 app = FastAPI(title="Webgame foundation", lifespan=lifespan)
@@ -78,3 +83,5 @@ from .modules.rescue.router import router as rescue_router
 from .modules.shop.router import router as shop_router
 app.include_router(rescue_router)
 app.include_router(shop_router)
+from .modules.raids.router import router as raids_router
+app.include_router(raids_router)

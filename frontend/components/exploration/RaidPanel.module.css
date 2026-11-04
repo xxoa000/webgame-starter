@@ -1,0 +1,25 @@
+.panel {
+  padding: 18px;
+  border: 1px solid #d97c87;
+  background: #23191e;
+  color: #f0d9df;
+  display: grid;
+  gap: 12px;
+}
+.panel h3,
+.panel p {
+  margin: 0;
+}
+.crystal {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+}
+.health {
+  display: grid;
+  gap: 8px;
+}
+.health progress {
+  width: 100%;
+  accent-color: #ec8497;
+}
