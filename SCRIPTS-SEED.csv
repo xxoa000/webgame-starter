@@ -1,179 +1,334 @@
-﻿code,situation_code,action_code,layer,visibility,content,priority,weight,is_active
-empty_COMMON_SPEECH,empty,,SPEECH,PUBLIC,회수할 물자를 찾지 못했다.,0,100,1
-empty_COMMON_THOUGHT,empty,,THOUGHT,OWNER,여긴 텅 비었어.,0,100,1
-empty_COMMON_NARRATION,empty,,NARRATION,OWNER,이 근처엔 아무것도 없는 듯 하다.,0,100,1
-empty_K1_1,empty,,SPEECH,PUBLIC,저기… 회수할 물자를 찾지 못했다.,10,100,1
-empty_K1_2,empty,,SPEECH,PUBLIC,"으음, 확인했어. 회수할 물자를 찾지 못했다.",10,100,1
-empty_K2_1,empty,,SPEECH,PUBLIC,"좋아, 보고할게! 회수할 물자를 찾지 못했다.",10,100,1
-empty_K2_2,empty,,SPEECH,PUBLIC,확인 완료! 회수할 물자를 찾지 못했다.,10,100,1
-empty_K3_1,empty,,SPEECH,PUBLIC,참 성가시네. 회수할 물자를 찾지 못했다.,10,100,1
-empty_K3_2,empty,,SPEECH,PUBLIC,상황 한번 훌륭하군. 회수할 물자를 찾지 못했다.,10,100,1
-empty_K4_1,empty,,SPEECH,PUBLIC,"잠깐, 집중해. 회수할 물자를 찾지 못했다.",10,100,1
-empty_K4_2,empty,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 회수할 물자를 찾지 못했다.,10,100,1
-empty_K11_1,empty,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
-empty_K11_2,empty,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
-empty_K12_1,empty,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
-empty_K12_2,empty,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
-empty_K13_1,empty,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
-empty_K13_2,empty,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
-empty_K14_1,empty,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
-empty_K14_2,empty,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
-empty_K21_1,empty,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
-empty_K21_2,empty,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
-empty_K22_1,empty,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
-empty_K22_2,empty,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
-empty_K23_1,empty,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
-empty_K23_2,empty,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
-found_COMMON_SPEECH,found,,SPEECH,PUBLIC,{item_name}을 발견했다.,0,100,1
-found_COMMON_THOUGHT,found,,THOUGHT,OWNER,{item_name}을 발견했다.,0,100,1
-found_COMMON_NARRATION,found,,NARRATION,OWNER,{item_name}을 발견했다.,0,100,1
-found_K1_1,found,,SPEECH,PUBLIC,저기… {item_name}을 발견했다.,10,100,1
-found_K1_2,found,,SPEECH,PUBLIC,"으음, 확인했어. {item_name}을 발견했다.",10,100,1
-found_K2_1,found,,SPEECH,PUBLIC,"좋아, 보고할게! {item_name}을 발견했다.",10,100,1
-found_K2_2,found,,SPEECH,PUBLIC,확인 완료! {item_name}을 발견했다.,10,100,1
-found_K3_1,found,,SPEECH,PUBLIC,참 성가시네. {item_name}을 발견했다.,10,100,1
-found_K3_2,found,,SPEECH,PUBLIC,상황 한번 훌륭하군. {item_name}을 발견했다.,10,100,1
-found_K4_1,found,,SPEECH,PUBLIC,"잠깐, 집중해. {item_name}을 발견했다.",10,100,1
-found_K4_2,found,,SPEECH,PUBLIC,작은 소리도 놓치지 마. {item_name}을 발견했다.,10,100,1
-found_K11_1,found,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
-found_K11_2,found,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
-found_K12_1,found,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
-found_K12_2,found,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
-found_K13_1,found,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
-found_K13_2,found,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
-found_K14_1,found,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
-found_K14_2,found,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
-found_K21_1,found,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
-found_K21_2,found,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
-found_K22_1,found,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
-found_K22_2,found,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
-found_K23_1,found,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
-found_K23_2,found,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
-rest_COMMON_SPEECH,rest,,SPEECH,PUBLIC,조금만 쉬었다 가자.,0,100,1
-rest_COMMON_THOUGHT,rest,,THOUGHT,OWNER,휴...,0,100,1
-rest_COMMON_NARRATION,rest,,NARRATION,OWNER,잠시 안전한 곳에서 쉬었다.,0,100,1
-rest_K1_1,rest,,SPEECH,PUBLIC,저기… 잠시 안전한 곳에서 쉬었다.,10,100,1
-rest_K1_2,rest,,SPEECH,PUBLIC,"으음, 확인했어. 잠시 안전한 곳에서 쉬었다.",10,100,1
-rest_K2_1,rest,,SPEECH,PUBLIC,"좋아, 보고할게! 잠시 안전한 곳에서 쉬었다.",10,100,1
-rest_K2_2,rest,,SPEECH,PUBLIC,확인 완료! 잠시 안전한 곳에서 쉬었다.,10,100,1
-rest_K3_1,rest,,SPEECH,PUBLIC,참 성가시네. 잠시 안전한 곳에서 쉬었다.,10,100,1
-rest_K3_2,rest,,SPEECH,PUBLIC,상황 한번 훌륭하군. 잠시 안전한 곳에서 쉬었다.,10,100,1
-rest_K4_1,rest,,SPEECH,PUBLIC,"잠깐, 집중해. 잠시 안전한 곳에서 쉬었다.",10,100,1
-rest_K4_2,rest,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 잠시 안전한 곳에서 쉬었다.,10,100,1
-rest_K11_1,rest,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
-rest_K11_2,rest,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
-rest_K12_1,rest,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
-rest_K12_2,rest,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
-rest_K13_1,rest,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
-rest_K13_2,rest,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
-rest_K14_1,rest,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
-rest_K14_2,rest,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
-rest_K21_1,rest,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
-rest_K21_2,rest,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
-rest_K22_1,rest,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
-rest_K22_2,rest,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
-rest_K23_1,rest,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
-rest_K23_2,rest,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
-encounter_COMMON_SPEECH,encounter,,SPEECH,PUBLIC,{monster_name}과 마주쳤다.,0,100,1
-encounter_COMMON_THOUGHT,encounter,,THOUGHT,OWNER,{monster_name}과 마주쳤다.,0,100,1
-encounter_COMMON_NARRATION,encounter,,NARRATION,OWNER,{monster_name}과 마주쳤다.,0,100,1
-encounter_K1_1,encounter,,SPEECH,PUBLIC,저기… {monster_name}과 마주쳤다.,10,100,1
-encounter_K1_2,encounter,,SPEECH,PUBLIC,"으음, 확인했어. {monster_name}과 마주쳤다.",10,100,1
-encounter_K2_1,encounter,,SPEECH,PUBLIC,"좋아, 보고할게! {monster_name}과 마주쳤다.",10,100,1
-encounter_K2_2,encounter,,SPEECH,PUBLIC,확인 완료! {monster_name}과 마주쳤다.,10,100,1
-encounter_K3_1,encounter,,SPEECH,PUBLIC,참 성가시네. {monster_name}과 마주쳤다.,10,100,1
-encounter_K3_2,encounter,,SPEECH,PUBLIC,상황 한번 훌륭하군. {monster_name}과 마주쳤다.,10,100,1
-encounter_K4_1,encounter,,SPEECH,PUBLIC,"잠깐, 집중해. {monster_name}과 마주쳤다.",10,100,1
-encounter_K4_2,encounter,,SPEECH,PUBLIC,작은 소리도 놓치지 마. {monster_name}과 마주쳤다.,10,100,1
-encounter_K11_1,encounter,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
-encounter_K11_2,encounter,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
-encounter_K12_1,encounter,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
-encounter_K12_2,encounter,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
-encounter_K13_1,encounter,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
-encounter_K13_2,encounter,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
-encounter_K14_1,encounter,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
-encounter_K14_2,encounter,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
-encounter_K21_1,encounter,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
-encounter_K21_2,encounter,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
-encounter_K22_1,encounter,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
-encounter_K22_2,encounter,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
-encounter_K23_1,encounter,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
-encounter_K23_2,encounter,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
-victory_COMMON_SPEECH,victory,,SPEECH,PUBLIC,위협 개체를 쓰러뜨렸다.,0,100,1
-victory_COMMON_THOUGHT,victory,,THOUGHT,OWNER,위협 개체를 쓰러뜨렸다.,0,100,1
-victory_COMMON_NARRATION,victory,,NARRATION,OWNER,위협 개체를 쓰러뜨렸다.,0,100,1
-victory_K1_1,victory,,SPEECH,PUBLIC,저기… 위협 개체를 쓰러뜨렸다.,10,100,1
-victory_K1_2,victory,,SPEECH,PUBLIC,"으음, 확인했어. 위협 개체를 쓰러뜨렸다.",10,100,1
-victory_K2_1,victory,,SPEECH,PUBLIC,"좋아, 보고할게! 위협 개체를 쓰러뜨렸다.",10,100,1
-victory_K2_2,victory,,SPEECH,PUBLIC,확인 완료! 위협 개체를 쓰러뜨렸다.,10,100,1
-victory_K3_1,victory,,SPEECH,PUBLIC,참 성가시네. 위협 개체를 쓰러뜨렸다.,10,100,1
-victory_K3_2,victory,,SPEECH,PUBLIC,상황 한번 훌륭하군. 위협 개체를 쓰러뜨렸다.,10,100,1
-victory_K4_1,victory,,SPEECH,PUBLIC,"잠깐, 집중해. 위협 개체를 쓰러뜨렸다.",10,100,1
-victory_K4_2,victory,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 위협 개체를 쓰러뜨렸다.,10,100,1
-victory_K11_1,victory,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
-victory_K11_2,victory,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
-victory_K12_1,victory,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
-victory_K12_2,victory,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
-victory_K13_1,victory,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
-victory_K13_2,victory,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
-victory_K14_1,victory,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
-victory_K14_2,victory,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
-victory_K21_1,victory,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
-victory_K21_2,victory,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
-victory_K22_1,victory,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
-victory_K22_2,victory,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
-victory_K23_1,victory,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
-victory_K23_2,victory,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
-flee_COMMON_SPEECH,flee,,SPEECH,PUBLIC,위협으로부터 벗어났다.,0,100,1
-flee_COMMON_THOUGHT,flee,,THOUGHT,OWNER,위협으로부터 벗어났다.,0,100,1
-flee_COMMON_NARRATION,flee,,NARRATION,OWNER,위협으로부터 벗어났다.,0,100,1
-flee_K1_1,flee,,SPEECH,PUBLIC,저기… 위협으로부터 벗어났다.,10,100,1
-flee_K1_2,flee,,SPEECH,PUBLIC,"으음, 확인했어. 위협으로부터 벗어났다.",10,100,1
-flee_K2_1,flee,,SPEECH,PUBLIC,"좋아, 보고할게! 위협으로부터 벗어났다.",10,100,1
-flee_K2_2,flee,,SPEECH,PUBLIC,확인 완료! 위협으로부터 벗어났다.,10,100,1
-flee_K3_1,flee,,SPEECH,PUBLIC,참 성가시네. 위협으로부터 벗어났다.,10,100,1
-flee_K3_2,flee,,SPEECH,PUBLIC,상황 한번 훌륭하군. 위협으로부터 벗어났다.,10,100,1
-flee_K4_1,flee,,SPEECH,PUBLIC,"잠깐, 집중해. 위협으로부터 벗어났다.",10,100,1
-flee_K4_2,flee,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 위협으로부터 벗어났다.,10,100,1
-flee_K11_1,flee,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
-flee_K11_2,flee,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
-flee_K12_1,flee,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
-flee_K12_2,flee,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
-flee_K13_1,flee,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
-flee_K13_2,flee,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
-flee_K14_1,flee,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
-flee_K14_2,flee,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
-flee_K21_1,flee,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
-flee_K21_2,flee,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
-flee_K22_1,flee,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
-flee_K22_2,flee,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
-flee_K23_1,flee,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
-flee_K23_2,flee,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
-damage_COMMON_SPEECH,damage,,SPEECH,PUBLIC,공격을 받아 다쳤다.,0,100,1
-damage_COMMON_THOUGHT,damage,,THOUGHT,OWNER,공격을 받아 다쳤다.,0,100,1
-damage_COMMON_NARRATION,damage,,NARRATION,OWNER,공격을 받아 다쳤다.,0,100,1
-damage_K1_1,damage,,SPEECH,PUBLIC,저기… 공격을 받아 다쳤다.,10,100,1
-damage_K1_2,damage,,SPEECH,PUBLIC,"으음, 확인했어. 공격을 받아 다쳤다.",10,100,1
-damage_K2_1,damage,,SPEECH,PUBLIC,"좋아, 보고할게! 공격을 받아 다쳤다.",10,100,1
-damage_K2_2,damage,,SPEECH,PUBLIC,확인 완료! 공격을 받아 다쳤다.,10,100,1
-damage_K3_1,damage,,SPEECH,PUBLIC,참 성가시네. 공격을 받아 다쳤다.,10,100,1
-damage_K3_2,damage,,SPEECH,PUBLIC,상황 한번 훌륭하군. 공격을 받아 다쳤다.,10,100,1
-damage_K4_1,damage,,SPEECH,PUBLIC,"잠깐, 집중해. 공격을 받아 다쳤다.",10,100,1
-damage_K4_2,damage,,SPEECH,PUBLIC,작은 소리도 놓치지 마. 공격을 받아 다쳤다.,10,100,1
-damage_K11_1,damage,,THOUGHT,OWNER,손끝이 떨린다. 더 위험해지지 않았으면.,10,100,1
-damage_K11_2,damage,,THOUGHT,OWNER,침착하자. 무사히 돌아가고 싶다.,10,100,1
-damage_K12_1,damage,,THOUGHT,OWNER,다른 사람들도 무사했으면 좋겠다.,10,100,1
-damage_K12_2,damage,,THOUGHT,OWNER,혼자만 괜찮다고 안심할 수는 없다.,10,100,1
-damage_K13_1,damage,,THOUGHT,OWNER,아직 버틸 수 있다. 다음 일에도 대비하자.,10,100,1
-damage_K13_2,damage,,THOUGHT,OWNER,주저앉을 때가 아니다. 정신을 붙잡자.,10,100,1
-damage_K14_1,damage,,THOUGHT,OWNER,우선 내 몫과 안전부터 지켜야 한다.,10,100,1
-damage_K14_2,damage,,THOUGHT,OWNER,남을 챙기기 전에 살아남는 게 먼저다.,10,100,1
-damage_K21_1,damage,,NARRATION,OWNER,주변에 도움을 필요로 하는 사람이 없는지 살핀다.,10,100,1
-damage_K21_2,damage,,NARRATION,OWNER,다른 이에게 피해를 주지 않도록 주의를 기울인다.,10,100,1
-damage_K22_1,damage,,NARRATION,OWNER,주변 상황과 남은 자원을 차분히 가늠한다.,10,100,1
-damage_K22_2,damage,,NARRATION,OWNER,위험과 이득을 비교하며 다음 지시를 기다린다.,10,100,1
-damage_K23_1,damage,,NARRATION,OWNER,자신에게 유리한 위치를 먼저 확인한다.,10,100,1
-damage_K23_2,damage,,NARRATION,OWNER,다른 이의 사정보다 자신의 목적을 앞세운다.,10,100,1
-death_COMMON_NARRATION,death,,NARRATION,OWNER,피계약자의 생체 신호가 끊겼다.,0,100,1
-encounter_COMBO_1,encounter,,SPEECH,PUBLIC,무섭지만… 누군가 다치기 전에 방법을 찾아야 해.,30,100,1
-encounter_COMBO_2,encounter,,SPEECH,PUBLIC,저기… 다 같이 무사할 방법부터 생각해 보자.,30,100,1
+﻿code,situation_code,keyword_name,action_code,layer,content,priority,weight,is_active
+common_speech_001,empty,공통,,SPEECH,수색 구역 확인했어. 회수할 만한 물자는 없어.,0,100,1
+common_speech_002,empty,공통,,SPEECH,보관함이 비어 있어. 다음 경로를 기다릴게.,0,100,1
+common_speech_003,empty,공통,,SPEECH,이쪽에서는 쓸 만한 걸 찾지 못했어.,0,100,1
+common_thought_001,empty,공통,,THOUGHT,빈 선반만 이어진다. 다른 곳을 살펴야겠다.,0,100,1
+common_thought_002,empty,공통,,THOUGHT,찾던 물자는 없지만 지나온 길은 기억해 둔다.,0,100,1
+common_thought_003,empty,공통,,THOUGHT,손에 쥔 것은 없다. 주변을 다시 한번 둘러본다.,0,100,1
+common_narration_001,empty,공통,,NARRATION,피계약자가 비어 있는 보관함을 닫는다.,0,100,1
+common_narration_002,empty,공통,,NARRATION,수색을 마친 구역에서 회수 가능한 물자가 확인되지 않는다.,0,100,1
+common_narration_003,empty,공통,,NARRATION,먼지를 털어 낸 뒤 다음 이동을 기다린다.,0,100,1
+outer_shy_001,empty,소심함,,SPEECH,저기… 이쪽은 다 살펴봤는데 아무것도 안 보여.,10,100,1
+outer_shy_002,empty,소심함,,SPEECH,혹시 내가 놓친 걸까? 여기서는 쓸 만한 걸 못 찾았어.,10,100,1
+outer_shy_003,empty,소심함,,SPEECH,문을 열어 봐도 될까…? 안에는 아무것도 없는 것 같지만.,10,100,1
+outer_cheerful_001,empty,쾌활함,,SPEECH,여긴 꽝이네! 다음 구역으로 가 보자.,10,100,1
+outer_cheerful_002,empty,쾌활함,,SPEECH,먼지만 잔뜩 챙겼네. 그래도 돌아다닐 길은 확인했어!,10,100,1
+outer_cheerful_003,empty,쾌활함,,SPEECH,빈 상자 확인 완료! 아직 뒤져 볼 곳은 많으니까.,10,100,1
+outer_cynical_001,empty,냉소적,,SPEECH,누가 먼저 싹 쓸어 갔군. 성실하기도 하지.,10,100,1
+outer_cynical_002,empty,냉소적,,SPEECH,열어 볼 필요도 없었네. 상자보다 먼지가 더 값지겠어.,10,100,1
+outer_cynical_003,empty,냉소적,,SPEECH,수확 없음. 폐허가 선물까지 준비해 둘 리는 없지.,10,100,1
+outer_sensitive_001,empty,예민함,,SPEECH,잠깐. 서랍은 비었는데 바닥에 새 발자국이 있어.,10,100,1
+outer_sensitive_002,empty,예민함,,SPEECH,쓸 만한 건 없어. 대신 소리가 너무 잘 울려. 오래 머물지 말자.,10,100,1
+outer_sensitive_003,empty,예민함,,SPEECH,이쪽은 빈손이야. 다음엔 문 여는 소리를 좀 줄일게.,10,100,1
+inner_fearful_001,empty,겁많음,,THOUGHT,빈 선반 뒤에서 뭔가 튀어나올 줄 알았다. 심장은 아직도 빠르다.,10,100,1
+inner_fearful_002,empty,겁많음,,THOUGHT,아무것도 없다면 더 들어가지 않아도 되겠지. 돌아가고 싶다.,10,100,1
+inner_fearful_003,empty,겁많음,,THOUGHT,물자보다 숨을 곳부터 찾게 된다. 이 정적이 싫다.,10,100,1
+inner_caring_001,empty,다정함,,THOUGHT,여길 먼저 찾은 사람에게는 필요한 물건이 있었기를.,10,100,1
+inner_caring_002,empty,다정함,,THOUGHT,빈 통조림 옆 작은 숟가락이 눈에 밟힌다. 주인은 무사할까.,10,100,1
+inner_caring_003,empty,다정함,,THOUGHT,누군가 두고 간 담요를 다시 덮어 놓았다. 돌아올지도 모르니까.,10,100,1
+inner_brave_001,empty,용감함,,THOUGHT,허탕 한 번으로 멈출 수는 없다. 다음 통로를 확인하자.,10,100,1
+inner_brave_002,empty,용감함,,THOUGHT,수색할 곳이 줄었다. 그것만으로도 앞으로 나아간 셈이다.,10,100,1
+inner_brave_003,empty,용감함,,THOUGHT,아직 두 다리가 멀쩡하다. 물자는 다른 곳에서 찾으면 된다.,10,100,1
+inner_selfish_001,empty,이기적임,,THOUGHT,내 몫이 남아 있지 않다. 남이 지나간 길은 피하는 게 낫겠다.,10,100,1
+inner_selfish_002,empty,이기적임,,THOUGHT,이곳에 시간을 더 쓸 이유가 없다. 더 쓸 만한 곳으로 가자.,10,100,1
+inner_selfish_003,empty,이기적임,,THOUGHT,헛수고에 힘을 쓰고 싶진 않다. 아직 남은 체력부터 계산한다.,10,100,1
+alignment_good_001,empty,선,,NARRATION,비어 있는 보관함을 닫고 다음 수색자가 알아볼 작은 표시를 남긴다.,10,100,1
+alignment_good_002,empty,선,,NARRATION,생존자의 흔적을 훼손하지 않도록 발길을 돌린다.,10,100,1
+alignment_good_003,empty,선,,NARRATION,다른 이가 같은 위험을 겪지 않도록 비어 있는 구역을 기록한다.,10,100,1
+alignment_neutral_001,empty,중립,,NARRATION,수색한 선반 수와 소요 시간을 기록한 뒤 다음 경로를 비교한다.,10,100,1
+alignment_neutral_002,empty,중립,,NARRATION,빈 상자를 제자리에 두고 출구까지의 거리를 확인한다.,10,100,1
+alignment_neutral_003,empty,중립,,NARRATION,남은 자원을 점검하고 추가 수색의 실익을 가늠한다.,10,100,1
+alignment_evil_001,empty,악,,NARRATION,이미 털린 보관함을 거칠게 밀어내고 더 깊은 곳으로 향한다.,10,100,1
+alignment_evil_002,empty,악,,NARRATION,다른 수색자가 남겼을 법한 은닉처부터 찾아본다.,10,100,1
+alignment_evil_003,empty,악,,NARRATION,빈 구역 표시를 남기지 않은 채 자신만 아는 지름길로 빠져나간다.,10,100,1
+common_speech_004,found,공통,,SPEECH,{item_name} 발견. 회수할지 지시해 줘.,0,100,1
+common_speech_005,found,공통,,SPEECH,여기에 {item_name}이 있어. 상태를 확인하는 중이야.,0,100,1
+common_speech_006,found,공통,,SPEECH,물자 확인했어. {item_name}이야.,0,100,1
+common_thought_004,found,공통,,THOUGHT,{item_name}을 가져갈 수 있을까. 가방의 여유를 떠올린다.,0,100,1
+common_thought_005,found,공통,,THOUGHT,쓸 만한 물건이 보인다. 서두르지 말고 살펴보자.,0,100,1
+common_thought_006,found,공통,,THOUGHT,{item_name}이 남아 있었다. 주변도 확인해야겠다.,0,100,1
+common_narration_004,found,공통,,NARRATION,잔해 사이에서 {item_name}이 확인된다.,0,100,1
+common_narration_005,found,공통,,NARRATION,피계약자가 {item_name} 앞에 멈춰 선다.,0,100,1
+common_narration_006,found,공통,,NARRATION,관측 화면에 회수 가능한 {item_name}이 포착된다.,0,100,1
+outer_shy_004,found,소심함,,SPEECH,저기… 여기 {item_name}이 있어. 가져가도 괜찮을까?,10,100,1
+outer_shy_005,found,소심함,,SPEECH,이거 봐 줄래? {item_name} 같은데 내가 잘못 본 건 아니지…?,10,100,1
+outer_shy_006,found,소심함,,SPEECH,{item_name}을 찾았어. 일단 만지지는 않았어.,10,100,1
+outer_cheerful_004,found,쾌활함,,SPEECH,찾았다! {item_name}이야. 이번엔 빈손 아니네!,10,100,1
+outer_cheerful_005,found,쾌활함,,SPEECH,여기 보물 상자 하나 추가! 안에 {item_name}이 있어.,10,100,1
+outer_cheerful_006,found,쾌활함,,SPEECH,좋아! {item_name} 확보할 기회야. 어떻게 할까?,10,100,1
+outer_cynical_004,found,냉소적,,SPEECH,{item_name}이라. 먼지 더미도 가끔 쓸모는 있군.,10,100,1
+outer_cynical_005,found,냉소적,,SPEECH,누가 두고 간 {item_name}이네. 자선인지 함정인지 모르겠지만.,10,100,1
+outer_cynical_006,found,냉소적,,SPEECH,{item_name} 발견. 드디어 이 수색에 핑곗거리가 생겼어.,10,100,1
+outer_sensitive_004,found,예민함,,SPEECH,{item_name}이 보여. 포장이 뜯긴 흔적부터 확인할게.,10,100,1
+outer_sensitive_005,found,예민함,,SPEECH,손대기 전에 잠깐. {item_name} 주변 먼지가 이상하게 쓸려 있어.,10,100,1
+outer_sensitive_006,found,예민함,,SPEECH,여기 {item_name}. 물건만 보지 말고 주변도 확인해 줘.,10,100,1
+inner_fearful_004,found,겁많음,,THOUGHT,저 {item_name}에 손을 뻗는 순간 무슨 일이 생기는 건 아닐까.,10,100,1
+inner_fearful_005,found,겁많음,,THOUGHT,찾기는 했는데 안심이 되지 않는다. 너무 눈에 띄는 곳에 있었다.,10,100,1
+inner_fearful_006,found,겁많음,,THOUGHT,{item_name}보다 그 뒤의 어두운 틈에서 눈을 떼기 어렵다.,10,100,1
+inner_caring_004,found,다정함,,THOUGHT,{item_name}이 꼭 필요한 사람이 있을지도 모른다. 잘 챙겨 두고 싶다.,10,100,1
+inner_caring_005,found,다정함,,THOUGHT,이 물건 하나로 누군가 덜 힘들어질 수 있다면 좋겠다.,10,100,1
+inner_caring_006,found,다정함,,THOUGHT,{item_name}을 두고 떠난 사람은 왜 가져가지 못했을까.,10,100,1
+inner_brave_004,found,용감함,,THOUGHT,{item_name}을 찾았다. 주변만 확인하면 침착하게 회수할 수 있다.,10,100,1
+inner_brave_005,found,용감함,,THOUGHT,위험을 감수한 보람은 있다. 이제 안전하게 챙길 방법을 찾자.,10,100,1
+inner_brave_006,found,용감함,,THOUGHT,여기까지 온 건 헛되지 않았다. {item_name}에서 눈을 떼고 퇴로도 살핀다.,10,100,1
+inner_selfish_004,found,이기적임,,THOUGHT,{item_name}이라면 내 생존에 얼마나 도움이 될까. 무게부터 떠올린다.,10,100,1
+inner_selfish_005,found,이기적임,,THOUGHT,다른 사람이 알아채기 전에 이 {item_name}의 가치를 확인하고 싶다.,10,100,1
+inner_selfish_006,found,이기적임,,THOUGHT,가방 한 칸을 내줄 만한 물건인지 따져 본다. 쓸모없는 짐은 사절이다.,10,100,1
+alignment_good_004,found,선,,NARRATION,{item_name}의 상태를 살피고 도움이 필요한 사람에게 쓸 수 있을지 확인한다.,10,100,1
+alignment_good_005,found,선,,NARRATION,회수할 물건 주변에 주인이 남긴 표시가 없는지 먼저 살핀다.,10,100,1
+alignment_good_006,found,선,,NARRATION,주변의 다른 물품을 망가뜨리지 않도록 {item_name}에 조심스럽게 접근한다.,10,100,1
+alignment_neutral_004,found,중립,,NARRATION,{item_name}의 보관 상태와 운반 부담을 비교한다.,10,100,1
+alignment_neutral_005,found,중립,,NARRATION,물건이 발견된 위치와 출구까지의 경로를 함께 기록한다.,10,100,1
+alignment_neutral_006,found,중립,,NARRATION,현재 소지품을 점검하며 {item_name}의 활용도를 계산한다.,10,100,1
+alignment_evil_004,found,악,,NARRATION,{item_name}이 타인의 시야에 들어가지 않도록 몸으로 가린다.,10,100,1
+alignment_evil_005,found,악,,NARRATION,경쟁자가 오기 전에 회수할 수 있도록 주변 통로를 살핀다.,10,100,1
+alignment_evil_006,found,악,,NARRATION,물건에 남은 주인 표시를 대수롭지 않게 넘기고 자신의 몫을 계산한다.,10,100,1
+common_speech_007,rest,공통,,SPEECH,안전한 자리에 도착했어. 잠깐 쉴게.,0,100,1
+common_speech_008,rest,공통,,SPEECH,주변 확인했어. 호흡을 고르는 중이야.,0,100,1
+common_speech_009,rest,공통,,SPEECH,여기서 잠시 멈출게. 다음 지시는 조금 뒤에 줘.,0,100,1
+common_thought_007,rest,공통,,THOUGHT,가쁘던 숨이 조금씩 가라앉는다.,0,100,1
+common_thought_008,rest,공통,,THOUGHT,기댈 벽이 있다는 것만으로도 마음이 놓인다.,0,100,1
+common_thought_009,rest,공통,,THOUGHT,잠깐의 정적 속에서 흐트러진 호흡을 센다.,0,100,1
+common_narration_007,rest,공통,,NARRATION,피계약자가 엄폐물에 기대 잠시 호흡을 고른다.,0,100,1
+common_narration_008,rest,공통,,NARRATION,장비를 몸 가까이에 모으고 짧은 휴식에 들어간다.,0,100,1
+common_narration_009,rest,공통,,NARRATION,주변을 확인한 뒤 안전한 자리에 앉는다.,0,100,1
+outer_shy_007,rest,소심함,,SPEECH,조금만… 여기 앉아 있어도 될까? 숨이 잘 안 골라져.,10,100,1
+outer_shy_008,rest,소심함,,SPEECH,나 잠깐 쉬어도 괜찮을까. 금방 다시 일어날게.,10,100,1
+outer_shy_009,rest,소심함,,SPEECH,여기서 쉬자는 거지? 알겠어… 길은 계속 보고 있을게.,10,100,1
+outer_cheerful_007,rest,쾌활함,,SPEECH,잠깐 충전 시간! 숨 좀 돌리고 다시 가자.,10,100,1
+outer_cheerful_008,rest,쾌활함,,SPEECH,휴식 명령 접수! 앉을 자리는 내가 먼저 확인할게.,10,100,1
+outer_cheerful_009,rest,쾌활함,,SPEECH,후우! 이제 좀 살겠네. 쉬고 나면 더 멀리 가 보자.,10,100,1
+outer_cynical_007,rest,냉소적,,SPEECH,벽에 기대는 것도 휴가라면 꽤 소박한 복지군.,10,100,1
+outer_cynical_008,rest,냉소적,,SPEECH,드디어 숨 돌릴 시간이네. 폐허 관광도 체력전이야.,10,100,1
+outer_cynical_009,rest,냉소적,,SPEECH,바닥이 딱딱하긴 해도 뛰어다니는 것보단 낫겠지.,10,100,1
+outer_sensitive_007,rest,예민함,,SPEECH,쉿. 쉴 때도 발소리는 들을 수 있게 해 줘.,10,100,1
+outer_sensitive_008,rest,예민함,,SPEECH,등 뒤는 막힌 곳이 좋아. 여기라면 잠깐 앉을 수 있겠어.,10,100,1
+outer_sensitive_009,rest,예민함,,SPEECH,숨소리부터 낮출게. 쉬는 동안 주변 화면을 잘 봐 줘.,10,100,1
+inner_fearful_007,rest,겁많음,,THOUGHT,쉬어도 된다는 말을 몇 번이나 되뇐다. 아직 어깨에 힘이 들어간다.,10,100,1
+inner_fearful_008,rest,겁많음,,THOUGHT,눈을 감으면 무언가 다가올 것 같다. 벽에 등을 더 붙인다.,10,100,1
+inner_fearful_009,rest,겁많음,,THOUGHT,쉬는 동안만큼은 아무 소리도 나지 않았으면 좋겠다.,10,100,1
+inner_caring_007,rest,다정함,,THOUGHT,드론 너머의 주무관도 계속 긴장하고 있겠지. 잠깐은 괜찮다고 말하고 싶다.,10,100,1
+inner_caring_008,rest,다정함,,THOUGHT,조금 남은 물을 내려다본다. 함께 나눌 사람이 있었으면 좋겠다.,10,100,1
+inner_caring_009,rest,다정함,,THOUGHT,내가 쉬는 동안 다른 곳의 사람들도 안전하게 숨 돌릴 수 있기를.,10,100,1
+inner_brave_007,rest,용감함,,THOUGHT,지금 쉬는 건 물러서는 게 아니다. 다음 위험을 버틸 준비다.,10,100,1
+inner_brave_008,rest,용감함,,THOUGHT,숨이 가라앉는다. 다시 일어설 힘이 조금씩 돌아온다.,10,100,1
+inner_brave_009,rest,용감함,,THOUGHT,급하게 움직일수록 실수한다. 이 짧은 틈을 제대로 쓰자.,10,100,1
+inner_selfish_007,rest,이기적임,,THOUGHT,쉬라는 지시는 반갑다. 내 몸을 혹사할 이유는 없으니까.,10,100,1
+inner_selfish_008,rest,이기적임,,THOUGHT,이 자리가 안전하다면 조금 더 머물고 싶다. 급할 건 없다.,10,100,1
+inner_selfish_009,rest,이기적임,,THOUGHT,남은 힘을 따져 본다. 손해 보는 움직임은 줄여야 한다.,10,100,1
+alignment_good_007,rest,선,,NARRATION,다른 생존자가 지나갈 통로를 비워 두고 벽 쪽에 앉는다.,10,100,1
+alignment_good_008,rest,선,,NARRATION,주변에 다친 사람이 없는지 살핀 뒤 잠시 호흡을 고른다.,10,100,1
+alignment_good_009,rest,선,,NARRATION,쉴 자리를 정리하며 뒤에 올 사람을 위해 날카로운 파편을 치운다.,10,100,1
+alignment_neutral_007,rest,중립,,NARRATION,출입구가 보이는 자리에 앉아 장비 상태를 점검한다.,10,100,1
+alignment_neutral_008,rest,중립,,NARRATION,주변 소음과 시야를 확인하고 휴식 시간을 가늠한다.,10,100,1
+alignment_neutral_009,rest,중립,,NARRATION,짐을 몸 가까이에 모으고 호흡이 안정되기를 기다린다.,10,100,1
+alignment_evil_007,rest,악,,NARRATION,가장 안전한 엄폐물을 혼자 차지하고 길게 숨을 내쉰다.,10,100,1
+alignment_evil_008,rest,악,,NARRATION,주변의 위험은 드론에 맡긴 채 자신의 장비만 점검한다.,10,100,1
+alignment_evil_009,rest,악,,NARRATION,다른 발소리가 들리면 즉시 자리를 옮길 수 있도록 물품을 끌어안는다.,10,100,1
+common_speech_010,encounter,공통,,SPEECH,{monster_name} 출현. 대응 지시를 기다릴게.,0,100,1
+common_speech_011,encounter,공통,,SPEECH,앞쪽에 {monster_name}이 있어. 아직 거리는 있어.,0,100,1
+common_speech_012,encounter,공통,,SPEECH,위협 확인. {monster_name}과 마주쳤어.,0,100,1
+common_thought_010,encounter,공통,,THOUGHT,갑자기 나타난 그림자에 걸음이 멈춘다.,0,100,1
+common_thought_011,encounter,공통,,THOUGHT,상대의 움직임을 놓치지 않으려 시선을 고정한다.,0,100,1
+common_thought_012,encounter,공통,,THOUGHT,빠르게 거리를 가늠하며 다음 행동을 기다린다.,0,100,1
+common_narration_010,encounter,공통,,NARRATION,{monster_name}이 이동 경로에 모습을 드러낸다.,0,100,1
+common_narration_011,encounter,공통,,NARRATION,피계약자가 {monster_name}과 거리를 두고 멈춘다.,0,100,1
+common_narration_012,encounter,공통,,NARRATION,관측 범위 안에 {monster_name}의 움직임이 포착된다.,0,100,1
+outer_shy_010,encounter,소심함,,SPEECH,저기… {monster_name}이 앞에 있어. 나 어떻게 해야 해?,10,100,1
+outer_shy_011,encounter,소심함,,SPEECH,잠깐만… {monster_name}이 이쪽을 보는 것 같아.,10,100,1
+outer_shy_012,encounter,소심함,,SPEECH,{monster_name}… 맞지? 너무 가까이 가고 싶지는 않아.,10,100,1
+outer_cheerful_010,encounter,쾌활함,,SPEECH,{monster_name} 발견! 아직 길은 열려 있어. 지시해 줘!,10,100,1
+outer_cheerful_011,encounter,쾌활함,,SPEECH,반갑진 않은 손님이네! {monster_name}에게 들키기 전에 정하자.,10,100,1
+outer_cheerful_012,encounter,쾌활함,,SPEECH,좋아… {monster_name} 하나야. 침착하게 대응해 보자!,10,100,1
+outer_cynical_010,encounter,냉소적,,SPEECH,오늘의 불청객은 {monster_name}이군. 취향도 참 꾸준해.,10,100,1
+outer_cynical_011,encounter,냉소적,,SPEECH,{monster_name}까지 나왔네. 이 구역은 서비스가 과해.,10,100,1
+outer_cynical_012,encounter,냉소적,,SPEECH,저 {monster_name}도 우리한테 볼일이 있나 본데. 난 없거든.,10,100,1
+outer_sensitive_010,encounter,예민함,,SPEECH,멈춰. {monster_name}의 움직임을 먼저 봐야 해.,10,100,1
+outer_sensitive_011,encounter,예민함,,SPEECH,{monster_name}이야. 오른쪽 통로는 비어 있어. 화면에서 놓치지 마.,10,100,1
+outer_sensitive_012,encounter,예민함,,SPEECH,조용히. {monster_name}의 시선이 돌아오기 전에 지시해.,10,100,1
+inner_fearful_010,encounter,겁많음,,THOUGHT,몸이 먼저 굳는다. 저 {monster_name}이 내 숨소리를 들을까 봐 두렵다.,10,100,1
+inner_fearful_011,encounter,겁많음,,THOUGHT,도망칠 길이 어디였지. {monster_name}에게서 눈을 떼지 못한다.,10,100,1
+inner_fearful_012,encounter,겁많음,,THOUGHT,침을 삼키는 소리마저 크게 느껴진다. 제발 아직 들키지 않았기를.,10,100,1
+inner_caring_010,encounter,다정함,,THOUGHT,{monster_name}이 다른 생존자를 쫓고 있지는 않을까. 주변도 살피고 싶다.,10,100,1
+inner_caring_011,encounter,다정함,,THOUGHT,내가 물러난 뒤 이 길을 지날 사람이 걱정된다.,10,100,1
+inner_caring_012,encounter,다정함,,THOUGHT,여기서 소란이 나면 숨어 있는 누군가까지 위험해질 수 있다.,10,100,1
+inner_brave_010,encounter,용감함,,THOUGHT,두렵지 않은 건 아니다. 그래도 {monster_name} 앞에서 주저앉지는 않겠다.,10,100,1
+inner_brave_011,encounter,용감함,,THOUGHT,발에 힘을 준다. 지시가 떨어지면 망설이지 않고 움직이자.,10,100,1
+inner_brave_012,encounter,용감함,,THOUGHT,상대의 크기보다 빈틈을 봐야 한다. 숨을 고르고 자세를 잡는다.,10,100,1
+inner_selfish_010,encounter,이기적임,,THOUGHT,저 {monster_name}을 상대해서 내가 얻는 게 있을까. 도망길부터 계산한다.,10,100,1
+inner_selfish_011,encounter,이기적임,,THOUGHT,영웅 노릇을 할 생각은 없다. 내 몸을 지킬 선택이면 된다.,10,100,1
+inner_selfish_012,encounter,이기적임,,THOUGHT,다른 누군가의 안전보다 지금 내 퇴로가 먼저다.,10,100,1
+alignment_good_010,encounter,선,,NARRATION,{monster_name}이 다른 이에게 접근할 수 없도록 통로 쪽으로 시선을 돌린다.,10,100,1
+alignment_good_011,encounter,선,,NARRATION,주변 생존자의 흔적을 확인하며 위협을 막을 위치를 찾는다.,10,100,1
+alignment_good_012,encounter,선,,NARRATION,다른 사람에게 위험을 떠넘기지 않도록 안전한 대응 경로를 살핀다.,10,100,1
+alignment_neutral_010,encounter,중립,,NARRATION,{monster_name}과의 거리와 남은 자원을 차례로 확인한다.,10,100,1
+alignment_neutral_011,encounter,중립,,NARRATION,엄폐물과 퇴로를 비교하며 다음 지시를 기다린다.,10,100,1
+alignment_neutral_012,encounter,중립,,NARRATION,접근할 때의 위험과 물러날 때의 이득을 빠르게 가늠한다.,10,100,1
+alignment_evil_010,encounter,악,,NARRATION,다른 수색자의 흔적 쪽으로 위협을 유도할 수 있을지 살핀다.,10,100,1
+alignment_evil_011,encounter,악,,NARRATION,자신에게 유리한 엄폐물부터 차지하며 {monster_name}을 관찰한다.,10,100,1
+alignment_evil_012,encounter,악,,NARRATION,남겨진 물자를 가로챌 틈이 생길지 위협 너머를 훑어본다.,10,100,1
+common_speech_013,victory,공통,,SPEECH,위협 제거 확인. 주변을 살펴볼게.,0,100,1
+common_speech_014,victory,공통,,SPEECH,상대가 쓰러졌어. 추가 움직임은 없어.,0,100,1
+common_speech_015,victory,공통,,SPEECH,전투가 끝났어. 지금 상태를 확인할게.,0,100,1
+common_thought_013,victory,공통,,THOUGHT,급했던 호흡을 가라앉히며 살아남았음을 확인한다.,0,100,1
+common_thought_014,victory,공통,,THOUGHT,몸에 남은 긴장이 쉽게 풀리지 않는다.,0,100,1
+common_thought_015,victory,공통,,THOUGHT,다음 위험이 오기 전에 주변을 살펴야겠다.,0,100,1
+common_narration_013,victory,공통,,NARRATION,위협 개체가 쓰러지고 이동 경로가 확보된다.,0,100,1
+common_narration_014,victory,공통,,NARRATION,피계약자가 상대의 반응이 멎었는지 확인한다.,0,100,1
+common_narration_015,victory,공통,,NARRATION,전투가 끝난 자리에서 장비와 주변 상태를 살핀다.,0,100,1
+outer_shy_013,victory,소심함,,SPEECH,끝난… 거지? 이제 움직이지 않는 것 같아.,10,100,1
+outer_shy_014,victory,소심함,,SPEECH,나 해낸 거야? 아직 손이 조금 떨려.,10,100,1
+outer_shy_015,victory,소심함,,SPEECH,더 가까이 안 가도 되겠지…? 여기서 확인해 줘.,10,100,1
+outer_cheerful_013,victory,쾌활함,,SPEECH,해냈다! 방금 봤지? 우리가 버텼어!,10,100,1
+outer_cheerful_014,victory,쾌활함,,SPEECH,위협 제거! 일단 크게 숨 한 번 쉬자!,10,100,1
+outer_cheerful_015,victory,쾌활함,,SPEECH,좋아! 길이 열렸어. 방심하지 말고 다음을 준비하자.,10,100,1
+outer_cynical_013,victory,냉소적,,SPEECH,이번엔 우리가 남았군. 별로 유쾌한 승리는 아니지만.,10,100,1
+outer_cynical_014,victory,냉소적,,SPEECH,쓰러졌네. 끝까지 성가신 상대였어.,10,100,1
+outer_cynical_015,victory,냉소적,,SPEECH,이겼다고 박수 칠 손은 없군. 장비부터 확인하지.,10,100,1
+outer_sensitive_013,victory,예민함,,SPEECH,움직임 멎었어. 그래도 주변 소리는 계속 확인해.,10,100,1
+outer_sensitive_014,victory,예민함,,SPEECH,아직 다가가지 마. 마지막 반응이 있는지 볼게.,10,100,1
+outer_sensitive_015,victory,예민함,,SPEECH,정리됐어. 전투 소리를 듣고 다른 게 오지 않았는지 확인해 줘.,10,100,1
+inner_fearful_013,victory,겁많음,,THOUGHT,살았다. 그 사실이 실감 나기까지 몇 번이나 숨을 삼켰다.,10,100,1
+inner_fearful_014,victory,겁많음,,THOUGHT,이겼는데 다리에 힘이 풀린다. 조금만 기대고 싶다.,10,100,1
+inner_fearful_015,victory,겁많음,,THOUGHT,쓰러진 상대가 다시 일어날까 봐 시선을 거두지 못한다.,10,100,1
+inner_caring_013,victory,다정함,,THOUGHT,이 길을 지나는 사람은 이제 조금 덜 위험하겠지.,10,100,1
+inner_caring_014,victory,다정함,,THOUGHT,누군가 다치기 전에 끝낼 수 있어서 다행이다.,10,100,1
+inner_caring_015,victory,다정함,,THOUGHT,무사히 버텼다. 멀리서 이 소리를 들은 사람이 겁먹지 않았으면.,10,100,1
+inner_brave_013,victory,용감함,,THOUGHT,버텨 냈다. 다음 위협 앞에서도 오늘의 감각을 잊지 말자.,10,100,1
+inner_brave_014,victory,용감함,,THOUGHT,한 걸음 더 나아갈 수 있게 됐다. 자세부터 다시 세운다.,10,100,1
+inner_brave_015,victory,용감함,,THOUGHT,내가 할 수 있는 일을 해냈다. 남은 길도 포기하지 않겠다.,10,100,1
+inner_selfish_013,victory,이기적임,,THOUGHT,내가 살아남았다. 그걸로 충분하다. 이제 쓸 만한 게 있는지 보자.,10,100,1
+inner_selfish_014,victory,이기적임,,THOUGHT,들인 힘에 비해 얻은 게 있어야 할 텐데. 남은 물건이 눈에 들어온다.,10,100,1
+inner_selfish_015,victory,이기적임,,THOUGHT,다치지 않은 곳부터 확인한다. 손해는 여기서 끝났으면 한다.,10,100,1
+alignment_good_013,victory,선,,NARRATION,주변에 남은 위험을 확인하고 다른 이가 지나갈 공간을 확보한다.,10,100,1
+alignment_good_014,victory,선,,NARRATION,전투로 흩어진 위험한 잔해를 통로 가장자리로 밀어 둔다.,10,100,1
+alignment_good_015,victory,선,,NARRATION,다른 생존자에게 위협이 사라졌음을 알릴 흔적을 남긴다.,10,100,1
+alignment_neutral_013,victory,중립,,NARRATION,장비 손상과 남은 자원을 확인한 뒤 주변을 다시 살핀다.,10,100,1
+alignment_neutral_014,victory,중립,,NARRATION,상대의 움직임이 완전히 멎었는지 확인하고 거리를 둔다.,10,100,1
+alignment_neutral_015,victory,중립,,NARRATION,전투에 쓴 시간과 현재 위치를 기록한다.,10,100,1
+alignment_evil_013,victory,악,,NARRATION,승리한 자리를 먼저 차지하고 회수할 만한 물건을 훑는다.,10,100,1
+alignment_evil_014,victory,악,,NARRATION,다른 수색자가 다가오기 전에 주변의 가치 있는 흔적을 확인한다.,10,100,1
+alignment_evil_015,victory,악,,NARRATION,전투 흔적을 자신의 경고처럼 남긴 채 유리한 길로 이동한다.,10,100,1
+common_speech_016,flee,공통,,SPEECH,안전 거리 확보했어. 추적은 보이지 않아.,0,100,1
+common_speech_017,flee,공통,,SPEECH,위협에서 벗어났어. 우회로를 확인할게.,0,100,1
+common_speech_018,flee,공통,,SPEECH,여기까지는 따라오지 않았어. 잠깐 주변을 볼게.,0,100,1
+common_thought_016,flee,공통,,THOUGHT,추적 소리가 멀어진 뒤에야 숨을 고른다.,0,100,1
+common_thought_017,flee,공통,,THOUGHT,돌아온 길을 떠올리며 현재 위치를 확인한다.,0,100,1
+common_thought_018,flee,공통,,THOUGHT,위험에서 벗어났지만 긴장을 완전히 놓지는 않는다.,0,100,1
+common_narration_016,flee,공통,,NARRATION,피계약자가 위협과 거리를 벌리고 우회로에 진입한다.,0,100,1
+common_narration_017,flee,공통,,NARRATION,엄폐물을 지나며 추적을 끊는 데 성공한다.,0,100,1
+common_narration_018,flee,공통,,NARRATION,안전한 통로에 도착한 뒤 주변을 확인한다.,0,100,1
+outer_shy_016,flee,소심함,,SPEECH,이제… 안 따라오는 거지? 조금만 더 멀어지면 안 될까?,10,100,1
+outer_shy_017,flee,소심함,,SPEECH,도망쳐도 된다고 해 줘서 고마워. 숨이 잘 안 쉬어져.,10,100,1
+outer_shy_018,flee,소심함,,SPEECH,여기까지면 괜찮을까…? 뒤쪽을 한 번만 봐 줘.,10,100,1
+outer_cheerful_016,flee,쾌활함,,SPEECH,따돌렸다! 잘 뛰었지? 이제 안전한 길로 가자!,10,100,1
+outer_cheerful_017,flee,쾌활함,,SPEECH,이쪽은 이상 없어! 무사히 빠져나온 것도 성과지.,10,100,1
+outer_cheerful_018,flee,쾌활함,,SPEECH,후우! 다음엔 저 길로 안 간다. 확실히 기억해 뒀어!,10,100,1
+outer_cynical_016,flee,냉소적,,SPEECH,인사도 없이 나왔군. 다시 만날 일은 없었으면 좋겠어.,10,100,1
+outer_cynical_017,flee,냉소적,,SPEECH,살아남는 데 체면까지 챙길 여유는 없지.,10,100,1
+outer_cynical_018,flee,냉소적,,SPEECH,저쪽도 달리기는 취미가 아닌 모양이네. 다행이군.,10,100,1
+outer_sensitive_016,flee,예민함,,SPEECH,멈추지 마. 모퉁이 하나만 더 돌아가자.,10,100,1
+outer_sensitive_017,flee,예민함,,SPEECH,뒤쪽 소리가 멀어졌어. 추적 흔적이 있는지 확인해 줘.,10,100,1
+outer_sensitive_018,flee,예민함,,SPEECH,안전 거리 확보했어. 이 통로로 되돌아가지는 말자.,10,100,1
+inner_fearful_016,flee,겁많음,,THOUGHT,쫓기는 소리는 멎었는데 귀에는 아직 발소리가 남아 있다.,10,100,1
+inner_fearful_017,flee,겁많음,,THOUGHT,뒤돌아볼 용기가 나지 않는다. 더 멀리 가고 싶다.,10,100,1
+inner_fearful_018,flee,겁많음,,THOUGHT,도망칠 수 있었다. 그 말을 속으로 반복하며 떨리는 무릎을 붙든다.,10,100,1
+inner_caring_016,flee,다정함,,THOUGHT,도망친 길이 다른 사람의 은신처로 이어지지 않았기를.,10,100,1
+inner_caring_017,flee,다정함,,THOUGHT,뒤에 누군가 남아 있지 않았는지 자꾸 마음에 걸린다.,10,100,1
+inner_caring_018,flee,다정함,,THOUGHT,위협을 다른 이에게 끌고 가지 않은 것만은 확인하고 싶다.,10,100,1
+inner_brave_016,flee,용감함,,THOUGHT,물러날 때를 아는 것도 살아남는 방법이다. 다음 기회를 준비하자.,10,100,1
+inner_brave_017,flee,용감함,,THOUGHT,발걸음을 늦추고 호흡을 고른다. 아직 끝난 건 아니다.,10,100,1
+inner_brave_018,flee,용감함,,THOUGHT,겁에 떠밀린 게 아니라 선택한 퇴각이다. 자세를 다시 바로잡는다.,10,100,1
+inner_selfish_016,flee,이기적임,,THOUGHT,내 몸 하나 지키면 됐다. 위험한 곳에 남을 이유는 없다.,10,100,1
+inner_selfish_017,flee,이기적임,,THOUGHT,버리고 온 물건이 조금 아깝다. 그래도 살아 있어야 다시 찾지.,10,100,1
+inner_selfish_018,flee,이기적임,,THOUGHT,누가 뭐라고 하든 살아남은 쪽이 이득이다.,10,100,1
+alignment_good_016,flee,선,,NARRATION,도주 경로에 다른 생존자가 없는지 확인하며 방향을 바꾼다.,10,100,1
+alignment_good_017,flee,선,,NARRATION,지나온 길에 위험을 알리는 표시를 남기고 거리를 벌린다.,10,100,1
+alignment_good_018,flee,선,,NARRATION,다른 이의 은신처를 피해서 추적이 끊길 때까지 이동한다.,10,100,1
+alignment_neutral_016,flee,중립,,NARRATION,시야가 트인 곳에서 추적 여부와 남은 자원을 점검한다.,10,100,1
+alignment_neutral_017,flee,중립,,NARRATION,돌아갈 길 대신 새로운 우회로를 지도에 표시한다.,10,100,1
+alignment_neutral_018,flee,중립,,NARRATION,위협과 충분히 거리를 둔 뒤 다음 이동을 계산한다.,10,100,1
+alignment_evil_016,flee,악,,NARRATION,뒤에 남은 수색자의 사정은 돌아보지 않고 출구를 향한다.,10,100,1
+alignment_evil_017,flee,악,,NARRATION,자신을 숨길 수 있는 문부터 닫아걸고 발소리를 죽인다.,10,100,1
+alignment_evil_018,flee,악,,NARRATION,추적이 끊기자 다른 이보다 먼저 물자를 찾을 지름길을 고른다.,10,100,1
+common_speech_019,damage,공통,,SPEECH,피해를 받았어. 현재 상태를 확인해 줘.,0,100,1
+common_speech_020,damage,공통,,SPEECH,충격이 있었어. 잠깐 자세를 바로잡을게.,0,100,1
+common_speech_021,damage,공통,,SPEECH,다친 곳이 있어. 다음 대응을 지시해 줘.,0,100,1
+common_thought_019,damage,공통,,THOUGHT,갑작스러운 통증에 호흡이 흐트러진다.,0,100,1
+common_thought_020,damage,공통,,THOUGHT,몸을 가다듬으며 움직일 수 있는지 확인한다.,0,100,1
+common_thought_021,damage,공통,,THOUGHT,지금은 무리하지 않는 선택이 필요하다.,0,100,1
+common_narration_019,damage,공통,,NARRATION,피계약자가 충격을 받고 자세를 낮춘다.,0,100,1
+common_narration_020,damage,공통,,NARRATION,통증이 발생한 부위를 확인하며 거리를 조절한다.,0,100,1
+common_narration_021,damage,공통,,NARRATION,피해를 입은 피계약자가 다음 지시를 기다린다.,0,100,1
+outer_shy_019,damage,소심함,,SPEECH,조금… 다친 것 같아. 어디부터 봐야 할까?,10,100,1
+outer_shy_020,damage,소심함,,SPEECH,나 괜찮을까…? 잠깐만 상태를 확인해 줘.,10,100,1
+outer_shy_021,damage,소심함,,SPEECH,아파… 그래도 움직일 수는 있어. 너무 걱정하진 마.,10,100,1
+outer_cheerful_019,damage,쾌활함,,SPEECH,아야! 방금 건 좀 셌네. 아직 움직일 수 있어!,10,100,1
+outer_cheerful_020,damage,쾌활함,,SPEECH,맞았어! 멀쩡하다고는 못 하겠지만 버티고 있어.,10,100,1
+outer_cheerful_021,damage,쾌활함,,SPEECH,이런! 상태 확인 부탁해. 괜찮은 척하다 더 다치긴 싫거든.,10,100,1
+outer_cynical_019,damage,냉소적,,SPEECH,좋은 소식은 아직 보고할 수 있다는 거야. 나쁜 소식은 아프다는 거고.,10,100,1
+outer_cynical_020,damage,냉소적,,SPEECH,방금 건 피했어야 했는데. 몸으로 배운 교훈은 비싸군.,10,100,1
+outer_cynical_021,damage,냉소적,,SPEECH,안 다쳤다고 우길 상태는 아니네. 확인부터 하지.,10,100,1
+outer_sensitive_019,damage,예민함,,SPEECH,다쳤어. 상태부터 확인해. 같은 방향으로 또 오면 안 돼.,10,100,1
+outer_sensitive_020,damage,예민함,,SPEECH,통증이 있어. 움직임이 달라졌는지 화면으로 봐 줘.,10,100,1
+outer_sensitive_021,damage,예민함,,SPEECH,잠깐. 숨을 고를게. 다음 지시는 무리하지 않는 쪽으로 줘.,10,100,1
+inner_fearful_019,damage,겁많음,,THOUGHT,아프다. 이대로 더 나빠지면 어쩌지. 나쁜 생각이 머리에서 떠나지 않는다.,10,100,1
+inner_fearful_020,damage,겁많음,,THOUGHT,손에 힘이 안 들어가는 것만 같다. 여기서 쓰러질까 봐 무섭다.,10,100,1
+inner_fearful_021,damage,겁많음,,THOUGHT,지금 돌아가자고 말하고 싶다. 더는 아픈 게 싫다.,10,100,1
+inner_caring_019,damage,다정함,,THOUGHT,내가 다친 걸 보고 주무관이 놀라지는 않았을까.,10,100,1
+inner_caring_020,damage,다정함,,THOUGHT,누군가 대신 맞지 않은 건 다행이다. 내 상태는 먼저 확인해야겠지만.,10,100,1
+inner_caring_021,damage,다정함,,THOUGHT,나 때문에 다른 이가 위험해지지 않도록 움직임을 가다듬고 싶다.,10,100,1
+inner_brave_019,damage,용감함,,THOUGHT,아직 의식은 또렷하다. 통증에 휩쓸리지 말고 할 일을 찾자.,10,100,1
+inner_brave_020,damage,용감함,,THOUGHT,한 번 맞았다고 끝은 아니다. 숨부터 고르고 다시 버티자.,10,100,1
+inner_brave_021,damage,용감함,,THOUGHT,두려워할 시간에 자세를 낮추자. 살아서 여기서 나가겠다.,10,100,1
+inner_selfish_019,damage,이기적임,,THOUGHT,내 몸이 상했다. 더 손해 보기 전에 치료할 방법부터 찾아야 한다.,10,100,1
+inner_selfish_020,damage,이기적임,,THOUGHT,아끼던 물건도 지금은 아깝지 않다. 나부터 살려야 한다.,10,100,1
+inner_selfish_021,damage,이기적임,,THOUGHT,누구를 위해 무리했든 대가는 내 몫이다. 다음엔 계산을 다르게 하자.,10,100,1
+alignment_good_019,damage,선,,NARRATION,다른 이가 위험에 노출되지 않도록 몸을 낮추며 자신의 상태를 확인한다.,10,100,1
+alignment_good_020,damage,선,,NARRATION,통로를 막지 않는 엄폐물 쪽으로 물러나 상처를 살핀다.,10,100,1
+alignment_good_021,damage,선,,NARRATION,주변에 도움을 요청할 수 있는 신호를 남기고 버틴다.,10,100,1
+alignment_neutral_019,damage,중립,,NARRATION,손상 부위와 움직일 수 있는 범위를 차례로 확인한다.,10,100,1
+alignment_neutral_020,damage,중립,,NARRATION,회복 물품과 남은 자원을 비교하며 다음 행동을 기다린다.,10,100,1
+alignment_neutral_021,damage,중립,,NARRATION,무리한 움직임을 멈추고 안전한 위치를 다시 계산한다.,10,100,1
+alignment_evil_019,damage,악,,NARRATION,주변의 물자를 자신의 치료에 쓸 수 있도록 가까이 끌어당긴다.,10,100,1
+alignment_evil_020,damage,악,,NARRATION,다른 이의 안전보다 자신의 엄폐를 우선하며 몸을 숨긴다.,10,100,1
+alignment_evil_021,damage,악,,NARRATION,통증에 얼굴을 굳히고 자신을 해친 방향을 오래 바라본다.,10,100,1
+common_narration_022,death,공통,,NARRATION,피계약자의 생체 신호가 끊겼다.,0,100,1
+common_narration_023,death,공통,,NARRATION,연속 호출에도 응답이 없어 현장 기록을 종료한다.,0,100,1
+common_narration_024,death,공통,,NARRATION,관측 화면의 움직임이 멎고 피계약자의 사망이 확인된다.,0,100,1
+outer_shy_022,death,소심함,,NARRATION,마지막 교신 버튼 위에서 망설이던 손이 천천히 내려간다.,10,100,1
+outer_shy_023,death,소심함,,NARRATION,작게 움직이던 입술이 멎고 드론을 올려다보던 시선이 흐려진다.,10,100,1
+outer_shy_024,death,소심함,,NARRATION,도움을 청하듯 뻗은 손끝이 더는 중계 신호에 반응하지 않는다.,10,100,1
+outer_cheerful_022,death,쾌활함,,NARRATION,드론을 향해 억지로 올리던 입꼬리가 힘없이 풀린다.,10,100,1
+outer_cheerful_023,death,쾌활함,,NARRATION,동료를 안심시키려 들었던 손이 마지막 인사처럼 떨어진다.,10,100,1
+outer_cheerful_024,death,쾌활함,,NARRATION,밝게 응답하던 목소리가 끊긴 뒤 교신 채널에는 잡음만 남는다.,10,100,1
+outer_cynical_022,death,냉소적,,NARRATION,끝내 지우지 못한 비틀린 미소 위로 생체 신호가 사라진다.,10,100,1
+outer_cynical_023,death,냉소적,,NARRATION,드론을 향해 고개를 한 번 기울인 뒤 더는 움직이지 않는다.,10,100,1
+outer_cynical_024,death,냉소적,,NARRATION,마지막으로 내뱉은 짧은 숨이 먼지 속에 흩어지고 응답이 멎는다.,10,100,1
+outer_sensitive_022,death,예민함,,NARRATION,주변을 날카롭게 쫓던 눈이 한곳에 멈춘 채 초점을 잃는다.,10,100,1
+outer_sensitive_023,death,예민함,,NARRATION,작은 소리에도 반응하던 손끝이 이제 아무 움직임도 보이지 않는다.,10,100,1
+outer_sensitive_024,death,예민함,,NARRATION,끝까지 퇴로를 확인하던 시선이 내려가고 교신이 끊긴다.,10,100,1
+inner_fearful_022,death,겁많음,,NARRATION,몸을 웅크린 채 버티던 움직임이 멎고 생체 신호가 소실된다.,10,100,1
+inner_fearful_023,death,겁많음,,NARRATION,무언가 붙잡으려던 손이 바닥을 미끄러진 뒤 멈춘다.,10,100,1
+inner_fearful_024,death,겁많음,,NARRATION,빠르게 이어지던 호흡이 잦아들고 관측 화면에는 정적만 남는다.,10,100,1
+inner_caring_022,death,다정함,,NARRATION,누군가에게 건네려던 물건이 손에서 떨어지고 움직임이 멎는다.,10,100,1
+inner_caring_023,death,다정함,,NARRATION,다른 이의 길을 비워 주려던 몸이 더는 일어나지 못한다.,10,100,1
+inner_caring_024,death,다정함,,NARRATION,마지막까지 바깥쪽을 향하던 손이 힘을 잃으며 생체 신호가 사라진다.,10,100,1
+inner_brave_022,death,용감함,,NARRATION,끝까지 버티려 세웠던 무릎이 꺾이고 생체 반응이 소실된다.,10,100,1
+inner_brave_023,death,용감함,,NARRATION,물러서지 않던 자세가 무너진 뒤에도 드론의 호출은 이어진다.,10,100,1
+inner_brave_024,death,용감함,,NARRATION,몸을 다시 일으키려던 마지막 움직임이 멎고 응답이 끊긴다.,10,100,1
+inner_selfish_022,death,이기적임,,NARRATION,끌어안고 있던 짐이 풀어지고 그 위로 손이 힘없이 떨어진다.,10,100,1
+inner_selfish_023,death,이기적임,,NARRATION,출구 쪽으로 뻗었던 팔이 멈춘 뒤 개인 생체 신호가 사라진다.,10,100,1
+inner_selfish_024,death,이기적임,,NARRATION,자신의 장비를 놓지 않던 손끝이 천천히 풀리며 교신이 멎는다.,10,100,1
+alignment_good_022,death,선,,NARRATION,다른 이가 빠져나갈 길을 남긴 자리에서 피계약자의 생체 신호가 끊긴다.,10,100,1
+alignment_good_023,death,선,,NARRATION,위험을 알리려 남긴 표시 옆으로 드론의 마지막 호출이 울린다.,10,100,1
+alignment_good_024,death,선,,NARRATION,타인의 통로를 지키려던 움직임이 멎고 관측 기록만 남는다.,10,100,1
+alignment_neutral_022,death,중립,,NARRATION,생체 반응이 소실되고 마지막 확인 좌표가 관측 기록에 고정된다.,10,100,1
+alignment_neutral_023,death,중립,,NARRATION,응답이 끊긴 지점을 드론이 선회하지만 새로운 움직임은 감지되지 않는다.,10,100,1
+alignment_neutral_024,death,중립,,NARRATION,마지막 자세와 주변 지형을 기록한 뒤 신원 신호가 종료된다.,10,100,1
+alignment_evil_022,death,악,,NARRATION,끝내 자신의 몫을 움켜쥔 자리에서 생체 신호가 끊긴다.,10,100,1
+alignment_evil_023,death,악,,NARRATION,홀로 차지한 엄폐물 안에서 움직임이 멎고 호출만 되풀이된다.,10,100,1
+alignment_evil_024,death,악,,NARRATION,남겨 둔 경고와 빼앗은 물품 사이로 피계약자의 마지막 신호가 사라진다.,10,100,1
+combo_shy_fearful_good_001,encounter,소심함 + 겁많음 + 선,,SPEECH,무섭지만… 누군가 다치기 전에 방법을 찾아야 해.,30,100,1
+combo_shy_fearful_good_002,encounter,소심함 + 겁많음 + 선,,SPEECH,저기… 다 같이 무사할 방법부터 생각해 보자.,30,100,1
+combo_shy_fearful_good_003,encounter,소심함 + 겁많음 + 선,,SPEECH,나도 겁나… 그래도 저걸 다른 사람 쪽으로 보내면 안 되잖아.,30,100,1

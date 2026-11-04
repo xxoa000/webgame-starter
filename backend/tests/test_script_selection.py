@@ -64,7 +64,7 @@ def test_private_entitlements_and_revocation(world):
         other=User(username='script_author',password_hash='hash');db.add(other);db.flush()
         pack=ScriptPack(code='PRIVATE_TEST',title='개인 대사',author_id=other.id,kind='PERSONAL');db.add(pack);db.flush()
         version=ScriptPackVersion(pack_id=pack.id,version=1,status='APPROVED');db.add(version);db.flush()
-        script=GameScript(code='PRIVATE_LINE',version_id=version.id,situation_code='encounter',layer='SPEECH',visibility='PUBLIC',content='개인 전용 대사',priority=999,weight=100,is_active=1)
+        script=GameScript(code='PRIVATE_LINE',version_id=version.id,situation_code='encounter',layer='SPEECH',content='개인 전용 대사',priority=999,weight=100,is_active=1)
         db.add(script);db.add(CharacterScriptPack(character_id=c.id,version_id=version.id,mode='PREFER'));db.flush()
         outputs=select_output(db,c,'encounter',1,CONTEXT,[])
         assert all(row['script_id'] != script.id for row in outputs)
@@ -87,3 +87,17 @@ def test_output_snapshot_survives_reload_and_original_edit(world, monkeypatch):
         db.commit()
     stored=c.get('/exploration/state').json()['history'][-1]
     assert stored['event_key']==event['event_key'] and stored['scripts'][0]['content']==before
+
+
+def test_thought_probability_boundaries(world, monkeypatch):
+    """속마음은 30% 경계에서 생략되며 발화와 서술은 계속 선택한다."""
+    _, factory, character = world
+    with factory() as db:
+        c = db.get(Character, character['id'])
+        monkeypatch.setattr('app.modules.scripts.service.secrets.randbelow', lambda size: 29 if size == 100 else 0)
+        visible = select_output(db, c, 'encounter', 1, CONTEXT, [])
+        assert any(row['layer'] == 'THOUGHT' for row in visible)
+        assert all('visibility' not in row for row in visible)
+        monkeypatch.setattr('app.modules.scripts.service.secrets.randbelow', lambda size: 30 if size == 100 else 0)
+        hidden = select_output(db, c, 'encounter', 1, CONTEXT, [])
+        assert {row['layer'] for row in hidden} == {'SPEECH', 'NARRATION'}

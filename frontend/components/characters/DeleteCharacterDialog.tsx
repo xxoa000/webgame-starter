@@ -1,14 +1,15 @@
 /* 캐릭터 이름을 확인한 뒤 삭제를 요청한다. */
 "use client";
+
+import styles from "./Characters.module.css";
+import sharedStyles from "../../styles/shared/Controls.module.css";
 import { useRef, useState, type FormEvent } from "react";
 import type { Character } from "../../lib/types";
-
 type Props = {
   character: Character;
   disabled: boolean;
   remove: (id: number, name: string) => Promise<void>;
 };
-
 export function DeleteCharacterDialog({ character, disabled, remove }: Props) {
   /* 캐릭터 이름을 확인한 뒤 삭제를 요청한다. */
 
@@ -17,7 +18,6 @@ export function DeleteCharacterDialog({ character, disabled, remove }: Props) {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [deleting, setDeleting] = useState(false);
-
   async function submit(event: FormEvent<HTMLFormElement>) {
     /* 폼 기본 제출을 막고 검증된 입력으로 요청을 실행한다. */
 
@@ -39,11 +39,9 @@ export function DeleteCharacterDialog({ character, disabled, remove }: Props) {
   return (
     <>
       <button
-        className="danger-outline"
+        className={styles.dangerOutline}
         disabled={disabled}
         onClick={() => {
-          /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
           setName("");
           setError("");
           dialog.current?.showModal();
@@ -53,17 +51,20 @@ export function DeleteCharacterDialog({ character, disabled, remove }: Props) {
       </button>
       <dialog
         ref={dialog}
-        className="delete-dialog"
+        className={styles.deleteDialog}
         aria-labelledby="delete-title"
         aria-describedby="delete-description"
         onCancel={(event) => {
-          /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
           if (pending.current) event.preventDefault();
         }}
       >
         <form onSubmit={submit}>
-          <div className="eyebrow">DELETE CHARACTER</div>
+          <div
+            className={sharedStyles.eyebrow}
+            data-ui="eyebrow"
+          >
+            DELETE CHARACTER
+          </div>
           <h2 id="delete-title">정말 피계약자를 삭제할까?</h2>
           <p id="delete-description">
             프로필과 스탯이 삭제 이력으로 이동해. 인벤토리와 진행 중인 탐색도
@@ -81,30 +82,31 @@ export function DeleteCharacterDialog({ character, disabled, remove }: Props) {
               autoComplete="off"
               value={name}
               onChange={(event) => {
-                /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setName(
-                  event.target.value,
-                );
+                return setName(event.target.value);
               }}
               placeholder="삭제할 피계약자 이름"
             />
           </label>
           {error && (
-            <p role="alert" className="delete-error">
+            <p
+              role="alert"
+              className={styles.deleteError}
+            >
               {error}
             </p>
           )}
-          <div className="dialog-actions">
+          <div className={styles.dialogActions}>
             <button
               type="button"
               disabled={deleting}
               onClick={() => {
-                /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return dialog.current?.close();
+                return dialog.current?.close();
               }}
             >
               취소
             </button>
             <button
-              className="danger-solid"
+              className={styles.dangerSolid}
               disabled={deleting || name !== character.name}
             >
               {deleting ? "삭제 중…" : "피계약자 영구 삭제"}

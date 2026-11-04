@@ -1,5 +1,9 @@
 /* 제목·본문과 운영자 전용 공지·상태 입력을 표시한다. */
 "use client";
+
+import sharedStyles from "../../styles/shared/Controls.module.css";
+import styles from "./Posts.module.css";
+import { classNames } from "../../lib/classNames";
 import { useState, type FormEvent } from "react";
 import {
   POST_STATUSES,
@@ -23,7 +27,10 @@ export function PostEditor({ post, canManage, busy, save, close }: Props) {
   async function submit(event: FormEvent<HTMLFormElement>): Promise<void> {
     /* 일반 사용자의 요청에는 운영 필드를 포함하지 않는다. */
     event.preventDefault();
-    const input: PostInput = { title, content };
+    const input: PostInput = {
+      title,
+      content,
+    };
     if (canManage) {
       input.is_notice = notice ? 1 : 0;
       if (post) input.post_status = status;
@@ -32,12 +39,11 @@ export function PostEditor({ post, canManage, busy, save, close }: Props) {
   }
   return (
     <form
-      className="panel post-editor"
+      className={classNames(sharedStyles.panel, styles.postEditor)}
       onSubmit={(event) => {
-        /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return void submit(
-          event,
-        );
+        return void submit(event);
       }}
+      data-ui="panel"
     >
       <h2>{post ? "글 수정" : "글 작성"}</h2>
       <label>
@@ -48,9 +54,7 @@ export function PostEditor({ post, canManage, busy, save, close }: Props) {
           required
           disabled={busy}
           onChange={(event) => {
-            /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setTitle(
-              event.target.value,
-            );
+            return setTitle(event.target.value);
           }}
         />
       </label>
@@ -63,23 +67,19 @@ export function PostEditor({ post, canManage, busy, save, close }: Props) {
           rows={12}
           disabled={busy}
           onChange={(event) => {
-            /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setContent(
-              event.target.value,
-            );
+            return setContent(event.target.value);
           }}
         />
       </label>
       {canManage && (
         <>
-          <label className="post-checkbox">
+          <label className={styles.postCheckbox}>
             <input
               type="checkbox"
               checked={notice}
               disabled={busy}
               onChange={(event) => {
-                /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setNotice(
-                  event.target.checked,
-                );
+                return setNotice(event.target.checked);
               }}
             />
             공지사항
@@ -91,14 +91,15 @@ export function PostEditor({ post, canManage, busy, save, close }: Props) {
                 value={status}
                 disabled={busy}
                 onChange={(event) => {
-                  /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setStatus(
-                    Number(event.target.value) as PostStatus,
-                  );
+                  return setStatus(Number(event.target.value) as PostStatus);
                 }}
               >
                 {Object.entries(POST_STATUSES).map(([key, label]) => {
-                  /* 각 항목의 화면 요소를 반환한다. */ return (
-                    <option value={key} key={key}>
+                  return (
+                    <option
+                      value={key}
+                      key={key}
+                    >
                       {label}
                     </option>
                   );
@@ -108,11 +109,20 @@ export function PostEditor({ post, canManage, busy, save, close }: Props) {
           )}
         </>
       )}
-      <div className="post-actions">
-        <button className="primary" disabled={busy} type="submit">
+      <div className={styles.postActions}>
+        <button
+          className={sharedStyles.primaryButton}
+          disabled={busy}
+          type="submit"
+          data-ui="primaryButton"
+        >
           저장
         </button>
-        <button type="button" disabled={busy} onClick={close}>
+        <button
+          type="button"
+          disabled={busy}
+          onClick={close}
+        >
           취소
         </button>
       </div>

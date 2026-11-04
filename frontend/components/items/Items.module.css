@@ -1,0 +1,67 @@
+/* 등급은 테두리 색으로, 식음료는 우상단 픽셀 고기 아이콘으로 구분한다. */
+.frame {
+  position: relative;
+  border: 1px solid var(--item-grade) !important;
+}
+.common {
+  --item-grade: #e7e7df;
+}
+.uncommon {
+  --item-grade: #78ca87;
+}
+.rare {
+  --item-grade: #78adf1;
+}
+.epic {
+  --item-grade: #bc8ce4;
+}
+.legendary {
+  --item-grade: #ead565;
+}
+.mythic {
+  --item-grade: #e3b9ed;
+}
+.frame.mythic {
+  border: 1px solid transparent !important;
+  background:
+    linear-gradient(#17302c, #17302c) padding-box,
+    linear-gradient(
+        115deg,
+        #f2bbc5,
+        #f1dfb6,
+        #c6e6c5,
+        #b9e2ec,
+        #c9bdec,
+        #f2bbc5
+      )
+      border-box !important;
+}
+.rarityTag {
+  display: inline-block;
+  font: 8px/1.4 monospace;
+  color: var(--item-grade, #e7e7df);
+}
+.frame > .rarityTag {
+  position: absolute;
+  left: 3px;
+  top: 1px;
+  pointer-events: none;
+}
+.edibleMark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  pointer-events: none;
+}
+.edibleMark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

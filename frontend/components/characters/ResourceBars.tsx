@@ -1,8 +1,15 @@
 /* HP·MP·스태미나와 부상 상태 및 자연 회복 시간을 표시한다. */
 "use client";
+
+import styles from "./Characters.module.css";
+import { classNames } from "../../lib/classNames";
 import { useEffect, useState } from "react";
 import type { Vitals } from "../../lib/types";
-
+const resourceStyles: Record<string, string> = {
+  hp: styles.healthBar,
+  mp: styles.manaBar,
+  stamina: styles.staminaBar,
+};
 function duration(seconds: number) {
   /* 남은 초를 분과 초로 변환한다. */
 
@@ -20,19 +27,13 @@ export function ResourceBars({
 
   const [elapsed, setElapsed] = useState(0);
   useEffect(() => {
-    /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
     setElapsed(0);
     const received = Date.now();
     const timer = setInterval(() => {
-      /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setElapsed(
-        (Date.now() - received) / 1000,
-      );
+      return setElapsed((Date.now() - received) / 1000);
     }, 1000);
     return () => {
-      /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return clearInterval(
-        timer,
-      );
+      return clearInterval(timer);
     };
   }, [vitals?.server_time]);
   if (!vitals) return null;
@@ -60,17 +61,20 @@ export function ResourceBars({
     },
   ];
   return (
-    <div className={`resource-bars ${compact ? "compact" : ""}`}>
+    <div
+      className={classNames(styles.resourceBars, compact ? styles.compact : "")}
+      data-ui={compact ? "" : ""}
+    >
       {vitals.condition !== "정상" && vitals.condition && (
-        <strong className="condition-injury">{vitals.condition}</strong>
+        <strong className={styles.conditionInjury}>{vitals.condition}</strong>
       )}
       {resources.map((resource) => {
-        /* 각 항목의 화면 요소를 반환한다. */ return (
+        return (
           <div
-            className={`resource resource-${resource.key}`}
+            className={resourceStyles[resource.key]}
             key={resource.key}
           >
-            <div className="resource-label">
+            <div className={styles.resourceLabel}>
               <span>{resource.name}</span>
               <strong>
                 {resource.current} / {resource.max}
@@ -78,7 +82,7 @@ export function ResourceBars({
               </strong>
             </div>
             <div
-              className="resource-track"
+              className={styles.resourceTrack}
               role="progressbar"
               aria-label={resource.name}
               aria-valuemin={0}
@@ -92,7 +96,7 @@ export function ResourceBars({
               />
             </div>
             {resource.key === "stamina" && (
-              <small className="recovery-time">
+              <small className={styles.recoveryTime}>
                 {resource.current >= resource.max ? (
                   "스태미나 최대치 도달"
                 ) : (

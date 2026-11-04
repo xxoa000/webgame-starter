@@ -20,6 +20,8 @@ services:
     environment:
       DATABASE_URL: mysql+pymysql://webgame:${MYSQL_PASSWORD}@mysql:3306/webgame?charset=utf8mb4
       FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:5174}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-}
+      JWT_ACCESS_HOURS: ${JWT_ACCESS_HOURS:-24}
       COOKIE_SECURE: ${COOKIE_SECURE:-false}
     ports:
       - "127.0.0.1:${BACKEND_PORT:-8000}:8000"

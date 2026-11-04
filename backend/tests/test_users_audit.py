@@ -17,15 +17,17 @@ def test_migration_preserves_accounts_and_all_tables(tmp_path):
     engine = sa.create_engine('sqlite:///' + str(tmp_path/'audit.db'))
     with engine.connect() as db:
         command.upgrade(config_for(db), '0008_combat')
+        before_tables = set(sa.inspect(db).get_table_names())
     with engine.begin() as db:
         db.execute(sa.text("INSERT INTO client (id,username,password_hash) VALUES (77,'preserved','same-hash')"))
         db.execute(sa.text("INSERT INTO login_session(token_hash,user_id,expires_at) VALUES (:token,77,:expires)"), {'token':'f'*64,'expires':datetime(2030,1,1)})
     with engine.connect() as db:
-        command.upgrade(config_for(db), 'head')
+        # 감사 변경 자체의 보존·재실행을 검사한다. JWT 전환은 별도 테스트한다.
+        command.upgrade(config_for(db), '0009_users_audit')
     with engine.begin() as db:
         inspector = sa.inspect(db)
         assert 'client' not in inspector.get_table_names()
-        assert len(inspector.get_table_names()) == 29
+        assert set(inspector.get_table_names()) == (before_tables - {'client'}) | {'users'}
         for table in inspector.get_table_names():
             columns = {column['name']: column for column in inspector.get_columns(table)}
             assert not columns['create_at']['nullable'] and not columns['update_at']['nullable']

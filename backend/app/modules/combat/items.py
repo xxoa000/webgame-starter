@@ -9,6 +9,8 @@ from .rules import ITEM_EFFECTS
 
 def use_item(db, character, inventory, item_id):
     """소유한 회복 물자를 소비하고 HP·MP 효과를 적용한다."""
+    from ..characters.vitals import require_mobile
+    require_mobile(character)
     if character.status != 'ready' or character.hp_current <= 0:
         raise HTTPException(409, '사망한 피계약자는 회복할 수 없어.')
     row = db.execute(select(InventoryEntry, Item).join(Item, Item.id == InventoryEntry.item_id)

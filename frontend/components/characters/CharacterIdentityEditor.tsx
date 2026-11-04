@@ -1,5 +1,9 @@
 /* 이름·나이의 남은 수정 기회와 무제한 인적사항 편집을 제공한다. */
 "use client";
+
+import sharedStyles from "../../styles/shared/Controls.module.css";
+import styles from "./Characters.module.css";
+import { classNames } from "../../lib/classNames";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useGame } from "../../hooks/useGame";
 import { api } from "../../lib/api";
@@ -49,8 +53,11 @@ export function CharacterIdentityEditor({
     await game.run(async () => {
       /* 비동기 요청 결과를 처리한다. */
 
-      const result = await api<{ available: boolean }>(
-        "/characters/check-name?for_profile=true&name=" + encodeURIComponent(candidate),
+      const result = await api<{
+        available: boolean;
+      }>(
+        "/characters/check-name?for_profile=true&name=" +
+          encodeURIComponent(candidate),
       );
       if (version !== revision.current) return;
       setChecked(result.available ? candidate : null);
@@ -65,7 +72,9 @@ export function CharacterIdentityEditor({
     void game.run(async () => {
       /* 비동기 요청 결과를 처리한다. */
 
-      const patch: ProfileUpdate = { bio };
+      const patch: ProfileUpdate = {
+        bio,
+      };
       if (gender && gender !== character.gender) patch.gender = gender;
       if (candidate !== character.name) {
         if (checked !== candidate) throw new Error("이름 중복 확인을 먼저 해.");
@@ -76,18 +85,24 @@ export function CharacterIdentityEditor({
     });
   }
   return (
-    <form className="panel identity-editor" onSubmit={submit}>
+    <form
+      className={classNames(sharedStyles.panel, styles.identityEditor)}
+      onSubmit={submit}
+      data-ui="panel"
+    >
       <h2>인적사항 수정</h2>
       <label>
         이름 · 수정 가능 {character.name_changes_remaining}회
-        <div className="inline">
+        <div
+          className={sharedStyles.inline}
+          data-ui="inline"
+        >
           <input
             required
             value={name}
             maxLength={24}
             disabled={game.busy || character.name_changes_remaining === 0}
             onChange={(event) => {
-              /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
               setName(event.target.value);
               setChecked(null);
               setMessage("");
@@ -103,14 +118,18 @@ export function CharacterIdentityEditor({
               candidate === character.name
             }
             onClick={() => {
-              /* 입력값에 따른 표시나 상태 변경을 처리한다. */ return void checkName();
+              return void checkName();
             }}
           >
             중복 확인
           </button>
         </div>
         {message && (
-          <small className="field-feedback" role="status">
+          <small
+            className={sharedStyles.fieldFeedback}
+            role="status"
+            data-ui="fieldFeedback"
+          >
             {message}
           </small>
         )}
@@ -121,19 +140,28 @@ export function CharacterIdentityEditor({
           value={age}
           disabled={game.busy || character.age_changes_remaining === 0}
           onChange={(event) => {
-            /* 입력값에 따른 표시나 상태 변경을 처리한다. */ return setAge(
-              Number(event.target.value),
-            );
+            return setAge(Number(event.target.value));
           }}
         >
-          <option value="" disabled>
+          <option
+            value=""
+            disabled
+          >
             선택
           </option>
-          {Array.from({ length: 41 }, (_, i) => {
-            /* 입력값에 따른 표시나 상태 변경을 처리한다. */ return i + 10;
-          }).map((value) => {
-            /* 입력값에 따른 표시나 상태 변경을 처리한다. */ return (
-              <option key={value} value={value}>
+          {Array.from(
+            {
+              length: 41,
+            },
+            (_, i) => {
+              return i + 10;
+            },
+          ).map((value) => {
+            return (
+              <option
+                key={value}
+                value={value}
+              >
                 {value}세
               </option>
             );
@@ -146,12 +174,13 @@ export function CharacterIdentityEditor({
           disabled={game.busy}
           value={gender}
           onChange={(event) => {
-            /* 입력값에 따른 표시나 상태 변경을 처리한다. */ return setGender(
-              event.target.value as "male" | "female",
-            );
+            return setGender(event.target.value as "male" | "female");
           }}
         >
-          <option value="" disabled>
+          <option
+            value=""
+            disabled
+          >
             선택
           </option>
           <option value="male">남자</option>
@@ -166,13 +195,15 @@ export function CharacterIdentityEditor({
           disabled={game.busy}
           value={bio}
           onChange={(event) => {
-            /* 입력값에 따른 표시나 상태 변경을 처리한다. */ return setBio(
-              event.target.value,
-            );
+            return setBio(event.target.value);
           }}
         />
       </label>
-      <button className="primary" disabled={game.busy}>
+      <button
+        className={sharedStyles.primaryButton}
+        disabled={game.busy}
+        data-ui="primaryButton"
+      >
         인적사항 저장
       </button>
     </form>

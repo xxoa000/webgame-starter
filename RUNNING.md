@@ -13,7 +13,7 @@ docker compose run --rm --no-deps backend alembic upgrade head
 docker compose up -d --no-deps backend frontend
 ```
 
-DB 초기화 완료 후 마이그레이션하고 앱을 시작하는 순서다. 최신 DB 리비전은 `0011_personality_scripts`다. 이미 적용된 변경은 Alembic이 건너뛴다. 새 DB에도 과거 이력부터 최신까지 순서대로 적용한다.
+DB 초기화 완료 후 마이그레이션하고 앱을 시작하는 순서다. 최신 DB 리비전은 `0016_jwt_auth`이다. 이미 적용된 변경은 Alembic이 건너뛴다. 새 DB에도 과거 이력부터 최신까지 순서대로 적용한다.
 
 ## 코드 업데이트
 
@@ -218,3 +218,144 @@ PY
 ```
 
 하위 폴더와 의존성·Git 파일·소스·.env는 대상이 아니다. 이전 패치 ZIP을 다시 풀면 옛 안내 파일이 재생성될 수 있으므로, 문서 기준은 이 네 파일로 유지한다.
+
+## 스크립트 표시 업데이트 적용
+
+이번 압축파일은 변경 파일만 포함한다. 프로젝트 최상위에서 병합하여 적용한다. .env는 포함하지 않는다.
+
+업로드된 0012 마이그레이션은 grimoire를 삭제하고 skill을 새로 생성한다. 이 파일은 이번 패치에서 수정하지 않았다. 아직 0012를 적용하지 않았다면 기존 데이터가 필요한지 확인하고, 삭제/생성 대신 테이블 및 magic_name 컬럼 이름 변경으로 고친 뒤 진행해야 한다. 이미 삭제된 데이터는 이번 패치로 복원되지 않는다.
+
+0012가 정상 적용된 DB에서는 다음 명령을 실행한다.
+
+```bash
+docker compose stop backend
+docker compose build backend frontend
+docker compose run --rm --no-deps backend alembic current
+docker compose run --rm --no-deps backend alembic upgrade head
+docker compose up -d --no-deps backend frontend
+```
+
+최종 revision은 `0013_script_display`다. 0013은 대사 본문과 조건을 보존하고 visibility 컬럼과 관련 CHECK를 제거한 뒤 조회 VIEW를 추가한다. 기존 탐색 기록 JSON은 그대로 두되 응답에서 과거 visibility 필드를 제외한다.
+
+```sql
+SELECT * FROM game_script_keyword_view
+ORDER BY situation_code, script_id, condition_group, condition_id;
+```
+
+검증: 스크립트 선택·확률 경계·편집 뷰·0013 업/다운 시 원문 보존·탐색/전투 관련 17개 테스트 통과. 기존 테스트 2개는 이전 grimoire 이름을 기대하거나 업로드된 0012의 MySQL 전용 DDL을 SQLite에서 실행하여 실패했다. 해당 기존 테스트/0012는 이번 패치에 포함하지 않는다. 실제 MySQL 적용과 브라우저 시각 검증은 수행하지 않았다.
+
+## 평면 지도 관측 화면 적용
+
+`script-console-update.zip`의 0013이 적용된 프로젝트 기준 변경 파일이다. 프로젝트 최상위에서 병합한 뒤 다음 명령을 실행한다. .env·포트·Compose 설정은 수정하지 않는다.
+
+```bash
+unzip -o "$HOME/Downloads/drone-exploration-update.zip" -d .
+docker compose stop backend
+docker compose build backend frontend
+docker compose run --rm --no-deps backend alembic upgrade head
+docker compose up -d --no-deps backend frontend
+```
+
+최종 revision: `0014_drone_observation`. 새 `exploration_presence` 테이블과 `exploration.position_step`을 추가한다. 기존 대사·키워드·맵 데이터는 갱신하지 않는다. 예전 맵 탐색 세션의 위치는 첫 지점에서 시작하며 기존 턴은 유지한다.
+
+지도 좌표와 이동 경로는 `frontend/lib/droneMap.ts`, 지형 그리기는 `frontend/components/exploration/DroneMap.tsx`, 높이·색감은 `frontend/styles/bureau/drone-observation.css`에서 수정한다. 지도는 임의로 설계한 게임용 평면 지형이며 GPS나 충돌 판정 기능은 아니다.
+
+온라인 인원은 탐색 페이지가 보이는 동안 25초마다 서버에 접속 신호를 전송하고, 같은 맵의 진행 중인 캐릭터 중 최근 90초 이내 신호가 있는 계정만 집계한다. 숨긴 탭과 페이지를 떠난 사용자는 최대 90초 후 제외된다. 종료·사망·제재 상태는 집계에서 제외한다. 여러 탭을 열어도 계정당 한 명으로 계산한다. 집계 요청에 실패하면 0명 대신 —를 표시한다.
+
+브라우저 수동 확인: 전체 지도에서 구역 선택 → 원격 탐색 개시 → 상세 지도/초록 점/해당 맵 인원 확인 → 탐색 시 이동, 휴식 시 제자리 확인 → 새로고침 후 위치 유지 → 탐색 종료 후 전체 지도 복귀.
+
+검증: 관련 백엔드 테스트 21개 통과(기존 0012·grimoire 관련 테스트 2개 제외), 프론트 타입 검사 및 프로덕션 빌드 통과. 로컬 브라우저는 실행 환경 제약으로 실행하지 못했으며 실제 MySQL 마이그레이션은 미검증이다.
+
+## CSV로 초기 공통 대사 덮어쓰기
+
+`script-seed-db-update.zip`을 프로젝트 최상위에 병합한다. 0013 이상 스키마가 적용되어 있어야 한다. 새 마이그레이션은 추가하지 않는다. CSV만 교체하면 DB는 바뀌지 않으므로 아래 명령을 실행한다.
+
+```bash
+unzip -o "$HOME/Downloads/script-seed-db-update.zip" -d .
+docker compose stop backend
+docker compose build backend
+docker compose run --rm --no-deps \
+  -v "$PWD/SCRIPTS-SEED.csv:/seed/SCRIPTS-SEED.csv:ro" \
+  -v "$PWD/SCRIPT-CONDITIONS-SEED.csv:/seed/SCRIPT-CONDITIONS-SEED.csv:ro" \
+  backend python -m app.modules.scripts.import_seed
+docker compose up -d --no-deps backend
+```
+
+덮어쓰기 범위는 `initial_common`(기존 `INITIAL_COMMON`) 공통 묶음의 1판이다. CSV의 본문·코드·우선순위·가중치·활성 여부·조건으로 기존 데이터를 교체한다. 해당 판에만 존재하던 잉여 대사는 제거한다. 다른 개인/판매 원고와 다른 판은 보존한다. 기존 키워드 ID와 캐릭터의 성격 선택은 보존하고 참조하는 키워드의 code를 소문자로 통일한다.
+
+같은 코드 또는 상황·층·조건에 해당하는 기존 대사의 ID를 우선 재사용한다. 기존 178개 초기 데이터라면 178개 갱신 + 155개 추가로 333개가 된다. 반복 실행해도 중복 추가되지 않는다. 이미 출력된 탐색 기록 JSON의 본문은 변경하지 않고 새 이벤트부터 수정 내용을 사용한다. 전체 교체는 하나의 트랜잭션이며 오류 시 모두 되돌린다.
+
+`keyword_name`은 편집용 표시 컬럼으로 DB에 중복 저장하지 않는다. 조건 파일의 이름은 실제 DB 이름과 검증하며 연결은 keyword_code로 한다. `code`·`script_code`·`keyword_code`는 영문 소문자이고 `layer`는 기존 DB 규칙인 SPEECH/THOUGHT/NARRATION을 유지한다.
+
+```sql
+SELECT COUNT(*) AS script_count
+FROM game_script s
+JOIN script_pack_version v ON v.id=s.version_id
+JOIN script_pack p ON p.id=v.pack_id
+WHERE p.code='initial_common' AND v.version=1;
+
+SELECT script_id, code, situation_code, keyword_name, content
+FROM game_script_keyword_view
+ORDER BY situation_code, script_id, condition_group;
+```
+
+검증: SQLite에서 기존 ID 보존·다른 묶음 보존·교체 후 재실행·실패 롤백·코드 충돌 거부를 테스트했다. 사용자 Mac의 실제 MySQL DB는 여기서 직접 변경하지 않았다.
+
+## 빈사·구조·인벤토리·상점 업데이트
+
+이 패치에는 대사 CSV와 대사 시드/불러오기 모듈을 포함하지 않는다. 현재 편집 중인 원문은 그대로 보존한다. 프로젝트 최상위에서 병합한 뒤 적용한다. .env와 Compose 설정 변경은 없다.
+
+```bash
+unzip -o "$HOME/Downloads/rescue-shop-update.zip" -d .
+docker compose stop backend
+docker compose build backend frontend
+docker compose run --rm --no-deps backend alembic upgrade head
+docker compose up -d --no-deps backend frontend
+```
+
+최종 revision은 `0015_rescue_shop`. character.downed, users.money, item.buy_price/sell_price, rescue_request 테이블을 추가한다. 기존 계정에 초기 무료 크레딧 1,000을 부여한다. 상점 상품 가격은 새 마이그레이션에서 5개 회복 물자에만 지정한다. 과거 맵·대사 데이터는 수정하지 않는다.
+
+치료 NPC 도착 시간은 backend/app/modules/rescue/service.py의 NPC_RESCUE_SECONDS=60에서 조절한다. 구조 요청 후 서버 기한은 DB에 저장되어 재접속해도 유지된다. 별도 작업 큐 없이 대상이 탐색 상태를 다시 조회할 때 도착을 확정한다.
+
+신규 경로: GET /shop, POST /shop/buy, POST /shop/sell, POST /inventory/use, POST /inventory/discard, POST /rescue/request, POST /rescue/abandon, GET /rescue/nearby, POST /rescue/{id}/help. 거래·버리기는 양수 정수 수량만 허용한다.
+
+검증 범위는 자동 API 테스트·SQLite 마이그레이션 보존·프론트 타입 검사·빌드다. 실제 MySQL 적용과 브라우저 화면 조작은 별도 확인이 필요하다.
+
+이번 업데이트 검증: 관련 API·상태·거래·구조·회귀 테스트 63개 통과. 업로드된 과거 0012의 SQLite 비호환 DDL을 거치는 테스트 2개와 이전 grimoire 테이블명을 기대하는 테스트 1개는 제외했다. 0015는 별도로 기존 데이터 보존 및 되돌리기를 검증했다. 브라우저 검증 환경에서 로컬 서버 연결이 거부되어 실제 화면 조작 검증은 수행하지 못했다.
+
+
+## JWT 인증 전환 (0016)
+
+기존 업데이트(0015)까지 적용한 프로젝트에 변경 파일을 병합한다. `.env`, 포트 선택 스크립트와 대사 CSV는 제공 ZIP에 포함하지 않는다. compose.yaml은 backend.environment에 JWT_SECRET_KEY와 JWT_ACCESS_HOURS를 전달하는 두 줄만 추가했다. 로컬에서 Compose를 별도로 수정했다면 해당 두 줄만 병합한다.
+
+서명키는 운영자가 한 번 생성하고 안전하게 보관한다. 아래 명령은 키를 출력할 뿐 파일을 수정하지 않는다.
+
+```bash
+openssl rand -hex 32
+```
+
+출력한 값을 프로젝트 최상위 `.env`에 **직접** 추가한다. 기존 DB 비밀번호나 포트는 유지한다.
+
+```dotenv
+JWT_SECRET_KEY=위에서_생성한_값
+JWT_ACCESS_HOURS=24
+```
+
+JWT_SECRET_KEY는 백엔드만 사용한다. 프론트 환경변수나 NEXT_PUBLIC_ 접두사로 전달하지 않는다. 무작위 32바이트 이상 키가 없으면 서버는 시작하지 않는다. 여러 백엔드 인스턴스는 동일한 키를 사용해야 하며, 키를 변경하면 기존 JWT가 모두 무효화된다. 기존 SESSION_HOURS 설정은 사용하지 않고 JWT_ACCESS_HOURS를 사용한다.
+
+```bash
+docker compose stop backend
+docker compose build backend
+docker compose run --rm --no-deps backend alembic upgrade head
+docker compose up -d --no-deps backend
+docker compose logs -f backend
+```
+
+최신 head는 `0016_jwt_auth`다. 이 마이그레이션은 users.token_version을 추가하고 login_session 테이블을 제거한다. 기존 로그인은 해제되므로 다시 로그인한다. 계정·권한·비밀번호·게임 데이터와 대사 데이터는 유지한다. downgrade는 빈 세션 테이블만 복구하며 폐기한 세션은 되살리지 않는다.
+
+프론트는 기존 credentials: include 쿠키 전송을 그대로 사용하므로 수정·재빌드가 필요 없다. 운영 HTTPS에서는 기존 COOKIE_SECURE를 true로 설정한다. JWT는 암호화된 데이터가 아니며 사용자 ID와 토큰 검증용 정보만 넣는다. 권한은 매 요청 DB에서 읽으며 JWT 안의 auth 값을 신뢰하지 않는다. 로그아웃은 계정의 기존 모든 JWT를 무효화한다. 만료 후 재로그인하며 refresh 토큰은 이번 범위에 포함하지 않는다.
+
+검증 기준: PyJWT 공식 API의 고정 알고리즘 및 필수 클레임 검증 사용.
+https://pyjwt.readthedocs.io/en/stable/api.html
+
+이번 JWT 업데이트는 인증·권한·로그아웃·마이그레이션 및 기존 게임 회귀 테스트 79개를 통과했다. 기존 0012 SQLite 비호환 DDL 관련 2개와 과거 grimoire 이름을 기대하는 1개는 제외했다. 0016 적용·되돌리기는 격리된 SQLite DB에서 검증했다. 실제 MySQL 업그레이드와 브라우저 조작 검증은 수행하지 않았다.

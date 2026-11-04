@@ -5,7 +5,7 @@ INACTIVE, ACTIVE, SANCTIONED, WITHDRAW = 0, 1, 2, 3
 
 
 def ensure_active(user):
-    """활성 계정의 기존 세션만 허용한다."""
+    """활성 계정의 기존 JWT만 허용한다."""
     if user.user_status != ACTIVE:
         raise HTTPException(403, '다시 로그인하거나 계정 상태를 확인해.')
 

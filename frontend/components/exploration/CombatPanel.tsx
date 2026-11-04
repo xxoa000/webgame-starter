@@ -1,6 +1,8 @@
-/* 전투·확정 도망·회복 물자 사용을 턴 선택지로 표시한다. */
+/* 전투 선택지와 회복 아이템 사용 창을 표시한다. 아이템은 턴을 쓰지 않는다. */
 "use client";
-import { useState } from "react";
+
+import styles from "./Observation.module.css";
+import sharedStyles from "../../styles/shared/Controls.module.css";
 import { useExploration } from "../../hooks/useExploration";
 export function CombatPanel({
   disabled,
@@ -9,58 +11,27 @@ export function CombatPanel({
   disabled: boolean;
   outsideCombat?: boolean;
 }) {
-  /* 화면 상태를 확인하고 CombatPanel 기능을 실행한다. */
-
+  /* 몬스터 정보는 결과 창 오른쪽에서 표시하고 이곳에는 버튼만 둔다. */
   const game = useExploration();
-  const [itemsOpen, setItemsOpen] = useState(false);
-  const monster = game.state?.combat;
-  const items =
-    game.inventory?.items.filter((item) => {
-      /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return item.usable;
-    }) ?? [];
   return (
-    <section
-      className="combat-panel"
-      aria-label={outsideCombat ? "회복 아이템" : "전투"}
-    >
-      {monster && (
-        <>
-          <h2>{monster.name}</h2>
-          <p>{monster.description}</p>
-          <div className="combat-hp">
-            <span>
-              HP {monster.hp} / {monster.max_hp}
-            </span>
-            <progress
-              value={monster.hp}
-              max={monster.max_hp}
-              aria-label="몬스터 HP"
-            />
-          </div>
-        </>
-      )}
-      <div className="exploration-actions">
+    <div className={styles.combatPanel}>
+      <div className={styles.explorationActions}>
         {!outsideCombat && (
           <>
             <button
-              className="primary"
+              className={sharedStyles.primaryButton}
               disabled={disabled}
               onClick={() => {
-                /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
-                setItemsOpen(false);
-                void game.act("fight");
+                /* 공격과 반격을 한 턴 진행한다. */ void game.act("fight");
               }}
+              data-ui="primaryButton"
             >
               전투
             </button>
             <button
               disabled={disabled}
               onClick={() => {
-                /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
-                setItemsOpen(false);
-                void game.act("flee");
+                /* 확정 도망을 실행한다. */ void game.act("flee");
               }}
             >
               도망
@@ -68,41 +39,17 @@ export function CombatPanel({
           </>
         )}
         <button
-          disabled={disabled}
-          aria-expanded={itemsOpen}
+          disabled={game.busy || !!game.state?.downed}
+          aria-expanded={game.window === "inventory"}
           onClick={() => {
-            /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setItemsOpen(
-              !itemsOpen,
+            /* 물품 버튼을 다시 누르면 같은 창을 닫는다. */ game.setWindow(
+              game.window === "inventory" ? null : "inventory",
             );
           }}
         >
           아이템
         </button>
       </div>
-      {itemsOpen && (
-        <div className="combat-items">
-          {items.length ? (
-            items.map((item) => {
-              /* 각 항목의 화면 요소를 반환한다. */ return (
-                <button
-                  key={item.item_id}
-                  disabled={disabled}
-                  onClick={() => {
-                    /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return void game.act(
-                      "use_item",
-                      item.item_id,
-                    );
-                  }}
-                >
-                  {item.name} ×{item.quantity}
-                </button>
-              );
-            })
-          ) : (
-            <p>사용 가능한 아이템 없음</p>
-          )}
-        </div>
-      )}
-    </section>
+    </div>
   );
 }

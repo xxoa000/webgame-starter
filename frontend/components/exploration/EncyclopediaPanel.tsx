@@ -1,5 +1,9 @@
 /* 맵별 발견 도감을 작은 격자 칸으로 표시한다. 미발견 이름은 ???로 유지하고 발견 확률을 표시한다. */
 "use client";
+
+import { ItemIndicators, itemFrame } from "../items/ItemIndicators";
+import styles from "./Exploration.module.css";
+import { classNames } from "../../lib/classNames";
 import { useState } from "react";
 import type { WorldMap } from "../../lib/exploration";
 export function EncyclopediaPanel({ maps }: { maps: WorldMap[] }) {
@@ -8,27 +12,24 @@ export function EncyclopediaPanel({ maps }: { maps: WorldMap[] }) {
   const [mapId, setMapId] = useState<number | null>(null);
   const selected =
     maps.find((map) => {
-      /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return (
-        map.id === mapId
-      );
+      return map.id === mapId;
     }) ?? maps[0];
-  if (!selected) return <p className="tray-message">도감 자료가 없습니다.</p>;
+  if (!selected)
+    return <p className={styles.trayMessage}>도감 자료가 없습니다.</p>;
   return (
-    <div className="compact-encyclopedia">
-      <div className="tray-summary">
-        <label className="catalog-map-label">
+    <div className={styles.compactEncyclopedia}>
+      <div className={styles.traySummary}>
+        <label className={styles.catalogMapLabel}>
           탐색 지역
           <select
             aria-label="도감 지역 선택"
             value={selected.id}
             onChange={(event) => {
-              /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setMapId(
-                Number(event.target.value),
-              );
+              return setMapId(Number(event.target.value));
             }}
           >
             {maps.map((map) => {
-              /* 각 항목의 화면 요소를 반환한다. */ return (
+              return (
                 <option key={map.id} value={map.id}>
                   {map.name}
                 </option>
@@ -39,30 +40,40 @@ export function EncyclopediaPanel({ maps }: { maps: WorldMap[] }) {
         <span>
           {
             selected.items.filter((item) => {
-              /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return item.discovered;
+              return item.discovered;
             }).length
           }
           /{selected.items.length} 발견
         </span>
       </div>
       <div
-        className="storage-cells catalog-cells"
+        className={styles.storageCells}
         aria-label={`${selected.name}의 발견 도감`}
       >
         {selected.items.map((item) => {
-          /* 각 항목의 화면 요소를 반환한다. */ return (
+          return (
             <div
               key={item.item_id}
-              className={`storage-cell catalog-cell ${item.discovered ? "known" : "unknown"}`}
+              className={classNames(
+                styles.itemSlot,
+                itemFrame(item.rarity),
+                styles.catalogSlot,
+                item.discovered ? "" : styles.unknown,
+              )}
               title={`${item.discovered ? item.name : "???"} · ${Math.round(item.probability * 100)}%`}
+              data-ui={item.discovered ? "" : ""}
             >
-              <span className="storage-icon" aria-hidden="true">
+              <ItemIndicators
+                rarity={item.rarity}
+                edible={item.discovered && item.edible}
+              />
+              <span className={styles.storageIcon} aria-hidden="true">
                 {item.discovered ? "❋" : "?"}
               </span>
-              <span className="storage-name">
+              <span className={styles.storageName}>
                 {item.discovered ? item.name : "???"}
               </span>
-              <span className="catalog-chance">
+              <span className={styles.catalogChance}>
                 {Math.round(item.probability * 100)}%
               </span>
             </div>

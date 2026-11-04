@@ -1,0 +1,661 @@
+/* 관측 화면 전용 배치. 외부 모니터와 중복되는 베젤은 만들지 않는다.
+ * 제목/상태/물자/명령은 지도 밖에 두어 구역 버튼을 가리지 않는다.
+ * 전투만 observationDesk 내부의 가장 높은 층에 겹쳐 표시한다.
+ */
+.explorationPage {
+  overflow-anchor: none;
+  display: block;
+}
+.mainColumn {
+  min-width: 0;
+}
+.observationDesk {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid #405d58;
+  background: #102727;
+}
+.observationSurface {
+  min-width: 0;
+}
+.observationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 18px;
+  border-bottom: 1px solid #405d58;
+}
+.mapHeading {
+  min-width: 0;
+}
+.mapHeading h2 {
+  margin: 0 0 4px;
+  font-size: 23px;
+  color: var(--text-color);
+}
+.mapHeading p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.mapStatus {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+}
+.onlinePlayers {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.onlinePlayers i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #88dba2;
+  box-shadow: 0 0 7px #88dba266;
+}
+.turnCount {
+  padding-left: 14px;
+  border-left: 1px solid #587068;
+  color: #cfb28e;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.turnCount strong {
+  margin-left: 7px;
+  font-size: 25px;
+}
+/* 높이의 하한을 보장하고 지도 자체에는 스크롤이나 두꺼운 프레임을 두지 않는다. */
+.mapViewport {
+  position: relative;
+  isolation: isolate;
+  height: clamp(420px, 50dvh, 620px);
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: var(--map-ground);
+}
+.droneMapLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.droneMapSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+.droneMapMarkers {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.droneMapMarker {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  max-width: 190px;
+  min-height: 34px;
+  padding: 4px 9px 4px 4px;
+  border: 1px solid #6c8171;
+  border-radius: 3px;
+  background: #0c2020f0;
+  color: #dfd7ba;
+  box-shadow: 0 2px 7px #0005;
+  font-size: 12px;
+  text-align: left;
+  pointer-events: auto;
+}
+.droneMapMarker b {
+  display: grid;
+  place-items: center;
+  flex: 0 0 26px;
+  height: 26px;
+  border: 1px solid #9b9871;
+  border-radius: 50%;
+  background: #4a5240;
+  font: 12px var(--font-mono);
+}
+.droneMapMarker.isSelected,
+.droneMapMarker:hover:not(:disabled) {
+  background: #355c51;
+  border-color: #a5c3aa;
+  outline: 2px solid #83b4a455;
+  outline-offset: 2px;
+}
+.droneMapMarker:focus-visible {
+  outline: 2px solid #e5ddae;
+  outline-offset: 4px;
+}
+.droneMapMarker:disabled {
+  opacity: 0.65;
+}
+.droneScanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 3px,
+    #06171622 3px 4px
+  );
+  box-shadow: inset 0 0 50px #06171666;
+  pointer-events: none;
+}
+.droneScale {
+  position: absolute;
+  bottom: 10px;
+  right: 14px;
+  z-index: 1;
+  color: #b5c1ac;
+  font: 10px var(--font-mono);
+  pointer-events: none;
+}
+.mapBlockLabel {
+  fill: #a4b8ac;
+  font: 14px var(--font-mono);
+}
+.radarWave {
+  fill: #78e4ac0a;
+  stroke: #85eab3;
+  stroke-width: 1;
+  animation: radarPulse 2.8s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.radarWaveSecond {
+  animation-delay: -1.4s;
+}
+@keyframes radarPulse {
+  from {
+    opacity: 0.7;
+    transform: scale(0.65);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+.mapItemPanel {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  padding: 10px 18px;
+  border-block: 1px solid #405d58;
+  background: #112a29;
+}
+.mapLootSection {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.mapLootSection > div:first-child {
+  font-size: 10px;
+  letter-spacing: 0;
+  color: #b5c5b5;
+}
+.itemProbabilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.itemProbabilities > span {
+  padding: 3px 7px;
+  border: 1px solid #526d60;
+  background: #263d35;
+  font-size: 11px;
+}
+.itemProbabilities b {
+  margin-left: 6px;
+  color: #d6ab9f;
+  font: 10px var(--font-mono);
+}
+.droneThreats {
+  display: flex;
+  gap: 6px 12px;
+  flex-wrap: wrap;
+  color: #c39e88;
+  font-size: 10px;
+}
+.actionArea {
+  padding: 10px 18px 14px;
+}
+.actionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 10px;
+}
+.explorationStatus {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.explorationStatus h2 {
+  margin: 0;
+  font-size: 17px;
+}
+.droneLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #a4b6aa;
+  font: 10px var(--font-mono);
+  letter-spacing: 1px;
+}
+.droneLink i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ba956e;
+}
+.droneInfo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.companionDrone {
+  flex: 0 1 auto;
+}
+.droneInfo > div:first-child {
+  width: 40px;
+  height: 40px;
+}
+.droneInfo > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.droneInfo strong {
+  font-size: 11px;
+  color: #c6d0bd;
+}
+.droneInfo small {
+  margin: 0;
+  font-size: 9px;
+  color: #91a89e;
+}
+/* 탐색 대기는 지역 선택과 시작을 한 줄에 묶는다. */
+.actionArea .startPanel {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 0.5fr);
+  gap: 6px 14px;
+  align-items: end;
+  padding: 0;
+  border: 0;
+}
+.startPanel label {
+  margin: 0;
+  font-size: 10px;
+}
+.startPanel select {
+  padding: 9px 10px;
+  margin-top: 4px;
+  font-size: 12px;
+}
+.startPanel > button {
+  padding: 10px;
+  font-size: 12px;
+}
+.selectedMapDescription {
+  grid-column: 1 / -1;
+  order: 2;
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+}
+/* 결과 텍스트와 명령을 나란히 배치해 세로 공간을 과하게 차지하지 않는다. */
+.actionArea .actionPanel {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 1fr);
+  gap: 18px;
+  padding: 0;
+  border: 0;
+}
+.resultColumn {
+  min-width: 0;
+  overflow: visible;
+}
+.resultColumn h4 {
+  margin: 0 0 5px;
+  font-size: 12px;
+}
+.commandColumn {
+  min-width: 0;
+}
+.encounterLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+  gap: 8px;
+}
+.encounterLayout > div:only-child {
+  grid-column: 1 / -1;
+}
+.turnMessage {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #d5dece;
+  overflow-wrap: anywhere;
+}
+.discoveredItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-left: 2px solid #829b83;
+  background: #1e3932;
+}
+.itemSymbol {
+  font-size: 23px;
+  color: #a6c8ad;
+}
+.discoveredItem h3 {
+  margin: 0;
+  font-size: 12px;
+}
+.discoveredItem p {
+  margin: 3px 0;
+  font-size: 11px;
+}
+.discoveredItem small {
+  font-size: 10px;
+}
+.discoveryActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.discoveryActions button {
+  padding: 7px 10px;
+  font-size: 11px;
+}
+.explorationActions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+}
+.explorationActions button {
+  padding: 10px 6px;
+  font-size: 12px;
+}
+.explorationEndRow {
+  margin-top: 7px;
+}
+.explorationEndRow button {
+  width: 100%;
+  padding: 7px;
+  font-size: 11px;
+}
+.commandColumn > p {
+  margin: 6px 0 0;
+  font-size: 10px;
+}
+.explorationHistory {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid #405d58;
+}
+.explorationHistory ol {
+  padding: 0;
+  list-style: none;
+  overflow: visible;
+}
+.explorationHistory li {
+  display: flex;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #2a4540;
+}
+.explorationHistory li > span {
+  color: #a6b89e;
+  font: 10px var(--font-mono);
+}
+.explorationHistory li p {
+  margin: 0;
+  font-size: 11px;
+}
+/* 배경은 메인 관측 영역만 덮고, 서브 콘솔과 전역 메뉴에는 영향을 주지 않는다. */
+.combatOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #061313b8;
+  backdrop-filter: blur(2px);
+}
+.combatWindow {
+  width: min(640px, 100%);
+  max-height: none;
+  overflow: visible;
+  border: 1px solid #a2b5a0;
+  border-radius: 4px;
+  background: #122c2b;
+  color: #e4e4d1;
+  box-shadow:
+    0 24px 70px #000b,
+    8px 8px 0 #0004;
+  outline: none;
+}
+.combatWindow:focus-visible {
+  outline: 2px solid #cdd4ac;
+  outline-offset: 3px;
+}
+.combatWindowTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid #819783;
+  background: #39564b;
+  font: 11px var(--font-mono);
+  letter-spacing: 1px;
+}
+.combatWindowBody {
+  padding: 22px;
+}
+.encounterCard {
+  padding-bottom: 18px;
+  border-bottom: 1px solid #405d58;
+}
+.encounterLabel {
+  font: 10px var(--font-mono);
+  letter-spacing: 2px;
+  color: #cea88c;
+}
+.encounterCard h2 {
+  margin: 8px 0;
+  font-size: 25px;
+}
+.encounterCard p {
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+.combatHp {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font: 11px var(--font-mono);
+}
+.combatHp progress {
+  width: 100%;
+  height: 8px;
+  border: 0;
+  accent-color: #ce8d7d;
+}
+.combatHp progress::-webkit-progress-bar {
+  background: #273a35;
+  border-radius: 2px;
+}
+.combatHp progress::-webkit-progress-value {
+  background: #ce8d7d;
+  border-radius: 2px;
+}
+.combatHp progress::-moz-progress-bar {
+  background: #ce8d7d;
+}
+.combatReport {
+  overflow: visible;
+  margin: 18px 0;
+  scrollbar-width: thin;
+}
+.combatPanel {
+  margin-top: 14px;
+}
+@media (max-width: 1000px) {
+  .observationHeader {
+    padding: 12px 14px;
+  }
+  .mapHeading h2 {
+    font-size: 20px;
+  }
+  .mapHeading p {
+    font-size: 11px;
+  }
+  .mapStatus {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .turnCount {
+    padding: 0;
+    border: 0;
+  }
+  .turnCount strong {
+    font-size: 20px;
+  }
+  .actionArea .actionPanel {
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 1fr);
+    gap: 12px;
+  }
+  .droneMapMarker {
+    max-width: 160px;
+    font-size: 11px;
+  }
+}
+@media (max-width: 600px) {
+  .observationHeader {
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .mapHeading h2 {
+    font-size: 18px;
+  }
+  .mapViewport {
+    height: 440px;
+  }
+  .mapHeading p {
+    max-width: 235px;
+    font-size: 10px;
+  }
+  .onlinePlayers {
+    font-size: 9px;
+  }
+  .mapStatus {
+    gap: 6px;
+  }
+  .droneMapMarker {
+    max-width: 115px;
+    gap: 3px;
+    padding: 3px 5px 3px 3px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  .droneMapMarker b {
+    flex-basis: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+  .actionArea {
+    padding: 10px 12px 14px;
+  }
+  .actionHeader {
+    gap: 8px;
+  }
+  .explorationStatus {
+    gap: 7px;
+  }
+  .droneInfo small {
+    display: none;
+  }
+  .actionArea .startPanel,
+  .actionArea .actionPanel {
+    grid-template-columns: 1fr;
+  }
+  .resultColumn {
+    max-height: none;
+  }
+  .selectedMapDescription {
+    grid-column: auto;
+    order: 0;
+  }
+  .combatOverlay {
+    padding: 12px;
+  }
+  .combatWindowBody {
+    padding: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .radarWave {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
+/* 지도 지형만 SVG로 늘리고 글씨는 HTML 층에서 원래 글자 비율을 유지한다. */
+.droneMapLabels {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.mapTextLabel,
+.radarTextLabel {
+  position: absolute;
+  white-space: nowrap;
+  font: 12px/1.4 var(--font-mono);
+  color: #afc8bb;
+}
+.radarTextLabel {
+  transform: translate(14px, -30px);
+  color: #c0f5d7;
+}
+.combatLoot {
+  margin: 16px 0;
+  padding: 14px;
+  background: #1e3932;
+  border-left: 2px solid #98b596;
+}
+.combatLoot h3 {
+  margin: 0 0 6px;
+}
+.combatLoot p {
+  margin: 4px 0;
+  font-size: 12px;
+}

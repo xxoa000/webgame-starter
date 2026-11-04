@@ -1,22 +1,36 @@
 /* 기관 네 곳의 편제와 역할을 표시한다. */
+import styles from "../home/Home.module.css";
+import { classNames } from "../../lib/classNames";
 import { DEPARTMENTS } from "../../lib/world";
+const departmentStyles: Record<string, string> = {
+  control: "",
+  field: styles.field,
+  research: styles.research,
+  hazard: styles.hazard,
+};
 export function DepartmentDirectory() {
   /* 기관 네 곳의 편제와 역할을 표시한다. */
 
   return (
-    <section className="department-directory" aria-label="기관 구성">
-      <div className="directory-title">
+    <section
+      className={styles.departmentDirectory}
+      aria-label="기관 구성"
+    >
+      <div className={styles.directoryTitle}>
         <span>기관 편제</span>
         <small>ORGANIZATION / 04</small>
       </div>
-      <div className="department-grid">
+      <div className={styles.departmentGrid}>
         {DEPARTMENTS.map((department) => {
-          /* 각 항목의 화면 요소를 반환한다. */ return (
+          return (
             <article
-              className={`department ${department.tone}`}
+              className={classNames(
+                styles.department,
+                departmentStyles[department.tone],
+              )}
               key={department.id}
             >
-              <span className="department-number">{department.id}</span>
+              <span className={styles.departmentNumber}>{department.id}</span>
               <div>
                 <h3>{department.name}</h3>
                 <small>{department.role}</small>

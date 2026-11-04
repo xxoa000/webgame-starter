@@ -13,8 +13,8 @@ def get_owned(db: Session, user_id: int):
 def lock_owned(db: Session, user_id: int):
     # Parent lock also serializes creation when the character doesn't exist yet.
     """사용자와 캐릭터 행을 잠가 변경 요청을 직렬화한다."""
-    db.execute(select(User).where(User.id == user_id).with_for_update()).scalar_one()
-    return db.scalar(select(Character).where(Character.user_id == user_id).with_for_update())
+    db.execute(select(User).where(User.id == user_id).with_for_update().execution_options(populate_existing=True)).scalar_one()
+    return db.scalar(select(Character).where(Character.user_id == user_id).with_for_update().execution_options(populate_existing=True))
 
 
 def name_exists(db: Session, key: str):

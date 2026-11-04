@@ -45,6 +45,10 @@ def seed_initial(db):
     meta = sa.MetaData()
     meta.reflect(bind=db)
     t = meta.tables
+    # CSV를 반영한 묶음에는 이전 예시 코드를 다시 추가하지 않는다.
+    imported = db.execute(sa.select(t['script_pack'].c.code).where(sa.func.lower(t['script_pack'].c.code) == 'initial_common')).scalar_one_or_none()
+    if imported == 'initial_common':
+        return
     ids = {}
     for proposed_id, category, code, name, description in KEYWORDS:
         existing = db.execute(sa.select(t['personality_keyword'].c.id).where(t['personality_keyword'].c.code == code)).scalar_one_or_none()
@@ -86,7 +90,7 @@ def add_script(db, tables, code, version_id, event, layer, content, priority, ke
         return
     # Death only has public speech-like system report; owner layers remain private factual text.
     result = db.execute(tables['game_script'].insert().values(code=code, version_id=version_id,
-        situation_code=event, action_code=None, layer=layer, visibility='PUBLIC' if layer == 'SPEECH' else 'OWNER',
+        situation_code=event, action_code=None, layer=layer,
         content=content, priority=priority, weight=100, is_active=1))
     if keyword_id is not None:
         db.execute(tables['game_script_condition'].insert().values(script_id=result.inserted_primary_key[0], condition_group=1, keyword_id=keyword_id))

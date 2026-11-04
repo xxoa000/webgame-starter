@@ -1,0 +1,648 @@
+/* 캐릭터 생성·프로필 프리셋·성격·스탯·자원 바.
+ * :global([data-ui~=...])는 다른 모듈의 부모 배치를 확인한다.
+ * 클래스는 이 파일 안에서만 유효하며, 조건부 규칙은 원래 순서를 유지한다.
+ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 9px;
+  border: 1px solid #3f5450;
+  border-radius: 4px;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: #d7d4c5;
+  background: #1a2c2a;
+}
+.sectionBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 18px;
+  font: 11px var(--font-mono);
+  letter-spacing: 0.5px;
+  color: #d1ccbb;
+}
+.sectionBar small {
+  font-family: inherit;
+  font-size: 10px;
+  color: #84a39e;
+}
+.sectionBar button {
+  font-size: 11px;
+  padding: 7px 12px;
+}
+.characterGrid {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.profile > :global([data-ui~="smallLabel"]) {
+  padding-bottom: 18px;
+  border-bottom: 1px solid #2e4d4a;
+}
+.profile > .badge {
+  display: flex;
+  width: max-content;
+  margin: 0 auto 13px;
+}
+.profile > h2 {
+  text-align: center;
+  font-size: 25px;
+  margin-bottom: 6px;
+}
+.profile > :global([data-ui~="mutedText"]) {
+  text-align: center;
+}
+.personnelUnit {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #355855;
+  background: #1b2d2c;
+  padding: 11px 13px;
+  border-radius: 5px;
+  margin-top: 22px;
+  font-size: 11px;
+  color: #b0a98c;
+}
+.personnelUnit strong {
+  font-size: 11px;
+  color: #d7d4c5;
+  font-weight: 500;
+}
+.bio {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  margin: 20px 0;
+}
+.profileId {
+  font: 10px var(--font-mono);
+  letter-spacing: 1px;
+  color: #779993;
+  padding-top: 15px;
+  border-top: 1px solid #2e4d4a;
+}
+.civilianNotice {
+  padding: 14px;
+  background: #1b2e2c;
+  border-left: 2px solid #bdb69d;
+  margin: 20px 0;
+}
+.civilianNotice > span {
+  font-size: 10px;
+  color: #8aa6a2;
+  margin-right: 10px;
+}
+.civilianNotice strong {
+  font-size: 12px;
+  font-weight: 600;
+  color: #dedbcf;
+}
+.civilianNotice p {
+  font-size: 10px;
+  line-height: 1.8;
+  margin: 7px 0 0;
+  color: #86a49f;
+}
+.statTitle {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+}
+.statTitle h2 {
+  margin: 10px 0 0;
+}
+.stats > :global([data-ui~="mutedText"]) {
+  font-size: 11px;
+  margin: 15px 0 20px;
+}
+.statList {
+  margin-top: 24px;
+  display: grid;
+  gap: 21px;
+}
+.stat > div:first-child {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.stat > div:first-child > span {
+  font-size: 12px;
+  min-width: 28px;
+}
+.stat small {
+  font: 10px var(--font-mono);
+}
+.stat strong {
+  font: 20px var(--font-mono);
+  margin-left: auto;
+}
+.track {
+  height: 5px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.track > div {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.25s;
+}
+.statTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 22px 0 0;
+  border-top: 1px solid #31514f;
+  padding-top: 17px;
+  font-size: 12px;
+}
+.statTotal strong {
+  font: 20px var(--font-mono);
+}
+.statTotal small {
+  font-size: 12px;
+  color: #7b9b96;
+}
+.reroll {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  border-top: 1px solid #31514f;
+  margin-top: 24px;
+  padding-top: 20px;
+}
+.reroll strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.reroll p {
+  font-size: 11px;
+  margin: 5px 0 0;
+}
+.reroll button {
+  font-size: 11px;
+  white-space: nowrap;
+  padding: 11px 12px;
+}
+.reroll b {
+  margin-left: 10px;
+  color: var(--accent-color);
+  font-family: var(--font-mono);
+}
+.emptyIcon {
+  font-size: 45px;
+  color: #cbc6b2;
+  margin-bottom: 20px;
+}
+.dangerOutline {
+  width: 100%;
+  margin-top: 24px;
+  border-color: #624147;
+  color: #e3a7ad;
+  background: #24181e;
+  font-size: 11px;
+}
+.deleteDialog {
+  color: var(--text-color);
+  background: #182726;
+  border: 1px solid #77525b;
+  border-radius: 10px;
+  width: min(470px, calc(100% - 32px));
+  max-height: 90dvh;
+  overflow: auto;
+  padding: 28px;
+}
+.deleteDialog::backdrop {
+  background: #080e0dc9;
+}
+.deleteDialog h2 {
+  margin: 15px 0;
+}
+.deleteDialog p {
+  font-size: 13px;
+}
+.deleteDialog strong {
+  color: #eea8af;
+}
+
+.deleteError {
+  color: #eea8af;
+}
+.dialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+.dangerSolid {
+  background: #94454f;
+  border-color: #94454f;
+  color: #fff;
+}
+.resourceBars {
+  margin: 24px 0;
+  display: grid;
+  gap: 15px;
+  width: 100%;
+  text-align: left;
+}
+.resourceLabel {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  margin-bottom: 7px;
+  color: #c7c1ac;
+}
+.resourceLabel strong {
+  font: 11px var(--font-mono);
+  color: #e7e4db;
+}
+.resourceTrack {
+  height: 7px;
+  border-radius: 3px;
+  background: #274240;
+  overflow: hidden;
+}
+.resourceTrack > span {
+  height: 100%;
+  display: block;
+  transition: width 0.25s;
+}
+.healthBar .resourceTrack > span {
+  background: #d36b76;
+}
+.manaBar .resourceTrack > span {
+  background: #6ba5cf;
+}
+.staminaBar .resourceTrack > span {
+  background: #d7c47a;
+}
+.recoveryTime {
+  display: grid;
+  gap: 3px;
+  font-size: 10px;
+  line-height: 1.7;
+  color: #83a19c;
+  margin-top: 7px;
+}
+.resourceBars.compact {
+  margin: 20px 0;
+}
+.compact .resourceLabel {
+  font-size: 10px;
+}
+
+.compact .resourceLabel strong {
+  font-size: 10px;
+}
+@media (max-width: 1200px) {
+  .characterGrid {
+    grid-template-columns: 290px minmax(0, 1fr);
+    gap: 18px;
+  }
+  .reroll {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 950px) {
+  .characterGrid {
+    grid-template-columns: 1fr;
+  }
+  .profile {
+    display: block;
+  }
+}
+@media (max-width: 680px) {
+  .sectionBar {
+    font-size: 10px;
+  }
+  .sectionBar small {
+    display: block;
+    margin-top: 7px;
+  }
+  .sectionBar button {
+    font-size: 10px;
+  }
+  .compact .resourceLabel {
+    font-size: 9px;
+  }
+
+  .compact .resourceLabel strong {
+    font-size: 9px;
+  }
+  .recoveryTime {
+    font-size: 8px;
+  }
+  .personnelUnit strong {
+    font-size: 10px;
+  }
+}
+.characterGrid > .profile {
+  background: linear-gradient(
+    100deg,
+    #bfb395,
+    #d6c8a7 9%,
+    #ccbd99 96%,
+    #a39676
+  );
+  border: 1px solid #e2d1a6;
+  border-top: 8px solid #9c8b63;
+  box-shadow: 4px 5px #0007;
+  color: #253d3b;
+}
+.profile > :global([data-ui~="smallLabel"]) {
+  color: #465c59;
+  border-color: #698c86;
+}
+.profile h2 {
+  color: #233b39;
+}
+.profile h3 {
+  color: #233b39;
+}
+.profile label {
+  color: #233b39;
+}
+.profile p {
+  color: #405652;
+}
+.profile :global([data-ui~="mutedText"]) {
+  color: #405652;
+}
+.profile :global([data-ui~="helpText"]) {
+  color: #405652;
+}
+.profile .personnelUnit {
+  background: #b3ac8f;
+  border-color: #678883;
+  color: #2b4745;
+}
+.profile .personnelUnit * {
+  color: inherit;
+}
+.profile .badge {
+  background: transparent;
+  border-color: #855449;
+  color: #793e35;
+  border-radius: 0;
+  transform: rotate(-3deg);
+}
+.profile .bio {
+  color: #31514f;
+}
+.profile :global([data-ui~="fieldFeedback"]):global([data-ui~="success"]) {
+  color: #345653;
+}
+.profile :global([data-ui~="fieldFeedback"]):global([data-ui~="error"]) {
+  color: #852e26;
+}
+.characterGrid > :global([data-ui~="panel"]):not(.profile) {
+  background: #172625;
+}
+.profile .profileId {
+  color: #49605c;
+  border-color: #6a8c86;
+}
+.profile .civilianNotice {
+  background: #b5ae92;
+  border-color: #57736e;
+}
+.profile .civilianNotice span {
+  color: #335452;
+}
+.profile .civilianNotice strong {
+  color: #335452;
+}
+.profile .civilianNotice p {
+  color: #335452;
+}
+.profile dialog {
+  color: var(--text-color);
+}
+.profile dialog p {
+  color: #c6c1ab;
+}
+.profile dialog label {
+  color: #c6c1ab;
+}
+.stat small {
+  color: #b0a98b;
+}
+.statTotal {
+  color: #b0a98b;
+}
+.reroll > span {
+  color: #b0a98b;
+}
+.stat strong {
+  color: #d1cdbc;
+}
+.statTotal strong {
+  color: #d1cdbc;
+}
+.track {
+  background: #274240;
+}
+.track > div {
+  background: #b7b094;
+}
+.statTotal {
+  border-color: #405652;
+}
+.reroll {
+  border-color: #405652;
+}
+:global([data-ui~="subConsoleContent"]) .resourceBars {
+  margin: 12px 0 2px;
+  gap: 10px;
+}
+:global([data-ui~="subConsoleContent"]) .resourceLabel {
+  margin-bottom: 4px;
+}
+:global([data-ui~="subConsoleContent"]) .resourceTrack {
+  height: 6px;
+}
+:global([data-ui~="subConsoleContent"]) .recoveryTime {
+  font-size: 9px;
+  margin-top: 4px;
+}
+@media (max-width: 1100px) {
+  :global([data-ui~="dualConsole"]) .characterGrid {
+    grid-template-columns: 1fr;
+  }
+}
+.appearanceEditor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  margin: 20px 0;
+  align-items: center;
+}
+.pixelStage {
+  background: #213836;
+  border: 3px solid #6b8e88;
+  overflow: hidden;
+  width: 100%;
+  max-width: 460px;
+  margin: auto;
+  aspect-ratio: 1;
+}
+.pixelCharacter {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  image-rendering: pixelated;
+  filter: none;
+}
+.pixelCharacter.compact {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  margin: auto;
+}
+.portraitPresets {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.portraitPresets button {
+  position: relative;
+  padding: 0;
+  border: 2px solid #5e7c77;
+  background: #213836;
+  aspect-ratio: 1;
+  overflow: hidden;
+  min-width: 0;
+  border-radius: 2px;
+}
+.portraitPresets button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.portraitPresets button[aria-pressed="true"] {
+  border-color: #c7a17f;
+  box-shadow: 0 0 0 2px #c7a17f;
+}
+.portraitPresets button:focus-visible {
+  outline: 3px solid #cecab8;
+  outline-offset: 4px;
+}
+.portraitCheck {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  background: #1a2c2a;
+  color: #e1d2b9;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+}
+.customizationPanel > :global([data-ui~="primaryButton"]) {
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .appearanceEditor {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .pixelStage {
+    max-width: 320px;
+  }
+}
+
+.conditionInjury {
+  color: #df8c7e;
+}
+
+.deathRecord h2 {
+  color: #df8c7e;
+}
+.deathPortrait {
+  width: 180px;
+  max-width: 100%;
+  filter: grayscale(1);
+  margin: 16px 0;
+}
+.personalityPicker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+  border: 1px solid #5e7c77;
+  padding: 14px;
+}
+.personalityTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+.personalityTags span {
+  border: 1px solid #5e7c77;
+  padding: 3px 8px;
+  font-size: 12px;
+}
+.identityEditor {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+@media (max-width: 700px) {
+  .personalityPicker {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 편집은 왼쪽, 관리자 삭제는 오른쪽. 일반 계정은 편집 버튼이 행 전체를 사용한다. */
+.profileActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+.singleProfileAction {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-top: 14px;
+}
+.profileActions > button,
+.singleProfileAction > button {
+  margin-top: 0;
+  width: 100%;
+  padding: 10px 6px;
+  font-size: 12px;
+}
+.statControls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.statControls button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  line-height: 1;
+}
+.statPoints {
+  font: 11px var(--font-mono);
+  color: #d7d8b7;
+  text-align: right;
+}
+.statApply {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}

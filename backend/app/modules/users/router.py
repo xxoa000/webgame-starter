@@ -23,11 +23,11 @@ def signup(body: Credentials, db: DB):
 
 @router.post("/login")
 def login(body: Credentials, response: Response, db: DB):
-    """비밀번호와 계정 상태를 검증하고 로그인 세션을 생성한다."""
+    """비밀번호와 계정 상태를 검증하고 JWT 인증 토큰을 발급한다."""
     return service.login(body, response, db)
 
 
 @router.post("/logout")
 def logout(request: Request, response: Response, db: DB):
-    """로그인 세션과 인증 쿠키를 제거한다."""
+    """기존 JWT를 무효화하고 인증 쿠키를 제거한다."""
     return service.logout(request, response, db)

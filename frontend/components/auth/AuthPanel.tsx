@@ -1,16 +1,18 @@
 /* 기밀 관제 단말의 로그인·회원가입과 아이디 중복 확인을 처리한다. */
 "use client";
+
+import sharedStyles from "../../styles/shared/Controls.module.css";
+import styles from "./Auth.module.css";
+import { classNames } from "../../lib/classNames";
 import { useRef, useState, type FormEvent } from "react";
 import { api } from "../../lib/api";
 import type { RunAction } from "../../lib/types";
-
 type Props = {
   busy: boolean;
   run: RunAction;
   notify: (message: string) => void;
   login: (username: string, password: string) => Promise<void>;
 };
-
 export function AuthPanel({ busy, run, notify, login }: Props) {
   /* 로그인과 회원가입 입력 상태 및 인증 요청을 처리한다. */
 
@@ -21,7 +23,6 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
   const [checked, setChecked] = useState<string | null>(null);
   const [fieldMessage, setFieldMessage] = useState("");
   const revision = useRef(0);
-
   function submit(event: FormEvent<HTMLFormElement>) {
     /* 폼 기본 제출을 막고 검증된 입력으로 요청을 실행한다. */
 
@@ -37,7 +38,10 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
         throw new Error("아이디 중복 확인을 먼저 해.");
       if (password !== confirmation)
         throw new Error("비밀번호 확인이 일치하지 않아.");
-      await api("/auth/signup", { username, password });
+      await api("/auth/signup", {
+        username,
+        password,
+      });
       setMode("login");
       setPassword("");
       setConfirmation("");
@@ -53,9 +57,9 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
       /* 비동기 요청 결과를 처리한다. */
 
       try {
-        const result = await api<{ available: boolean }>(
-          "/auth/check-username?username=" + encodeURIComponent(candidate),
-        );
+        const result = await api<{
+          available: boolean;
+        }>("/auth/check-username?username=" + encodeURIComponent(candidate));
         if (version !== revision.current) return;
         setChecked(result.available ? candidate : null);
         setFieldMessage(
@@ -70,23 +74,29 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
     });
   }
   return (
-    <section className="panel auth classified-auth">
-      <div className="auth-classification">
+    <section
+      className={classNames(
+        sharedStyles.panel,
+        styles.auth,
+        styles.classifiedAuth,
+      )}
+      data-ui="panel"
+    >
+      <div className={styles.authClassification}>
         보안 구역 · AUTHORIZED PERSONNEL ONLY
       </div>
-      <div className="tabs">
+      <div className={styles.tabs}>
         {(["login", "signup"] as const).map((value) => {
-          /* 각 항목의 화면 요소를 반환한다. */ return (
+          return (
             <button
               key={value}
               disabled={busy}
-              className={mode === value ? "selected" : ""}
+              className={mode === value ? "" : ""}
               onClick={() => {
-                /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
                 setMode(value);
                 notify("");
               }}
+              data-ui={mode === value ? "selected" : ""}
             >
               {value === "login" ? "로그인" : "회원가입"}
             </button>
@@ -98,11 +108,19 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
           ? "관제 세션에 접속합니다."
           : "주무관 계정을 등록합니다."}
       </h2>
-      <p className="muted">상황관제탑 내부 시스템 · 개인 인증</p>
+      <p
+        className={sharedStyles.mutedText}
+        data-ui="mutedText"
+      >
+        상황관제탑 내부 시스템 · 개인 인증
+      </p>
       <form onSubmit={submit}>
         <label>
           아이디
-          <div className="inline">
+          <div
+            className={sharedStyles.inline}
+            data-ui="inline"
+          >
             <input
               required
               pattern="[a-zA-Z0-9_]{4,24}"
@@ -110,8 +128,6 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
               autoComplete="username"
               value={username}
               onChange={(event) => {
-                /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
                 setUsername(event.target.value);
                 setChecked(null);
                 setFieldMessage("");
@@ -131,8 +147,15 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
           </div>
           {mode === "signup" && fieldMessage && (
             <small
-              className={`field-feedback ${checked ? "success" : "error"}`}
+              className={classNames(
+                sharedStyles.fieldFeedback,
+                checked ? sharedStyles.success : sharedStyles.error,
+              )}
               role="status"
+              data-ui={classNames(
+                "fieldFeedback",
+                checked ? "success" : "error",
+              )}
             >
               {fieldMessage}
             </small>
@@ -147,9 +170,7 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
             maxLength={128}
             value={password}
             onChange={(event) => {
-              /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setPassword(
-                event.target.value,
-              );
+              return setPassword(event.target.value);
             }}
             autoComplete={
               mode === "login" ? "current-password" : "new-password"
@@ -166,14 +187,16 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
               autoComplete="new-password"
               value={confirmation}
               onChange={(event) => {
-                /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setConfirmation(
-                  event.target.value,
-                );
+                return setConfirmation(event.target.value);
               }}
             />
           </label>
         )}
-        <button disabled={busy} className="primary">
+        <button
+          disabled={busy}
+          className={sharedStyles.primaryButton}
+          data-ui="primaryButton"
+        >
           {busy
             ? "처리 중…"
             : mode === "login"
@@ -181,7 +204,7 @@ export function AuthPanel({ busy, run, notify, login }: Props) {
               : "주무관 등록 →"}
         </button>
       </form>
-      <div className="secure">
+      <div className={styles.secure}>
         개인 인증 필수 · 접속 권한을 타인과 공유하지 마십시오.
       </div>
     </section>

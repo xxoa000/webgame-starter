@@ -2,7 +2,7 @@
 from typing import Annotated
 from fastapi import APIRouter, Depends, Request, HTTPException, Query
 from ...core.dependencies import DB
-from ...core.security import Auth, current_user
+from ...core.security import ACCESS_COOKIE, Auth, current_user
 from .schemas import PostCreate, PostUpdate, PostResponse, PostPage
 from . import service
 
@@ -10,8 +10,8 @@ router = APIRouter(prefix='/posts', tags=['posts'])
 
 
 def optional_user(request: Request, db: DB):
-    """비로그인 조회를 허용하되 운영 권한은 유효한 세션에서만 가져온다."""
-    if not request.cookies.get('game_session'):
+    """비로그인 조회를 허용하되 운영 권한은 유효한 JWT에서만 가져온다."""
+    if not request.cookies.get(ACCESS_COOKIE):
         return None
     try:
         return current_user(request, db)

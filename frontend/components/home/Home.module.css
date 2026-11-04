@@ -1,0 +1,322 @@
+/* 홈 공지사항·균열 경보·기관 소개 화면.
+ * :global([data-ui~=...])는 다른 모듈의 부모 배치를 확인한다.
+ * 클래스는 이 파일 안에서만 유효하며, 조건부 규칙은 원래 순서를 유지한다.
+ */
+
+.departmentDirectory {
+  margin-top: 30px;
+}
+.directoryTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+.directoryTitle small {
+  font: 8px var(--font-mono);
+  letter-spacing: 1px;
+}
+.departmentGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.department {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid #2d4a48;
+  border-top: 2px solid #b4ad92;
+  padding: 17px 15px;
+}
+.department.field {
+  border-top-color: #b4ad90;
+}
+.department.research {
+  border-top-color: #bfb9a0;
+}
+.department.hazard {
+  border-top-color: #c8ac76;
+}
+.departmentNumber {
+  font: 10px var(--font-mono);
+  margin-top: 3px;
+}
+.department h3 {
+  font-size: 12px;
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+.department small {
+  font-size: 10px;
+}
+.department p {
+  font-size: 11px;
+  margin: 9px 0 0;
+  line-height: 1.75;
+}
+@media (max-width: 1200px) {
+  .departmentGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 680px) {
+  .departmentGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .department {
+    padding: 14px 11px;
+    gap: 8px;
+  }
+  .department p {
+    font-size: 10px;
+  }
+  .department h3 {
+    font-size: 11px;
+  }
+}
+.consolePanelHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.consolePanelHeading h2 {
+  margin: 7px 0 0;
+}
+.consolePanelHeading > small {
+  font: 9px var(--font-mono);
+}
+.noticeRows details {
+  border-top: 1px solid #2e4c4a;
+}
+.noticeRows summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+  padding: 18px 0;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.noticeRows summary::-webkit-details-marker {
+  display: none;
+}
+.noticeRows summary:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 3px;
+}
+.noticeExpand {
+  margin-left: auto;
+}
+.noticeRows details[open] .noticeExpand {
+  transform: rotate(45deg);
+}
+.bulletinBody {
+  padding: 4px 15px 16px;
+  border-left: 2px solid #7c9c97;
+  margin: 0 0 18px 2px;
+}
+.bulletinBody p {
+  font-size: 12px;
+  line-height: 1.9;
+  margin: 6px 0;
+}
+.riftAlerts {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.riftAlert {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-left: 4px solid #f26870;
+  padding: 20px 24px;
+}
+.alarmMarker {
+  width: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font: 24px var(--font-mono);
+}
+.alarmCopy {
+  flex: 1;
+}
+.alarmCopy :global([data-ui~="smallLabel"]) {
+  font-size: 10px;
+}
+.alarmCopy h2 {
+  font-size: 18px;
+  margin: 6px 0;
+}
+.alarmCopy p {
+  font-size: 11px;
+  margin: 0;
+}
+.alarmProgress {
+  min-width: 170px;
+}
+.alarmProgress strong {
+  display: block;
+  font-size: 12px;
+}
+.alarmProgress progress {
+  width: 100%;
+  height: 7px;
+  display: block;
+  margin: 10px 0;
+}
+.alarmProgress small {
+  font-size: 9px;
+}
+@media (max-width: 1100px) {
+  .riftAlert {
+    flex-wrap: wrap;
+  }
+  .alarmProgress {
+    width: 100%;
+    padding-left: 60px;
+  }
+}
+@media (max-width: 480px) {
+  .noticeRows summary {
+    gap: 8px;
+    font-size: 11px;
+  }
+  .riftAlert {
+    padding: 17px 14px;
+    gap: 12px;
+  }
+  .alarmMarker {
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+  }
+  .alarmCopy h2 {
+    font-size: 15px;
+  }
+  .alarmProgress {
+    padding-left: 0;
+  }
+}
+.riftAlert:before {
+  content: "";
+  align-self: stretch;
+  width: 8px;
+  flex-shrink: 0;
+}
+.consolePanelHeading {
+  border-bottom: 1px solid #425754;
+  padding-bottom: 10px;
+}
+.consolePanelHeading h2 {
+  font-size: 16px;
+}
+.consolePanelHeading > small {
+  color: #b0a88a;
+}
+.homeContent {
+  padding-top: 22px;
+}
+.noticeRows details {
+  border-color: #2f4e4c;
+}
+.noticeRows summary:hover {
+  color: #dbd8ca;
+}
+.noticeExpand {
+  color: #bbb49a;
+}
+.bulletinBody {
+  border-color: #7e9e99;
+}
+.department {
+  border-radius: 1px;
+  background: #182726;
+  border-color: #475f5b;
+  border-top-color: #ada687;
+}
+.department h3 {
+  color: #d6d3c4;
+}
+.department small {
+  color: #bcb59c;
+}
+.department p {
+  color: #b4ad91;
+}
+.departmentNumber {
+  color: #b2ab8f;
+}
+.directoryTitle {
+  color: #b2ab8f;
+}
+.directoryTitle small {
+  color: #b2ab8f;
+}
+.riftAlert {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, #0002 3px 4px), #2b100e;
+  border: 2px solid #b24f37;
+  border-top: 5px solid #db6b49;
+  border-radius: 0;
+  box-shadow:
+    inset 0 0 30px #a41d141a,
+    2px 3px #0008;
+}
+.riftAlert:before {
+  background: repeating-linear-gradient(
+    135deg,
+    #e18455 0 5px,
+    transparent 5px 10px
+  );
+}
+.alarmMarker {
+  border-radius: 0;
+  color: #ffb08a;
+  border-color: #e18455;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: #713822;
+  border: 0;
+  height: 38px;
+  padding-top: 8px;
+}
+.alarmCopy :global([data-ui~="smallLabel"]) {
+  color: #f19168;
+  letter-spacing: 2px;
+}
+.alarmCopy h2 {
+  color: #ffd1ad;
+}
+.alarmCopy p {
+  color: #d9a48d;
+}
+.alarmProgress small {
+  color: #d9a48d;
+}
+.alarmProgress strong {
+  color: #ffc298;
+}
+.alarmProgress progress {
+  accent-color: #e77b52;
+}
+@media (max-width: 680px) {
+  .alarmCopy :global([data-ui~="smallLabel"]) {
+    letter-spacing: 1px;
+  }
+}
+:global([data-ui~="dualConsole"]) .departmentGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+:global([data-ui~="dualConsole"]) .noticeBoard {
+  margin-top: 0;
+  padding: 16px 20px;
+}
+:global([data-ui~="dualConsole"]) .noticeRows summary {
+  padding: 9px 0;
+}

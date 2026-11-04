@@ -18,7 +18,7 @@
 | 프론트엔드 | Next.js App Router, React, TypeScript |
 | 백엔드 | FastAPI, Uvicorn, Pydantic, SQLAlchemy 동기 세션 |
 | DB | MySQL 8.4, PyMySQL, Alembic |
-| 인증 | Argon2 비밀번호 해시, 서버 세션·HttpOnly 쿠키 |
+| 인증 | Argon2 비밀번호 해시, JWT(HS256)·HttpOnly 쿠키 |
 | 실행 | Docker Compose: mysql / backend / frontend |
 | 테스트 | pytest, FastAPI TestClient, 격리된 SQLite DB |
 | Redis | 현재 도입하지 않음. 향후 공통 조회 후보 캐시 용도로 검토 |
@@ -32,13 +32,15 @@
 | 성격 | 겉성격·속성격·성향에서 각 1개 선택, 기존 캐릭터 최초 선택 지원 |
 | 탐색 | 맵 8개, 파밍 물자 24종, 확률 조우·선택·DB 상태 유지 |
 | 전투 | 몬스터 8종, 공격·확정 도망·회복 물자·부상·사망·전리품 |
-| 인벤토리·도감 | 10종·30kg 제한, 발견 기록과 미확인 이름 처리 |
-| 스크립트 | 초기 178개, 조건·우선순위·가중 추첨·출력 스냅샷·사용권 검사 |
+| 인벤토리·도감 | 서브 콘솔 수납창·10종·30kg 제한·버리기·회복량 표시·발견 기록 |
+| 스크립트 | 공통 CSV 갱신·조건·우선순위·가중 추첨·출력 스냅샷·사용권 검사 |
 | 게시판 | CRUD·공지·운영 상태 관리·권한별 제어 |
 | 균열 경보 | 홈 표시 UI. 일정 데이터는 frontend/lib/control.ts에서 관리 |
 | 원고 작성·심사·묶음 사용권 | 테이블 기반과 선택 엔진만 준비. 사용자 관리 화면/API는 아직 없음 |
-| 상점·재화·유료 결제·온라인 조우 | 아직 구현하지 않음 |
-| 마법·제작 | grimoire·recipe 테이블만 준비. 실제 사용 기능은 아직 없음 |
+| 상점·무료 재화 | 상품 구매·보유품 판매·계정 잔액 관리 |
+| 구조 | HP 1 빈사·NPC 및 같은 맵 플레이어 구조·구조 포기 |
+| 유료 결제·일반 온라인 조우 | 아직 구현하지 않음 |
+| 마법·제작 | skill·recipe 테이블만 준비. 실제 사용 기능은 아직 없음 |
 
 ## 요청 처리 파이프라인
 
@@ -83,18 +85,20 @@
 
 | 모듈/파일 | 담당 |
 |---|---|
-| users | 계정·세션·권한·휴면·로컬 운영 명령 |
+| users | 계정·JWT·권한·휴면·로컬 운영 명령 |
 | characters | 생성·프로필·이름·수정 기회·삭제 보관·자원 |
 | characters/rules.py | 스탯 합계·최대 재추첨·자원 배율·회복 간격 |
 | characters/stats.py | 합계 20인 스탯 분배 |
 | personality | 키워드·선택 검증·초기 시드 참고 |
 | scripts | 묶음·버전·조건·사용권과 대사 선택 |
 | maps / items | 맵과 공통 아이템 정의·연결 |
-| exploration | 탐색 상태·턴·회수 선택·결과 기록 |
+| exploration | 탐색 상태·턴·회수 선택·위치·온라인 접속 기록 |
+| rescue | 빈사 구조 요청·NPC 도착·플레이어 구조·구조 포기 |
+| shop | 무료 크레딧 상품 조회·구매·판매 |
 | combat | 조우·공격·전리품·사망·회복 물자 규칙 |
 | inventory / encyclopedia | 보유 물자·용량과 최초 발견 기록 |
 | posts | 게시판과 공지 CRUD·권한·정렬 |
-| monsters / magic / recipes | 몬스터·마법·조합 모델 |
+| monsters / skill / recipes | 몬스터·마법·조합 모델 |
 
 모든 모듈이 다섯 파일을 반드시 채우는 것은 아니다. 현재 모델만 필요한 기능에는 아직 라우터나 서비스가 없다. models.py는 저장 구조, schemas.py는 API 형식, router.py는 경로, service.py는 규칙·커밋, repository.py는 조회를 맡는다.
 
@@ -118,17 +122,17 @@
 
 ## DB 구성
 
-현재 애플리케이션 테이블은 28개이며 Alembic 관리 테이블은 별도다.
+현재 애플리케이션 테이블은 29개이며 Alembic 관리 테이블은 별도다.
 
 | 분류 | 테이블 |
 |---|---|
-| 계정 | users, login_session |
+| 계정 | users |
 | 캐릭터 | character, deleted_character |
 | 성격 | personality_keyword, character_personality |
 | 맵·아이템 | map, item, farming_item, drop_item, map_farming_item |
 | 몬스터 | monster, map_monster, monster_drop_item |
-| 인벤토리·탐색 | inventory, inventory_entry, exploration, encyclopedia |
-| 확장용 | grimoire, recipe |
+| 인벤토리·탐색 | inventory, inventory_entry, exploration, exploration_presence, encyclopedia, rescue_request |
+| 확장용 | skill, recipe |
 | 게시판 | posts |
 | 대사 | script_pack, script_pack_version, game_script, game_script_condition |
 | 기여·사용권 기반 | script_submission, user_script_pack, character_script_pack |
@@ -147,3 +151,5 @@
 ## 코드 작성 기준
 
 Python 파일 상단·함수 첫 부분에는 docstring, TSX 파일 상단·함수 내부에는 설명 주석을 둔다. 화면에는 필요한 안내만 표시한다. TypeScript strict 검사를 유지하고, 정상 추론되는 상태·콜백에 불필요한 any를 붙이지 않는다. 기능 변경 시 해당 서비스·스키마·타입·마이그레이션을 함께 확인한다.
+
+현재 상점은 /shop에서 이용하며 무료 크레딧은 users.money에 계정 단위로 보관한다. 빈사·구조·사망 확인 규칙은 RULE.md, 업데이트 실행 순서는 RUNNING.md에 정리했다.

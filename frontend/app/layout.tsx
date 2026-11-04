@@ -1,5 +1,6 @@
 /* 공통 계정 상태와 듀얼 물리 콘솔을 모든 경로에 제공하는 루트 레이아웃. */
 import "./globals.css";
+import "../styles/loadStyles";
 import { ConsoleDesk } from "../components/console/ConsoleDesk";
 import type { Metadata } from "next";
 export const metadata: Metadata = {

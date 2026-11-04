@@ -1,0 +1,1089 @@
+/* 모니터 프레임·하단 물리 버튼·메인 및 서브 콘솔 배치.
+ * :global([data-ui~=...])는 다른 모듈의 부모 배치를 확인한다.
+ * 클래스는 이 파일 안에서만 유효하며, 조건부 규칙은 원래 순서를 유지한다.
+ */
+
+.statusDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  margin-right: 8px;
+}
+.shell {
+  display: flex;
+  min-height: 100vh;
+}
+.agencyMark {
+  font-weight: 300;
+  line-height: 1;
+}
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 11px;
+}
+.pageHeader b {
+  font-weight: 400;
+  margin: 0 12px;
+}
+.operatorBadge {
+  border: 1px solid #2d4b49;
+  padding: 6px 12px;
+  font-size: 11px;
+}
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+.heading h1 {
+  margin: 11px 0 9px;
+}
+.heading p {
+  margin: 0;
+  max-width: 750px;
+}
+.relayDrone {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+}
+.relayDrone.large {
+  width: 160px;
+  height: 160px;
+  margin: 15px auto 10px;
+}
+.explorerMiniProfile {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  background: #1e3230;
+  border: 1px solid #455b57;
+  margin-top: 15px;
+  padding: 21px 10px;
+}
+.explorerMiniProfile > strong {
+  font-size: 18px;
+  font-weight: 600;
+}
+.explorerMiniProfile > span {
+  font-size: 10px;
+  color: #bfb9a0;
+}
+.explorerMiniProfile > small {
+  font-size: 10px;
+  color: #d2cebe;
+}
+:global([data-ui~="droneInfo"]) .relayDrone {
+  transform: scale(0.55);
+  margin: -12px -18px -12px -20px;
+}
+@media (min-width: 1550px) {
+  .mainContent {
+    padding: 0 55px;
+  }
+}
+@media (max-width: 1200px) {
+  .mainContent {
+    margin-left: 225px;
+    width: calc(100% - 225px);
+    padding: 0 25px;
+  }
+  .heading h1 {
+    font-size: 27px;
+  }
+}
+@media (max-width: 950px) {
+  .explorerMiniProfile {
+    margin: 0;
+    grid-column: 1;
+    grid-row: 2/5;
+    padding: 18px;
+  }
+}
+@media (max-width: 680px) {
+  .shell {
+    display: block;
+  }
+  .pageHeader b {
+    margin: 0 6px;
+  }
+  .operatorBadge {
+    font-size: 9px;
+    padding: 5px 8px;
+  }
+  .heading {
+    padding: 25px 0 22px;
+  }
+  .heading h1 {
+    margin-top: 8px;
+  }
+  .heading p {
+    font-size: 12px;
+    line-height: 1.85;
+  }
+  .explorerMiniProfile {
+    padding: 14px 7px;
+  }
+  .explorerMiniProfile > strong {
+    font-size: 16px;
+  }
+  .explorerMiniProfile > span {
+    font-size: 9px;
+  }
+  :global([data-ui~="droneInfo"]) .relayDrone {
+    display: none;
+  }
+}
+.explorationTheme :global([data-ui~="primaryButton"]):hover:not(:disabled) {
+  border-color: #ffbac0;
+}
+.monitorFrame {
+  border-top-color: #89806b;
+  border-bottom-color: #211f19;
+  background: linear-gradient(
+    115deg,
+    #475d5a,
+    #2c4946 23%,
+    #345653 80%,
+    #1e3230
+  );
+}
+.monitorScreen {
+  position: relative;
+  isolation: isolate;
+  overscroll-behavior: contain;
+  border: 9px solid #172726;
+  border-top-color: #111d1c;
+  border-bottom-color: #506965;
+  background: #0e1716;
+  box-shadow:
+    0 0 0 2px #77705c,
+    0 0 0 4px #203533,
+    inset 0 0 40px #0009;
+  scrollbar-color: #55706c #172625;
+  scrollbar-width: thin;
+}
+.monitorScreen:after {
+  content: "";
+  position: sticky;
+  display: block;
+  bottom: 0;
+  z-index: 20;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    #0000000b 0 1px,
+    transparent 1px 4px
+  );
+  border-radius: 8px;
+  box-shadow: inset 0 0 55px #0005;
+}
+.chassisControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 13px;
+}
+.ventSlots {
+  margin-left: auto;
+  width: 100px;
+  height: 16px;
+  background: repeating-linear-gradient(
+    90deg,
+    #1a2b2a 0 3px,
+    transparent 3px 7px
+  );
+}
+.powerLight {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #b4ad91;
+  box-shadow: 0 0 8px #beb8a088;
+}
+.powerLabel {
+  font: 8px var(--font-mono);
+  color: #c1bba4;
+  letter-spacing: 1px;
+}
+.pageShell {
+  min-height: 100%;
+  align-items: flex-start;
+}
+.mainContent {
+  margin-left: 0;
+  width: calc(100% - 226px);
+  padding: 0 28px;
+  max-width: none;
+}
+.agencyMark {
+  color: #beb8a0;
+  font-size: 33px;
+}
+.pageHeader {
+  height: 54px;
+  border-color: #425754;
+  color: #b8b196;
+  font: 10px var(--font-mono);
+}
+.pageHeader b {
+  color: #62837d;
+}
+.operatorBadge {
+  border-radius: 1px;
+  background: #1e3230;
+  border-color: #4d6662;
+  color: #cecab8;
+}
+.heading {
+  padding: 25px 0 22px;
+}
+.heading h1 {
+  font-size: 25px;
+}
+.heading p {
+  color: #b4ad91;
+  font-size: 12px;
+}
+.statusDot {
+  box-shadow: 0 0 5px #bbb59b66;
+}
+/* 탐색도 공통 청록 팔레트를 사용한다. */
+.explorationTheme .mainContent {
+  background: var(--background-color);
+}
+.explorationTheme .pageHeader {
+  border-color: var(--border-color);
+}
+.explorationTheme :global([data-ui~="panel"]) {
+  background: var(--panel-background);
+  border-color: var(--border-color);
+}
+.explorationTheme :global([data-ui~="primaryButton"]) {
+  background: linear-gradient(#45665e, #2d4c46);
+  border-color: #91a792;
+  color: var(--text-color);
+}
+.explorationTheme :global([data-ui~="primaryButton"]):hover:not(:disabled) {
+  background: #4c7167;
+}
+@media (max-width: 1100px) {
+  .workstation {
+    padding: 14px 14px 0;
+  }
+  .monitorFrame {
+    padding: 10px 13px 0;
+    border-radius: 18px;
+  }
+  .monitorScreen {
+    height: calc(100dvh - 113px);
+  }
+  .mainContent {
+    width: calc(100% - 195px);
+    padding: 0 20px;
+  }
+  .monitorScreen:after {
+    height: calc(100dvh - 131px);
+    margin-top: calc(-100dvh + 131px);
+  }
+}
+@media (max-width: 680px) {
+  .workstation {
+    padding: 7px 6px 0;
+  }
+  .monitorFrame {
+    border-radius: 13px;
+  }
+  .monitorScreen {
+    height: auto;
+    min-height: calc(100dvh - 100px);
+    overflow: visible;
+  }
+  .monitorScreen:after {
+    display: none;
+  }
+  .pageShell {
+    display: block;
+  }
+  .mainContent {
+    width: 100%;
+    margin: 0;
+    padding: 0 15px;
+  }
+  .pageHeader {
+    height: 48px;
+    font-size: 9px;
+    gap: 8px;
+  }
+  .chassisControls {
+    gap: 7px;
+    padding: 0 4px;
+  }
+  .ventSlots {
+    display: none;
+  }
+  .powerLight {
+    margin-left: auto;
+  }
+  .heading h1 {
+    font-size: 22px;
+  }
+}
+@media (prefers-contrast: more) {
+  .monitorScreen:after {
+    display: none;
+  }
+}
+.workstation {
+  padding: 0;
+  min-height: 100dvh;
+}
+.monitorFrame {
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  margin: 0;
+  padding: 8px 12px 0;
+  border: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: inset 0 1px 1px #ada58655;
+}
+.monitorScreen {
+  flex: 1;
+  min-height: 0;
+  height: auto;
+  overflow: auto;
+  border-width: 9px;
+  border-radius: 15px;
+}
+.monitorScreen:after {
+  height: calc(100dvh - 75px);
+  min-height: 0;
+  margin-top: calc(-100dvh + 75px);
+}
+.chassisControls {
+  height: 49px;
+  flex: 0 0 49px;
+}
+@media (max-width: 680px) {
+  .monitorFrame {
+    padding: 6px 6px 0;
+  }
+  .monitorScreen {
+    border-width: 5px;
+    border-radius: 7px;
+  }
+  .chassisControls {
+    height: 38px;
+    flex-basis: 38px;
+  }
+}
+.dualConsole {
+  padding: 0;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+.consolePair {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(270px, 1fr);
+  height: 100%;
+  gap: 6px;
+  background: #1e3130;
+}
+.dualConsole .monitorFrame {
+  min-width: 0;
+  height: 100%;
+}
+.dualConsole .mainGlass:after {
+  display: none;
+}
+.dualConsole .subGlass:after {
+  display: none;
+}
+.dualConsole .monitorScreen {
+  background-image: repeating-linear-gradient(
+    0deg,
+    #00000008 0 1px,
+    transparent 1px 4px
+  );
+}
+.dualConsole .pageShell {
+  display: block;
+  min-height: 100%;
+}
+.dualConsole .mainContent {
+  width: 100%;
+  margin: 0;
+  padding: 0 24px;
+}
+.dualConsole .pageHeader {
+  gap: 18px;
+}
+.dualConsole .pageHeader > span {
+  margin-left: auto;
+  font-size: 9px;
+}
+.consoleBrand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d0ccbb;
+  text-decoration: none;
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 650;
+}
+.consoleBrand .agencyMark {
+  font-size: 27px;
+}
+.mainControls {
+  gap: 15px;
+  padding: 0 16px;
+}
+.hardwareNav {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.hardwareMenu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 4px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.hardwareButton {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #152221, #5e7d78);
+  box-shadow:
+    1px 2px 2px #152423,
+    -1px -1px 1px #86a49f88;
+}
+.hardwareButton > span {
+  display: block;
+  border-radius: 50%;
+  border: 2px solid #435855;
+  background: radial-gradient(
+    circle at 36% 27%,
+    #48605c 0,
+    #2a4543 38%,
+    #1e3130 75%
+  );
+  box-shadow:
+    inset 0 1px 1px #83a19c66,
+    0 2px 2px #000a;
+}
+.hardwareLabel {
+  line-height: 1.3;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.hardwareMenu:hover .hardwareButton > span {
+  border-color: #84a39e;
+}
+.hardwareMenu:active .hardwareButton > span {
+  box-shadow: inset 1px 2px 4px #000a;
+}
+.hardwareMenu.isActive .hardwareButton > span {
+  background: radial-gradient(
+    circle at 36% 27%,
+    #e1ded2,
+    #89a6a1 42%,
+    #4e6863 85%
+  );
+  border-color: #c3bea8;
+  box-shadow:
+    inset 0 1px 2px #eeede7,
+    0 0 9px #c5c0aa77,
+    0 0 18px #b4ad9233;
+}
+.subControls {
+  justify-content: center;
+  gap: 10px;
+}
+.dualConsole .subGlass {
+  background-color: #121f1e;
+}
+.subConsoleContent {
+  padding: 17px 15px;
+}
+.subConsoleContent > :global([data-ui~="smallLabel"]) {
+  font-size: 9px;
+}
+.subConsoleContent .explorerMiniProfile {
+  margin-top: 12px;
+  padding: 14px 8px;
+  gap: 7px;
+  background: #213836;
+  border-color: #56736e;
+}
+.subConsoleContent .explorerMiniProfile > span {
+  color: #bbb59c;
+}
+.subConsoleContent .explorerMiniProfile > small {
+  color: #c9c4af;
+}
+.statList {
+  display: grid;
+  gap: 0;
+  margin: 18px 0;
+  border-top: 1px solid #435855;
+}
+.statList > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 2px;
+  border-bottom: 1px solid #2e4d4a;
+  font-size: 11px;
+}
+.statList dt {
+  color: #c0baa3;
+}
+.statList dd {
+  margin: 0;
+  color: #dbd8ca;
+  font: 13px var(--font-mono);
+}
+.consoleStandby {
+  padding: 30px 0;
+}
+.consoleStandby h2 {
+  font-size: 18px;
+  margin-top: 20px;
+}
+.consoleStandby p {
+  font-size: 12px;
+}
+.dualConsole .explorationTheme .mainContent {
+  background: #120f0d;
+}
+@media (max-width: 1100px) {
+  .consolePair {
+    grid-template-columns: minmax(0, 1fr) 270px;
+  }
+  .dualConsole .mainContent {
+    padding: 0 18px;
+  }
+  .dualConsole .pageHeader > span {
+    display: none;
+  }
+  .mainControls .ventSlots {
+    width: 45px;
+  }
+  .mainControls .powerLabel {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .dualConsole {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+  .consolePair {
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+    gap: 7px;
+  }
+  .dualConsole .subChassis {
+    min-height: 0;
+  }
+  .dualConsole .subGlass {
+    flex: none;
+  }
+  .dualConsole .mainContent {
+    padding: 0 14px;
+  }
+  .dualConsole .chassisControls {
+    flex-basis: 74px;
+  }
+  .dualConsole .subControls {
+    flex-basis: 35px;
+  }
+  .subConsoleContent {
+    padding: 16px 20px;
+  }
+  .consoleBrand {
+    font-size: 11px;
+  }
+  .mainControls .ventSlots {
+    display: none;
+  }
+  .mainControls .powerLight {
+    margin-left: auto;
+  }
+}
+.dualConsole .consolePair {
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+}
+.dualConsole .monitorFrame {
+  display: grid;
+  min-height: 0;
+  overflow: hidden;
+}
+.dualConsole .monitorScreen {
+  min-height: 0;
+  height: auto;
+  overflow: auto;
+}
+.dualConsole .chassisControls {
+  min-height: 0;
+  overflow: visible;
+}
+@media (max-width: 760px) {
+  .dualConsole .consolePair {
+    grid-template-rows: auto auto;
+  }
+  .dualConsole .mainChassis {
+    height: 82dvh;
+    min-height: 0;
+  }
+  .dualConsole .subChassis {
+    height: auto;
+  }
+  .dualConsole .subGlass {
+    overflow: visible;
+  }
+}
+.dualConsole {
+  --housing: linear-gradient(
+    110deg,
+    #85857c,
+    #6d7069 28%,
+    #777a72 75%,
+    #5d625b
+  );
+  background: #6d7069;
+}
+.dualConsole .consolePair {
+  gap: 0;
+  padding: 8px 9px 0;
+  background: var(--housing);
+}
+.dualConsole .monitorFrame {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  grid-template-rows: minmax(0, 1fr) 48px;
+}
+.dualConsole .mainChassis {
+  padding-right: 7px;
+}
+.dualConsole .subChassis {
+  padding-left: 7px;
+}
+.dualConsole .chassisControls {
+  height: 48px;
+  flex-basis: 48px;
+  padding: 0 12px;
+}
+.hardwareMenu {
+  flex-direction: row;
+  gap: 9px;
+  min-width: 0;
+}
+.hardwareNav {
+  gap: 25px;
+}
+.hardwareButton {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+.hardwareButton > span {
+  width: 21px;
+  height: 21px;
+}
+.hardwareLabel {
+  color: #1e3331;
+  font-size: 10px;
+  font-weight: 650;
+}
+.hardwareMenu.isActive .hardwareLabel {
+  color: #131f1e;
+}
+.hardwareMenu.explorationMenu.isActive .hardwareButton > span {
+  background: radial-gradient(
+    circle at 36% 27%,
+    #ffdbb5,
+    #e25d43 43%,
+    #96311f 85%
+  );
+  border-color: #f1a78a;
+  box-shadow:
+    inset 0 1px 2px #ffe7cb,
+    0 0 9px #ff664c88,
+    0 0 18px #d7483733;
+}
+.hardwareAuth {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-left: auto;
+  padding: 3px 0 3px 6px;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.hardwareAuth:hover:not(:disabled) {
+  background: transparent;
+}
+.hardwareAuth.isActive .hardwareButton > span {
+  background: radial-gradient(
+    circle at 36% 27%,
+    #e1ded2,
+    #89a6a1 42%,
+    #4e6863 85%
+  );
+  border-color: #c3bea8;
+  box-shadow: 0 0 8px #c5c0aa77;
+}
+.dualConsole .powerLabel {
+  color: #213635;
+}
+.subConsoleContent a.explorerMiniProfile {
+  text-decoration: none;
+  color: var(--text-color);
+}
+.consoleAuth label {
+  margin: 13px 0;
+}
+.consoleAuth input {
+  padding: 9px;
+  font-size: 12px;
+}
+.consoleAuth :global([data-ui~="inline"]) {
+  flex-wrap: wrap;
+}
+.consoleAuth :global([data-ui~="inline"]) input {
+  flex: 1 1 140px;
+}
+@media (max-width: 1100px) {
+  .hardwareNav {
+    gap: 16px;
+  }
+  .mainControls .ventSlots {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .dualConsole .consolePair {
+    gap: 0;
+    padding: 6px;
+  }
+  .dualConsole .mainChassis {
+    padding: 0;
+    grid-template-rows: minmax(0, 1fr) 48px;
+  }
+  .dualConsole .subChassis {
+    padding: 0;
+    grid-template-rows: auto 42px;
+  }
+  .dualConsole .chassisControls {
+    height: 48px;
+  }
+  .dualConsole .subControls {
+    height: 42px;
+  }
+  .hardwareNav {
+    gap: 15px;
+  }
+  .hardwareMenu {
+    gap: 6px;
+  }
+  .hardwareLabel {
+    font-size: 9px;
+  }
+  .hardwareButton {
+    width: 26px;
+    height: 26px;
+  }
+}
+.dualConsole .mainGlass {
+  overflow: hidden;
+}
+.mainScreenLayout {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+}
+.mainWorkspace {
+  min-height: 0;
+  overflow: auto;
+  scrollbar-color: #55706c #172625;
+  scrollbar-width: thin;
+}
+.subEquipment {
+  margin: 14px 0 18px;
+  border: 1px solid #4a635f;
+  padding: 10px;
+  background: #101b1a;
+}
+.subEquipmentTabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.subEquipmentTabs button {
+  padding: 8px 5px;
+  font-size: 12px;
+}
+.subCargoSummary {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  font: 11px monospace;
+  color: #c1bca5;
+  margin-top: 10px;
+}
+.subEquipmentBody {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #3f5450;
+}
+@media (max-width: 700px) {
+  .hardwareNav {
+    gap: 10px !important;
+  }
+}
+.portraitFrame {
+  position: relative;
+  width: 100%;
+}
+.thoughtBubble {
+  position: absolute;
+  z-index: 12;
+  top: -60px;
+  left: 0;
+  right: 0;
+  padding: 12px 14px;
+  border: 2px solid #62837d;
+  border-radius: 24px;
+  background: #162423;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: left;
+  overflow-wrap: anywhere;
+  box-shadow: 0 3px 8px #0008;
+  pointer-events: none;
+}
+.thoughtDot {
+  position: absolute;
+  display: block;
+  border: 2px solid #62837d;
+  background: #162423;
+  border-radius: 50%;
+}
+.largeThoughtDot {
+  width: 16px;
+  height: 16px;
+  right: 14px;
+  bottom: -25px;
+}
+.smallThoughtDot {
+  width: 9px;
+  height: 9px;
+  right: 27px;
+  bottom: -43px;
+}
+
+.explorationTheme :global([data-ui~="companionDrone"]) > div:not(.relayDrone) {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* 밝은 베젤과 유리의 곡률을 같은 경계 안에서 맞춘다. */
+.dualConsole {
+  background: var(--frame-color);
+}
+.dualConsole .consolePair {
+  background: linear-gradient(110deg, #a1a398, #8c9388 45%, #9b9d91);
+}
+.dualConsole .monitorScreen {
+  border: 8px solid var(--frame-color);
+  border-top-color: #a3a698;
+  border-left-color: #9b9f91;
+  border-right-color: #7f8b7f;
+  border-bottom-color: #8e9381;
+  border-radius: 19px;
+  background-color: var(--background-color);
+  background-clip: padding-box;
+  box-shadow:
+    inset 0 0 24px #0005,
+    0 0 0 1px var(--frame-shadow);
+}
+.dualConsole .subGlass {
+  background-color: #0d2222;
+}
+.subConsoleHeader {
+  padding: 4px 0 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  font: 11px/1.5 var(--font-mono);
+  letter-spacing: 1.5px;
+}
+.subConsoleContent .explorerMiniProfile {
+  background: #1b3230;
+  border-color: var(--border-color);
+}
+/* 속마음은 일정하게 확보한 여백 위에 겹쳐 표시하며 프로필 높이를 바꾸지 않는다. */
+.thoughtBubble {
+  position: absolute;
+  inset: auto;
+  bottom: 95%;
+  left: 50%;
+  width: calc(100% + 24px);
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 9px 11px;
+  font-size: 12px;
+  line-height: 1.5;
+  background: #122524;
+  border-color: #929879;
+}
+.thoughtDot {
+  background: #122524;
+  border-color: #929879;
+}
+.equipmentHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+.equipmentHeading button {
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  font-size: 22px;
+  line-height: 1;
+}
+.droneSprite {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+:global([data-ui~="droneInfo"]) .relayDrone {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin: 0;
+  transform: none;
+}
+.routeToast {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  bottom: 72px;
+  transform: translateX(-50%);
+  padding: 9px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background: #102626f5;
+  box-shadow: 0 3px 12px #0006;
+  color: var(--text-color);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+/* 서브 콘솔의 프로필·도구·자원을 한 화면에 모은다. 열린 도구 본문만 자원 아래에 추가된다. */
+.subConsoleContent {
+  padding: 12px 14px;
+}
+.subConsoleContent .explorerMiniProfile {
+  position: relative;
+  overflow: visible;
+  margin-top: 8px;
+  padding: 24px 10px 10px;
+  gap: 5px;
+}
+.subConsoleContent .portraitFrame {
+  width: min(100%, 26dvh);
+  max-width: 240px;
+  aspect-ratio: 1;
+}
+.subConsoleContent .explorerMiniProfile > strong {
+  font-size: 17px;
+}
+.subConsoleContent .explorerMiniProfile > span {
+  font-size: 10px;
+}
+.subEquipment {
+  padding: 8px 10px;
+  margin: 10px 0 12px;
+}
+.subEquipmentToolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.subEquipmentTabs {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.subEquipmentTabs button {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+}
+.subEquipmentTabs button[aria-expanded="true"] {
+  border-color: #b1c8a6;
+  background: #436559;
+}
+.subEquipmentTabs svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+.subCargoSummary {
+  flex: 1;
+  margin-top: 0;
+  font-size: 10px;
+  gap: 2px 8px;
+}
+.largeThoughtDot {
+  width: 10px;
+  height: 10px;
+  right: 16px;
+  bottom: -16px;
+}
+.smallThoughtDot {
+  width: 6px;
+  height: 6px;
+  right: 27px;
+  bottom: -28px;
+}
+@media (max-width: 760px) {
+  .subConsoleContent .portraitFrame {
+    width: min(100%, 220px);
+  }
+}

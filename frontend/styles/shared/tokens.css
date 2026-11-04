@@ -1,0 +1,20 @@
+/* 공통 색상·글꼴·모서리 크기. 전체 테마를 바꾸려면 이 기본값부터 수정한다. */
+:root {
+  color-scheme: dark;
+  --font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --background-color: #0e1716;
+  --panel-background: #152c2c;
+  --border-color: #71877f;
+  --text-color: #e0dfcc;
+  --muted-color: #acb9ae;
+  --accent-color: #83afa1;
+  --highlight-color: #83afa1;
+  --frame-color: #94978b;
+  --frame-shadow: #536661;
+  --map-ground: #162f30;
+  --map-block: #365351;
+  --map-road: #081d1e;
+  --map-road-line: #8b9381;
+  --selection-color: #83b4a4;
+  --corner-radius: 2px;
+}

@@ -1,0 +1,138 @@
+/* 버튼·패널·안내 문구처럼 여러 화면에서 사용하는 공통 스타일.
+ * :global([data-ui~=...])는 다른 모듈의 부모 배치를 확인한다.
+ * 클래스는 이 파일 안에서만 유효하며, 조건부 규칙은 원래 순서를 유지한다.
+ */
+
+.primaryButton {
+  font-weight: 650;
+  padding: 13px 16px;
+  width: 100%;
+}
+.panel {
+  border: 1px solid var(--border-color);
+  padding: 28px;
+}
+.smallLabel {
+  font: 11px/1.5 var(--font-mono);
+  letter-spacing: 1.3px;
+}
+
+.eyebrow {
+  font: 11px/1.5 var(--font-mono);
+  letter-spacing: 1.3px;
+}
+.mutedText {
+  font-size: 12px;
+  color: var(--muted-color);
+}
+.helpText {
+  font-size: 11px;
+  color: #afa88a;
+  line-height: 1.8;
+  margin-top: 14px;
+}
+.inline {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: stretch;
+}
+.inline input {
+  margin: 0;
+  min-width: 0;
+}
+.inline button {
+  font-size: 11px;
+  padding: 9px 12px;
+  white-space: nowrap;
+}
+.fieldFeedback {
+  display: block;
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 7px;
+}
+.fieldFeedback.success {
+  color: #c7c1ac;
+}
+.fieldFeedback.error {
+  color: #f0a4a0;
+}
+.message {
+  border: 1px solid #716245;
+  padding: 14px 18px;
+  border-radius: 6px;
+  margin-top: 20px;
+  font-size: 13px;
+}
+.empty {
+  text-align: center;
+  padding: 55px 28px;
+}
+.empty p {
+  font-size: 13px;
+  max-width: 500px;
+  margin: 10px auto 25px;
+}
+.empty .primaryButton {
+  max-width: 300px;
+}
+@media (max-width: 1200px) {
+  .panel {
+    padding: 23px;
+  }
+}
+@media (max-width: 680px) {
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .panel {
+    padding: 21px;
+  }
+  .empty {
+    padding: 38px 22px;
+  }
+}
+.eyebrow {
+  color: #b5ae92;
+}
+.smallLabel {
+  color: #b5ae92;
+}
+.panel {
+  border-radius: 2px;
+  background: #142221;
+  border-color: #475f5b;
+  box-shadow:
+    inset 0 0 0 2px #0e1817,
+    2px 3px 0 #070c0c66;
+}
+.primaryButton {
+  background: #beb89f;
+  border-color: #cecab8;
+  color: #182726;
+}
+.primaryButton:hover:not(:disabled) {
+  background: #ccc8b5;
+  border-color: #dfdcd1;
+}
+.message {
+  background: #1c2f2d;
+  border-color: #55716c;
+  color: #ccc8b5;
+}
+@media (prefers-contrast: more) {
+  .panel {
+    border-color: #b3ac8f;
+  }
+  .mutedText {
+    color: #d0ccbb;
+  }
+}
+.postContent {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+  margin: 18px 0;
+}

@@ -18,12 +18,15 @@ def enter(session, monster):
 def die(db, character, session, log):
     # The current row becomes an immutable tombstone until a new draft replaces it.
     """사망 기록을 보관하고 캐릭터와 탐색을 종료 상태로 바꾼다."""
+    if character.status == 'dead':
+        return
     from ..personality.service import snapshot
     db.add(DeletedCharacter(personality_snapshot=snapshot(character), original_character_id=character.id, user_id=character.user_id,
         name=character.name, gender=character.gender, age=character.age, bio=character.bio,
         appearance=dict(character.appearance or {}), stats=dict(character.stats), rerolls=character.rerolls,
         status='dead', deleted_at=now()))
     db.flush()
+    character.downed = False
     character.status, character.name_key, character.hp_current = 'dead', None, 0
     session.status, session.combat = 'ended', None
     session.pending_item_id, session.pending_quantity = None, 0
@@ -38,7 +41,10 @@ def counterattack(db, character, session, log):
     apply_damage(character, damage)
     log(session, 'damage', f"{monster['name']}의 공격. HP -{damage}.")
     if character.hp_current <= 0:
-        die(db, character, session, log)
+        character.hp_current, character.downed = 1, True
+        session.combat = None
+        session.pending_item_id, session.pending_quantity = None, 0
+        log(session, 'downed', f"{monster['name']}에게 치명상을 입었다. HP 1. 전투가 종료되었고 구조가 필요하다.")
     elif character.hp_current * 100 <= limits(character)[0] * INJURY_PERCENT:
         log(session, 'injury', '부상 상태. 회복이 필요하다.')
 

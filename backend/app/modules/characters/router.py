@@ -19,7 +19,7 @@ def me(user: Auth, db: DB):
     character = repository.lock_owned(db, user.id)
     if character and character.status == 'ready':
         vitals.sync(character)
-    result = {"username": user.username, "auth": user.auth, "user_status": user.user_status, "character": character_data(character)}
+    result = {"money": user.money, "username": user.username, "auth": user.auth, "user_status": user.user_status, "character": character_data(character)}
     db.commit()
     return result
 
@@ -91,3 +91,12 @@ def update_profile(body: ProfileUpdate, user: Auth, db: DB):
 def select_personality(body: PersonalitySelection, user: Auth, db: DB):
     """기존 캐릭터의 최초 성격 선택을 저장한다."""
     return service.select_personality(body, user, db)
+
+
+from .allocation import StatAllocation, allocate
+
+
+@router.post('/characters/stats/allocate')
+def allocate_stats(body: StatAllocation, user: Auth, db: DB):
+    """소유 캐릭터의 미분배 스탯 포인트를 확정한다."""
+    return allocate(db, user.id, body)

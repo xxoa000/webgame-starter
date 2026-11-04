@@ -1,16 +1,20 @@
-/* 피계약자를 중계하는 관제 드론을 표시한다. */
-// 코드로 그린 중계 드론. 장식용으로 별도의 이미지 의존성이 없다.
+/* 투명 배경의 도트 관제 드론을 표시한다. */
+import styles from "../console/Console.module.css";
+import { classNames } from "../../lib/classNames";
 export function RelayDrone({ large = false }: { large?: boolean }) {
-  /* 피계약자를 중계하는 관제 드론을 표시한다. */
-
+  /* 원본 PNG의 픽셀 경계를 유지한다. */
   return (
-    <div className={`relay-drone ${large ? "large" : ""}`} aria-hidden="true">
-      <div className="drone-orbit" />
-      <div className="drone-body">
-        <span className="drone-lens" />
-        <span className="drone-light" />
-      </div>
-      <div className="drone-shadow" />
+    <div
+      className={classNames(styles.relayDrone, large ? styles.large : "")}
+      aria-hidden="true"
+    >
+      <img
+        className={styles.droneSprite}
+        src="/drone/relay-pixel.png"
+        alt=""
+        width={64}
+        height={64}
+      />
     </div>
   );
 }

@@ -1,269 +1,365 @@
-/* 메인콘솔의 탐색 선택지와 현장 보고. 보조 창이 열린 동안 입력만 일시정지한다. */
+/* 탐색 지도와 행동 패널을 표시하고 모든 탐색 상태에서 드론을 유지한다. */
 "use client";
-import { reportText } from "../../lib/world";
+
+import { ItemIndicators, itemFrame } from "../items/ItemIndicators";
+import sharedStyles from "../../styles/shared/Controls.module.css";
+import styles from "./Observation.module.css";
+import { classNames } from "../../lib/classNames";
 import { useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 import { useExploration } from "../../hooks/useExploration";
-import type { Character, StatRanges } from "../../lib/types";
+import { useMapPresence } from "../../hooks/useMapPresence";
 import { kilograms } from "../../lib/exploration";
-import { ScriptLines } from "./ScriptLines";
-import { CombatPanel } from "./CombatPanel";
+import type { ExplorationAction } from "../../lib/exploration";
+import type { Character, StatRanges } from "../../lib/types";
+import { pendingCombatDrop } from "../../lib/pendingCombatDrop";
+import { reportText } from "../../lib/world";
+import { RelayDrone } from "../world/RelayDrone";
+import { CombatWindow } from "./CombatWindow";
+import { DroneMap } from "./DroneMap";
 import { MapLootPreview } from "./MapLootPreview";
-
-type Props = { character: Character; ranges: StatRanges };
-
-export function ExplorationWorkspace({ character, ranges }: Props) {
-  /* 탐색 상태에 맞춰 맵과 행동 선택지를 표시한다. */
-
+import { RescueBoard } from "./RescueBoard";
+import { RescuePanel } from "./RescuePanel";
+import { ScriptLines } from "./ScriptLines";
+type Props = {
+  character: Character;
+  ranges: StatRanges;
+};
+export function ExplorationWorkspace({ character }: Props) {
+  /* 최신 탐색 상태를 기준으로 지도·결과·행동 버튼을 구성한다. */
   const game = useExploration();
   const [selectedMap, setSelectedMap] = useState(1);
-  const { window } = game;
-  const stateVitals = game.state?.vitals;
-  const vitals =
+  const { state, maps, window: equipmentWindow } = game;
+  const stateMapId = state?.map_id;
+  const active = state?.status === "active";
+  const pending = state?.pending_item;
+  const combat = state?.combat;
+  const battleDrop = pendingCombatDrop(state);
+  const battleWindowOpen = Boolean(
+    active && !state?.downed && (combat || battleDrop),
+  );
+  const latest = state?.history.at(-1);
+  const downed = state?.downed ?? character.downed;
+  const paused = equipmentWindow !== null;
+  const blocked = game.busy || paused || downed;
+  const onlineCounts = useMapPresence(active, stateMapId);
+  const stateVitals = state?.vitals;
+  const characterVitals = character.vitals;
+  const useStateVitals =
     stateVitals &&
-    (!character.vitals ||
+    (!characterVitals ||
       Date.parse(stateVitals.server_time) >
-        Date.parse(character.vitals.server_time))
-      ? stateVitals
-      : character.vitals;
-  const active = game.state?.status === "active";
-  const pending = game.state?.pending_item;
-  const combat = game.state?.combat;
-  const selected = game.maps.find((map) => {
-    /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return (
-      map.id === (active ? game.state?.map_id : selectedMap)
-    );
-  });
-  const blocked = game.busy || window !== null;
-  const latest = game.state?.history.at(-1);
+        Date.parse(characterVitals.server_time));
+  const vitals = useStateVitals ? stateVitals : characterVitals;
+  const noStamina = (vitals?.stamina_current ?? 0) < 1;
+  const actionBlocked = blocked || !!pending;
+  const currentMapId = active ? stateMapId : selectedMap;
+  const selected = maps.find((map) => map.id === currentMapId);
+  const onlineCount =
+    onlineCounts === null
+      ? "—"
+      : selected
+        ? (onlineCounts[String(selected.id)] ?? 0)
+        : 0;
+  const mapTitle = active ? (selected?.name ?? "탐색 구역") : "균열 탐색";
+  const mapDescription = active
+    ? selected?.description
+    : "드론을 통해 현장을 관측하고, 피계약자의 행동을 지시하세요.";
+  const statusTitle = paused
+    ? "일시정지"
+    : downed
+      ? "구조 대기"
+      : active
+        ? "탐색 중"
+        : "탐색 대기";
+  const resultTitle = pending
+    ? "회수 가능한 자원 발견"
+    : latest?.kind === "rest"
+      ? "휴식 결과"
+      : latest?.kind === "empty"
+        ? "탐색 결과: 자원 미발견"
+        : "";
   useEffect(() => {
-    /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
-    if (game.state) setSelectedMap(game.state.map_id);
-  }, [game.state?.map_id]);
+    /* 서버의 탐색 지역이 바뀌면 지도 선택을 동기화한다. */
+    if (active && stateMapId !== undefined) {
+      setSelectedMap(stateMapId);
+    }
+  }, [active, stateMapId]);
   useEffect(() => {
-    /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
-
+    /* 최초 조회에서 유효한 탐색 지역을 선택한다. */
     if (
-      !game.state &&
-      game.maps.length &&
-      !game.maps.some((map) => {
-        /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return (
-          map.id === selectedMap
-        );
-      })
-    )
-      setSelectedMap(game.maps[0].id);
-  }, [game.maps, game.state, selectedMap]);
-
-  if (game.loading)
-    return <div className="panel">현장 데이터와 인벤토리를 수신하는 중…</div>;
+      !active &&
+      maps.length > 0 &&
+      !maps.some((map) => map.id === selectedMap)
+    ) {
+      setSelectedMap(maps[0].id);
+    }
+  }, [maps, active, selectedMap]);
+  function handleMapChange(event: ChangeEvent<HTMLSelectElement>) {
+    /* 지역 선택 값을 숫자 ID로 변환한다. */
+    setSelectedMap(Number(event.target.value));
+  }
+  function handleStart() {
+    /* 선택 지역에서 탐색을 시작한다. */
+    void game.start(selectedMap);
+  }
+  function handleAction(action: ExplorationAction) {
+    /* 턴과 자원 검증은 기존 탐색 API에 맡긴다. */
+    void game.act(action);
+  }
+  function openInventory() {
+    /* 서브 콘솔의 인벤토리를 연다. */
+    game.setWindow(equipmentWindow === "inventory" ? null : "inventory");
+  }
+  if (game.loading) {
+    return (
+      <div className={sharedStyles.panel} data-ui="panel">
+        현장 데이터를 수신받는 중…
+      </div>
+    );
+  }
   return (
-    <div className="explore-page">
-      <div className="explore-main-column">
-        <div className="explore-section-title">
-          <span>현장 영상 / FIELD OBSERVATION</span>
-          <span className="field-state">
-            {window ? "일시정지" : active ? "탐색 중" : "탐색 대기"}
-          </span>
-        </div>
-        <section className="forest-scene">
-          <div className="forest-mist" aria-hidden="true" />
-          <div className="forest-trees" aria-hidden="true">
-            ⟐
-          </div>
-          <div className="forest-caption">
-            <div className="eyebrow">FRACTURE ZONE / 균열 내부</div>
-            <h2>{selected?.name ?? "탐색 구역"}</h2>
-            <p>{selected?.description}</p>
-          </div>
-          <span className="turn-counter">
-            TURN{" "}
-            <strong>{String(game.state?.turn ?? 0).padStart(2, "0")}</strong>
-          </span>
-        </section>
-        <MapLootPreview map={selected} />
-        {!!selected?.monsters?.length && (
-          <div className="map-threats">
-            {selected.monsters.map((monster) => {
-              /* 각 항목의 화면 요소를 반환한다. */ return (
-                <span key={monster.name}>
-                  {monster.name} · {(monster.probability * 100).toFixed(1)}%
-                </span>
-              );
-            })}
-          </div>
-        )}
-        {!active ? (
-          <section className="panel exploration-start">
-            <h2>
-              {game.state?.status === "ended"
-                ? "현장 탐색이 종료되었습니다."
-                : "탐색 구역을 지정하십시오."}
-            </h2>
-            <p>
-              {game.state?.status === "ended"
-                ? "회수 물품은 보관 중입니다. 새 탐색 구역을 지정할 수 있습니다."
-                : "주무관은 중계 드론으로 선택지를 전달합니다. 피계약자의 자원 상태를 확인한 뒤 진입을 지시하십시오."}
-            </p>
-            <label>
-              탐색 지역
-              <select
-                value={selectedMap}
-                disabled={blocked}
-                onChange={(event) => {
-                  /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setSelectedMap(
-                    Number(event.target.value),
-                  );
-                }}
-              >
-                {game.maps.map((map) => {
-                  /* 각 항목의 화면 요소를 반환한다. */ return (
-                    <option key={map.id} value={map.id}>
-                      {map.name}
-                    </option>
-                  );
-                })}
-              </select>
-            </label>
-            <button
-              className="primary"
-              disabled={blocked || !selected}
-              onClick={() => {
-                /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return void game.start(
-                  selectedMap,
-                );
-              }}
-            >
-              원격 탐색 개시 →
-            </button>
-          </section>
-        ) : combat ? (
-          <section className="panel exploration-turn">
-            <p className="turn-message">{latest?.message}</p>
-            <ScriptLines outputs={latest?.scripts} />
-            <CombatPanel disabled={blocked} />
-          </section>
-        ) : (
-          <section className="panel exploration-turn" aria-live="polite">
-            <div className="mini">
-              {pending ? "SOMETHING FOUND" : "YOUR NEXT STEP"}
-            </div>
-            <h2>
-              {pending
-                ? "회수 가능한 자원 발견"
-                : latest?.kind === "rest"
-                  ? "휴식 결과 보고"
-                  : latest?.kind === "empty"
-                    ? "탐색 결과: 자원 미발견"
-                    : "다음 명령을 지정하십시오."}
-            </h2>
-            <p className="turn-message">
-              {latest
-                ? reportText(latest, game.state?.map_name ?? "")
-                : "명령 대기 중"}
-            </p>
-            <ScriptLines outputs={latest?.scripts} />
-            {pending && (
-              <article className="discovered-item">
-                <div className="item-symbol">❋</div>
-                <div>
-                  <h3>{pending.name}</h3>
-                  <p>{pending.description}</p>
-                  <small>
-                    ×{pending.quantity} ·{" "}
-                    {kilograms(pending.weight_grams * pending.quantity)} kg
-                  </small>
-                </div>
-              </article>
-            )}
-            {pending && (
-              <div className="discovery-actions">
-                <button
-                  className="primary"
-                  disabled={blocked}
-                  onClick={() => {
-                    /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return void game.act(
-                      "take",
-                    );
-                  }}
-                >
-                  아이템을 가져간다
-                </button>
-                <button
-                  disabled={blocked}
-                  onClick={() => {
-                    /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return void game.act(
-                      "give_up",
-                    );
-                  }}
-                >
-                  포기한다
-                </button>
+    <div className={styles.explorationPage}>
+      <div className={styles.mainColumn}>
+        <div className={styles.observationDesk}>
+          <div className={styles.observationSurface} inert={battleWindowOpen}>
+            <header className={styles.observationHeader}>
+              <div className={styles.mapHeading}>
+                <h2>{mapTitle}</h2>
+                <p>{mapDescription}</p>
               </div>
-            )}
-            <div className="exploration-actions">
-              <button
-                className="primary"
-                disabled={
-                  blocked || !!pending || (vitals?.stamina_current ?? 0) < 1
-                }
-                onClick={() => {
-                  /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return void game.act(
-                    "search",
-                  );
-                }}
-              >
-                ⌕ 탐색
-              </button>
-              <button
-                disabled={blocked || !!pending}
-                onClick={() => {
-                  /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return void game.act(
-                    "rest",
-                  );
-                }}
-              >
-                ☾ 휴식
-              </button>
-              <button
-                disabled={blocked}
-                onClick={() => {
-                  /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return void game.act(
-                    "end",
-                  );
-                }}
-              >
-                {pending ? "발견을 포기하고 종료" : "탐색 종료"}
-              </button>
+              <div className={styles.mapStatus}>
+                <span className={styles.onlinePlayers}>
+                  <i /> ONLINE {onlineCount}
+                </span>
+                <span className={styles.turnCount}>
+                  TURN{" "}
+                  <strong>{String(state?.turn ?? 0).padStart(2, "0")}</strong>
+                </span>
+              </div>
+            </header>
+            <section
+              className={styles.mapViewport}
+              aria-label="균열 탐색 관측 지도"
+            >
+              <DroneMap
+                maps={maps}
+                selected={selected}
+                active={active}
+                step={state?.position_step ?? 0}
+                blocked={blocked}
+                onSelect={setSelectedMap}
+              />
+              <div className={styles.droneScanlines} aria-hidden="true" />
+              <div className={styles.droneScale} aria-hidden="true">
+                100 m · N ↑
+              </div>
+            </section>
+            <div className={styles.mapItemPanel}>
+              <MapLootPreview map={selected} />
+              {!!selected?.monsters?.length && (
+                <div className={styles.droneThreats}>
+                  {selected.monsters.map((monster) => (
+                    <span key={monster.name}>
+                      {monster.name} · {(monster.probability * 100).toFixed(1)}%
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
-            {!pending && <CombatPanel disabled={blocked} outsideCombat />}
-            <p className="hint">
-              {pending
-                ? "가져가거나 포기하면 다음 턴을 진행할 수 있어."
-                : "탐색당 스태미나 -1. 휴식은 HP·MP를 각각 5~30% 회복해. 스태미나는 5분마다 1씩 회복돼."}
-            </p>
-          </section>
-        )}
+            <div className={styles.actionArea}>
+              <header className={styles.actionHeader}>
+                <div className={styles.explorationStatus}>
+                  <h2>
+                    {battleDrop
+                      ? "전투 승리"
+                      : combat
+                        ? "전투 중"
+                        : statusTitle}
+                  </h2>
+                  <span className={styles.droneLink}>
+                    <i /> {active ? "LIVE" : "STANDBY"}
+                  </span>
+                </div>
+                <div
+                  className={classNames(
+                    styles.droneInfo,
+                    styles.companionDrone,
+                  )}
+                  data-ui="droneInfo companionDrone"
+                >
+                  <RelayDrone />
+                  <div>
+                    <strong>관제 드론</strong>
+                    <small>현장대응센터 · 동행 유닛</small>
+                  </div>
+                </div>
+              </header>
+              {downed ? (
+                <RescuePanel />
+              ) : !active ? (
+                <section
+                  className={classNames(sharedStyles.panel, styles.startPanel)}
+                  data-ui="panel"
+                >
+                  <p className={styles.selectedMapDescription}>
+                    {selected?.description}
+                  </p>
+
+                  <label>
+                    탐색 지역
+                    <select
+                      value={selectedMap}
+                      disabled={blocked}
+                      onChange={handleMapChange}
+                    >
+                      {maps.map((map) => (
+                        <option key={map.id} value={map.id}>
+                          {map.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <button
+                    className={sharedStyles.primaryButton}
+                    disabled={blocked || !selected}
+                    onClick={handleStart}
+                    data-ui="primaryButton"
+                  >
+                    원격 탐색 개시 →
+                  </button>
+                </section>
+              ) : battleWindowOpen ? null : (
+                <section
+                  className={classNames(sharedStyles.panel, styles.actionPanel)}
+                  aria-live="polite"
+                  data-ui="panel"
+                >
+                  <div className={styles.resultColumn}>
+                    {resultTitle && <h4>{resultTitle}</h4>}
+
+                    <div className={styles.encounterLayout}>
+                      <div>
+                        <p className={styles.turnMessage}>
+                          {latest
+                            ? reportText(latest, state?.map_name ?? "")
+                            : "명령 대기 중"}
+                        </p>
+                        <ScriptLines outputs={latest?.scripts} />
+                      </div>
+
+                      {pending && (
+                        <article
+                          className={classNames(
+                            styles.discoveredItem,
+                            itemFrame(pending.rarity),
+                          )}
+                        >
+                          <ItemIndicators
+                            rarity={pending.rarity}
+                            edible={pending.edible}
+                          />
+                          <div className={styles.itemSymbol}>❋</div>
+                          <div>
+                            <h3>{pending.name}</h3>
+                            <p>{pending.description}</p>
+                            <small>
+                              ×{pending.quantity} ·{" "}
+                              {kilograms(
+                                pending.weight_grams * pending.quantity,
+                              )}{" "}
+                              kg
+                            </small>
+                          </div>
+                        </article>
+                      )}
+                    </div>
+                  </div>
+                  <div className={styles.commandColumn}>
+                    <div className={styles.explorationActions}>
+                      <button
+                        className={sharedStyles.primaryButton}
+                        disabled={
+                          pending ? blocked : actionBlocked || noStamina
+                        }
+                        onClick={() =>
+                          handleAction(pending ? "take" : "search")
+                        }
+                        data-ui="primaryButton"
+                      >
+                        {pending ? "회수" : "⌕ 탐색"}
+                      </button>
+                      <button
+                        disabled={
+                          pending ? blocked : actionBlocked || noStamina
+                        }
+                        onClick={() =>
+                          handleAction(pending ? "give_up" : "rest")
+                        }
+                      >
+                        {pending ? "포기" : "☾ 휴식"}
+                      </button>
+                      <button
+                        disabled={game.busy || downed}
+                        aria-expanded={equipmentWindow === "inventory"}
+                        onClick={openInventory}
+                      >
+                        아이템
+                      </button>
+                    </div>
+
+                    <div className={styles.explorationEndRow}>
+                      <button
+                        disabled={blocked}
+                        onClick={() => handleAction("end")}
+                      >
+                        {pending ? "발견을 포기하고 종료" : "탐색 종료"}
+                      </button>
+                    </div>
+
+                    <p className={sharedStyles.helpText} data-ui="helpText">
+                      {pending
+                        ? "가져가거나 포기하면 다음 턴을 진행할 수 있습니다."
+                        : "탐색·휴식은 턴 1과 스태미나 1을 소비합니다. " +
+                          "아이템 사용은 턴을 소비하지 않습니다."}
+                    </p>
+                  </div>
+                </section>
+              )}
+            </div>
+          </div>
+          {battleWindowOpen && (
+            <CombatWindow
+              combat={combat ?? null}
+              loot={battleDrop}
+              disabled={blocked}
+            />
+          )}
+        </div>
+        {active && !downed && <RescueBoard />}
+
         {game.error && (
-          <div className="notice" role="alert">
+          <div className={sharedStyles.message} role="alert" data-ui="message">
             {game.error}
           </div>
         )}
-        {game.state && (
-          <section className="exploration-history">
-            <div className="mini">OPERATION LOG / 현장 보고</div>
+
+        {state && (
+          <section className={styles.explorationHistory}>
+            <div className={sharedStyles.smallLabel} data-ui="smallLabel">
+              OPERATION LOG / 현장 보고
+            </div>
             <ol>
-              {[...game.state.history].reverse().map((event, index) => {
-                /* 각 항목의 화면 요소를 반환한다. */ return (
-                  <li key={`${game.state?.id}-${index}`}>
-                    <span>{String(event.turn).padStart(2, "0")}</span>
-                    <div>
-                      <p>{reportText(event, game.state?.map_name ?? "")}</p>
-                      <ScriptLines outputs={event.scripts} />
-                    </div>
-                  </li>
-                );
-              })}
+              {[...state.history].reverse().map((event, index) => (
+                <li key={`${state.id}-${index}`}>
+                  <span>{String(event.turn).padStart(2, "0")}</span>
+                  <div>
+                    <p>{reportText(event, state.map_name)}</p>
+                    <ScriptLines outputs={event.scripts} />
+                  </div>
+                </li>
+              ))}
             </ol>
           </section>
         )}

@@ -213,7 +213,7 @@ def test_future_world_tables_and_foreign_keys(world):
     _,factory,_=world
     with factory() as db:
         inspector=inspect(db.connection())
-        assert {column['name'] for column in inspector.get_columns('grimoire')} == {'id','magic_name','description','power','mana_cost','create_at','update_at'}
+        assert {column['name'] for column in inspector.get_columns('skill')} == {'id','skill_name','description','power','mana_cost','create_at','update_at'}
         assert {'main_item_id','sub_item1_id','sub_item2_id','result_item_id'} <= {column['name'] for column in inspector.get_columns('recipe')}
         for table,targets in {'map_farming_item':{'map','farming_item'},'map_monster':{'map','monster'},'monster_drop_item':{'monster','drop_item'},'recipe':{'item'}}.items():
             assert targets=={constraint['referred_table'] for constraint in inspector.get_foreign_keys(table)}

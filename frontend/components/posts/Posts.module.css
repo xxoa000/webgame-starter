@@ -1,0 +1,60 @@
+/* 게시판 목록·본문·작성 및 수정 폼.
+ * :global([data-ui~=...])는 다른 모듈의 부모 배치를 확인한다.
+ * 클래스는 이 파일 안에서만 유효하며, 조건부 규칙은 원래 순서를 유지한다.
+ */
+
+.postBoard {
+  display: grid;
+  gap: 16px;
+}
+.postList {
+  display: grid;
+  padding: 12px 20px;
+}
+.postList > button {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+  padding: 12px 0;
+  border: 0;
+  border-bottom: 1px solid #62817c55;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.postList > button span {
+  overflow-wrap: anywhere;
+}
+.postList small {
+  flex-shrink: 0;
+  font-size: 11px;
+  opacity: 0.7;
+}
+.postActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.postActions h2 {
+  margin-right: auto;
+}
+.postEditor {
+  display: grid;
+  gap: 16px;
+}
+.postCheckbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.postCheckbox input {
+  width: auto;
+}
+@media (max-width: 700px) {
+  .postList > button {
+    flex-direction: column;
+    gap: 4px;
+  }
+}

@@ -28,7 +28,6 @@ class ScriptPackVersion(Base):
 class GameScript(Base):
     __tablename__ = 'game_script'
     __table_args__ = (CheckConstraint("layer IN ('SPEECH','THOUGHT','NARRATION')", name='ck_script_layer'),
-        CheckConstraint("(layer='SPEECH' AND visibility='PUBLIC') OR (layer IN ('THOUGHT','NARRATION') AND visibility='OWNER')", name='ck_script_visibility'),
         CheckConstraint('weight > 0 AND is_active IN (0,1)', name='ck_script_weight_active'),
         Index('ix_script_candidate','situation_code','is_active','layer','version_id'))
     id: Mapped[int] = mapped_column(primary_key=True, comment='스크립트 ID')
@@ -37,7 +36,6 @@ class GameScript(Base):
     situation_code: Mapped[str] = mapped_column(String(40), comment='상황 코드')
     action_code: Mapped[str | None] = mapped_column(String(40), nullable=True, comment='행동 코드, NULL이면 공통')
     layer: Mapped[str] = mapped_column(String(12), comment='발화·속마음·행동 서술 층')
-    visibility: Mapped[str] = mapped_column(String(8), comment='PUBLIC공개 OWNER소유자전용')
     content: Mapped[str] = mapped_column(Text, comment='허용된 변수만 포함한 대사 본문')
     priority: Mapped[int] = mapped_column(Integer, default=0, server_default='0', comment='조건 일치 후보 중 우선순위')
     weight: Mapped[int] = mapped_column(Integer, default=100, server_default='100', comment='동일 우선순위 내 추첨 가중치')

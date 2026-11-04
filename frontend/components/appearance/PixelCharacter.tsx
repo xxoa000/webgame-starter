@@ -1,4 +1,6 @@
 /* 선택한 완성형 프로필 이미지를 원본 색상으로 표시한다. */
+import styles from "../characters/Characters.module.css";
+import { classNames } from "../../lib/classNames";
 import { portraitFor, type Appearance } from "../../lib/appearance";
 export function PixelCharacter({
   appearance,
@@ -14,9 +16,13 @@ export function PixelCharacter({
     <img
       src={portrait.src}
       alt={portrait.label}
-      className={`pixel-character ${compact ? "compact" : ""}`}
+      className={classNames(
+        styles.pixelCharacter,
+        compact ? styles.compact : "",
+      )}
       width={512}
       height={512}
+      data-ui={compact ? "" : ""}
     />
   );
 }

@@ -161,3 +161,14 @@ git commit -m "docs: consolidate current project documentation"
 `git add -u -- '*.md'`는 추적 중인 문서의 수정·삭제를 스테이징한다. 커밋 전 변경 목록을 확인한다.
 
 기능 개발은 브랜치에서 진행하고 검증 후 main으로 병합한다. 릴리스 태그를 사용할 때는 실제 검증·배포한 버전만 지정한다. 현재 package.json의 0.1.0이 곧 운영 릴리스가 완료됐다는 뜻은 아니다.
+
+
+## JWT 의존성
+
+JWT는 PyJWT를 사용한다. requirements.txt에는 PyJWT>=2.13,<3, requirements.lock.txt에는 검증한 PyJWT==2.13.0을 기록했다. Docker 빌드는 lock 파일을 설치한다. 에디터용 가상환경도 backend에서 다음처럼 갱신한다.
+
+```bash
+.venv/bin/python -m pip install -r requirements.lock.txt
+```
+
+서명키 설정과 마이그레이션 적용 순서는 RUNNING.md의 JWT 인증 전환 항목을 따른다. 실제 `.env`는 업데이트 파일로 배포하지 않는다.

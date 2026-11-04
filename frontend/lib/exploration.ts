@@ -1,5 +1,9 @@
 /* 맵·인벤토리·탐색과 전투 상태의 API 타입을 정의한다. */
-export type InventoryItem = {
+import type { ItemTraits } from "./items";
+export type InventoryItem = ItemTraits & {
+  hp_restore: number;
+  mp_restore: number;
+  sell_price: number;
   item_id: number;
   name: string;
   description: string;
@@ -16,15 +20,16 @@ export type WorldMap = {
   name: string;
   description: string;
   empty_probability: number;
-  items: {
+  items: (ItemTraits & {
     item_id: number;
     name: string;
     weight_grams: number | null;
     discovered: boolean;
     probability: number;
-  }[];
+  })[];
 };
 export type InventoryData = {
+  money: number;
   character_id: number;
   slot_capacity: number;
   used_slots: number;
@@ -40,6 +45,15 @@ export type CombatState = {
   max_hp: number;
 };
 export type ExplorationState = {
+  downed: boolean;
+  rescue: {
+    id: number;
+    status: "waiting" | "rescued" | "abandoned";
+    due_at: string;
+    remaining_seconds: number;
+    helper: string;
+  } | null;
+  position_step: number;
   combat: CombatState | null;
   dead: boolean;
   vitals: Vitals;
@@ -49,13 +63,15 @@ export type ExplorationState = {
   status: "active" | "ended";
   turn: number;
   version: number;
-  pending_item: {
-    item_id: number;
-    name: string;
-    description: string;
-    weight_grams: number;
-    quantity: number;
-  } | null;
+  pending_item:
+    | (ItemTraits & {
+        item_id: number;
+        name: string;
+        description: string;
+        weight_grams: number;
+        quantity: number;
+      })
+    | null;
   history: {
     turn: number;
     kind: string;
@@ -81,6 +97,5 @@ export type ScriptOutput = {
   version_id: number;
   version: number;
   layer: "SPEECH" | "THOUGHT" | "NARRATION";
-  visibility: "PUBLIC" | "OWNER";
   content: string;
 };

@@ -2,7 +2,7 @@
 import type { PersonalityKeyword } from "./personality";
 import type { Appearance } from "./appearance";
 export type Vitals = {
-  condition: "정상" | "부상" | "사망";
+  condition: "정상" | "부상" | "빈사" | "사망";
   hp_current: number;
   hp_max: number;
   hp_percent: number;
@@ -16,6 +16,9 @@ export type Vitals = {
   server_time: string;
 };
 export type Character = {
+  stat_points: number;
+  stat_version: number;
+  downed: boolean;
   personality: PersonalityKeyword[];
   name_changes_remaining: number;
   age_changes_remaining: number;
@@ -32,6 +35,7 @@ export type Character = {
   rerolls_remaining: number;
 };
 export type Account = {
+  money: number;
   username: string;
   auth: 0 | 1 | 9;
   user_status: 0 | 1 | 2 | 3;

@@ -1,6 +1,10 @@
 /* 하나의 회색 외장 안에 메인/서브 화면과 물리 메뉴·인증 버튼을 배치한다. 로그인은 서브 화면에 표시한다. */
 "use client";
-import { useState, type ReactNode } from "react";
+
+import styles from "./Console.module.css";
+import sharedStyles from "../../styles/shared/Controls.module.css";
+import { classNames } from "../../lib/classNames";
+import { useEffect, useState, type ReactNode } from "react";
 import { DeathRecord } from "../characters/DeathRecord";
 import { AuthPanel } from "../auth/AuthPanel";
 import { usePathname } from "next/navigation";
@@ -20,46 +24,83 @@ function ConsoleFrame({
 
   const game = useGame();
   const [authOpen, setAuthOpen] = useState(false);
-  const exploring = usePathname().startsWith("/explore");
+  const pathname = usePathname();
+  const exploring = pathname.startsWith("/explore");
+  useEffect(() => {
+    /* 페이지에 남은 인증 입력과 알림을 초기화한다. */
+    setAuthOpen(false);
+    game.setNotice("");
+  }, [pathname]);
   return (
     <div
-      className={`workstation dual-workstation ${exploring ? "field-terminal" : "control-terminal"}`}
+      className={classNames(
+        styles.workstation,
+        styles.dualConsole,
+        exploring ? styles.explorationTheme : "",
+      )}
+      data-ui={classNames("dualConsole", exploring ? "explorationTheme" : "")}
     >
-      <div className="console-pair">
-        <div className="monitor-chassis main-chassis">
-          <div className="monitor-glass main-glass">
+      <div className={styles.consolePair}>
+        <div className={classNames(styles.monitorFrame, styles.mainChassis)}>
+          <div className={classNames(styles.monitorScreen, styles.mainGlass)}>
             <MainConsole ready={ready}>{children}</MainConsole>
           </div>
-          <div className="chassis-controls main-controls">
+          <div
+            className={classNames(styles.chassisControls, styles.mainControls)}
+          >
             <HardwareNavigation />
-            <span className="vent-slots" aria-hidden="true" />
-            <span className="power-light" aria-hidden="true" />
-            <span className="power-label" aria-hidden="true">
+            <span
+              className={styles.ventSlots}
+              aria-hidden="true"
+            />
+            <span
+              className={styles.powerLight}
+              aria-hidden="true"
+            />
+            <span
+              className={styles.powerLabel}
+              aria-hidden="true"
+            >
               POWER
             </span>
           </div>
         </div>
+
         <aside
-          className="monitor-chassis sub-chassis"
-          aria-label="피계약자 서브콘솔"
+          className={classNames(styles.monitorFrame, styles.subChassis)}
+          aria-label="서브콘솔"
         >
-          <div className="monitor-glass sub-glass">
-            <div className="sub-console-title">PERSONNEL / SUB CONSOLE</div>
-            <div className="sub-console-content">
+          <div className={classNames(styles.monitorScreen, styles.subGlass)}>
+            <div
+              key={pathname}
+              className={styles.subConsoleContent}
+              data-ui="subConsoleContent"
+            >
+              <header className={styles.subConsoleHeader}>
+                PERSONNEL / SUB CONSOLE
+              </header>
               {authOpen && !game.account ? (
-                <section className="console-auth" aria-label="주무관 인증">
+                <section
+                  className={styles.consoleAuth}
+                  aria-label="주무관 인증"
+                  data-ui="consoleAuth"
+                >
                   <AuthPanel
                     busy={game.busy}
                     run={game.run}
                     notify={game.setNotice}
                     login={async (username, password) => {
-                      /* 비동기 요청 결과를 처리한다. */
+                      /* 로그인이 완료된 후 서브 콘솔 인증 입력을 닫는다. */
                       await game.login(username, password);
                       setAuthOpen(false);
                     }}
                   />
                   {game.notice && (
-                    <p className="notice" role="status">
+                    <p
+                      className={sharedStyles.message}
+                      role="status"
+                      data-ui="message"
+                    >
                       {game.notice}
                     </p>
                   )}
@@ -67,10 +108,24 @@ function ConsoleFrame({
               ) : ready ? (
                 <ContractorConsole />
               ) : game.account?.character?.status === "dead" ? (
-                <DeathRecord />
+                exploring ? (
+                  <p
+                    className={sharedStyles.message}
+                    data-ui="message"
+                  >
+                    생체 신호 종료 · 메인 콘솔에서 사망 경위를 확인하십시오.
+                  </p>
+                ) : (
+                  <DeathRecord />
+                )
               ) : (
-                <div className="console-standby">
-                  <span className="mini">PERSONNEL LINK</span>
+                <div className={styles.consoleStandby}>
+                  <span
+                    className={sharedStyles.smallLabel}
+                    data-ui="smallLabel"
+                  >
+                    PERSONNEL LINK
+                  </span>
                   <h2>
                     {game.loading
                       ? "신원 확인 중…"
@@ -87,18 +142,26 @@ function ConsoleFrame({
               )}
             </div>
           </div>
-          <div className="chassis-controls sub-controls">
-            <span className="power-label" aria-hidden="true">
+
+          <div
+            className={classNames(styles.chassisControls, styles.subControls)}
+          >
+            <span
+              className={styles.powerLabel}
+              aria-hidden="true"
+            >
               PERSONNEL TERMINAL
             </span>
             <button
               type="button"
-              className={`hardware-auth ${game.account || authOpen ? "is-active" : ""}`}
+              className={classNames(
+                styles.hardwareAuth,
+                game.account || authOpen ? styles.isActive : "",
+              )}
               disabled={game.busy || game.loading}
               aria-expanded={!game.account ? authOpen : undefined}
               aria-label={game.account ? "로그아웃" : "로그인 및 회원가입"}
               onClick={() => {
-                /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
                 if (game.account) {
                   void game.run(game.logout);
                 } else {
@@ -106,11 +169,15 @@ function ConsoleFrame({
                   setAuthOpen(!authOpen);
                 }
               }}
+              data-ui={game.account || authOpen ? "" : ""}
             >
-              <span className="hardware-label">
+              <span className={styles.hardwareLabel}>
                 {game.account ? "로그아웃" : "로그인"}
               </span>
-              <span className="hardware-button" aria-hidden="true">
+              <span
+                className={styles.hardwareButton}
+                aria-hidden="true"
+              >
                 <span />
               </span>
             </button>
@@ -125,9 +192,11 @@ function ConnectedDesk({ children }: { children: ReactNode }) {
 
   const game = useGame();
   const character = game.account?.character;
-  return character?.status === "ready" ? (
+  return character && ["ready", "dead"].includes(character.status) ? (
     <ExplorationProvider key={character.id}>
-      <ConsoleFrame ready>{children}</ConsoleFrame>
+      <ConsoleFrame ready={character.status === "ready"}>
+        {children}
+      </ConsoleFrame>
     </ExplorationProvider>
   ) : (
     <ConsoleFrame ready={false}>{children}</ConsoleFrame>

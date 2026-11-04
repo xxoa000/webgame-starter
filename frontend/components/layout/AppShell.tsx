@@ -1,11 +1,14 @@
 /* 메인 작업 화면의 기관 로고·인증 상태·페이지 제목을 표시한다. 인증 입력은 서브콘솔에서 처리한다. */
 "use client";
+
+import styles from "../console/Console.module.css";
+import sharedStyles from "../../styles/shared/Controls.module.css";
+import { classNames } from "../../lib/classNames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import type { useGame } from "../../hooks/useGame";
 import { AGENCY } from "../../lib/world";
-
 type Props = {
   username?: string;
   ready: boolean;
@@ -19,42 +22,53 @@ export function AppShell({ username, ready, children, auth }: Props) {
   const exploring = pathname.startsWith("/explore");
   const home = pathname === "/";
   const posts = pathname.startsWith("/posts");
+  const shop = pathname.startsWith("/shop");
   const about = pathname === "/about";
   return (
     <div
-      className={`shell bureau-shell ${exploring ? "field-terminal" : "control-terminal"}`}
+      className={classNames(
+        styles.shell,
+        styles.pageShell,
+        exploring ? styles.explorationTheme : "",
+      )}
+      data-ui={exploring ? "explorationTheme" : ""}
     >
-      <main className="bureau-main">
-        <header className="bureau-header">
+      <main className={styles.mainContent}>
+        <header className={styles.pageHeader}>
           <Link
             href="/"
-            className="console-brand"
+            className={styles.consoleBrand}
             aria-label="차원위상격리감시국 홈"
           >
-            <span className="agency-mark">⟐</span>
+            <span className={styles.agencyMark}>⟐</span>
             <span>{AGENCY}</span>
           </Link>
           <span>
             상황관제탑 <b>/</b>{" "}
-            {posts
-              ? "게시판"
-              : home
-                ? "통합 관제 단말"
-                : exploring
-                  ? "현장 원격 관제"
-                  : about
-                    ? "기관 소개"
-                    : "피계약자 관리"}
+            {shop
+              ? "보급 상점"
+              : posts
+                ? "게시판"
+                : home
+                  ? "통합 관제 단말"
+                  : exploring
+                    ? "현장 원격 관제"
+                    : about
+                      ? "기관 소개"
+                      : "피계약자 관리"}
           </span>
-          <div className="operator-badge">
-            <span className="status-dot" />
+          <div className={styles.operatorBadge}>
+            <span className={styles.statusDot} />
             {username ? `주무관 ${username}` : "인증 대기"}
           </div>
         </header>
-        {!home && !posts && (
-          <section className="heading">
+        {!home && !posts && !shop && !exploring && (
+          <section className={styles.heading}>
             <div>
-              <div className="eyebrow">
+              <div
+                className={sharedStyles.eyebrow}
+                data-ui="eyebrow"
+              >
                 {about
                   ? "BUREAU ORGANIZATION"
                   : exploring

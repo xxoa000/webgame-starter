@@ -1,5 +1,9 @@
 /* 게시판 목록·상세와 사용자·운영자별 CRUD 조작을 구성한다. */
 "use client";
+
+import styles from "./Posts.module.css";
+import sharedStyles from "../../styles/shared/Controls.module.css";
+import { classNames } from "../../lib/classNames";
 import { useState } from "react";
 import { useGame } from "../../hooks/useGame";
 import { usePosts } from "../../hooks/usePosts";
@@ -17,29 +21,26 @@ export function PostBoard() {
     selected?.is_notice === 0 &&
     selected?.post_status === 1;
   return (
-    <div className="post-board">
-      <div className="post-actions">
+    <div className={styles.postBoard}>
+      <div className={styles.postActions}>
         <h2>게시판</h2>
         {game.account && (
           <button
             disabled={board.busy}
             onClick={() => {
-              /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setEditing(
-                "new",
-              );
+              return setEditing("new");
             }}
           >
             글 작성
           </button>
         )}
         {canManage && (
-          <label className="post-checkbox">
+          <label className={styles.postCheckbox}>
             <input
               type="checkbox"
               checked={board.management}
               disabled={board.busy}
               onChange={(event) => {
-                /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
                 board.setManagement(event.target.checked);
                 board.setPage(1);
                 board.setSelected(null);
@@ -51,7 +52,11 @@ export function PostBoard() {
         )}
       </div>
       {board.error && (
-        <p role="alert" className="notice">
+        <p
+          role="alert"
+          className={sharedStyles.message}
+          data-ui="message"
+        >
           {board.error}
         </p>
       )}
@@ -63,24 +68,24 @@ export function PostBoard() {
           busy={board.busy}
           save={board.save}
           close={() => {
-            /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setEditing(
-              null,
-            );
+            return setEditing(null);
           }}
         />
       )}
       {board.loading ? (
         <p>불러오는 중…</p>
       ) : (
-        <section className="panel post-list">
+        <section
+          className={classNames(sharedStyles.panel, styles.postList)}
+          data-ui="panel"
+        >
           {board.data?.items.length ? (
             board.data.items.map((post) => {
-              /* 각 항목의 화면 요소를 반환한다. */ return (
+              return (
                 <button
                   key={post.id}
                   disabled={board.busy}
                   onClick={() => {
-                    /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
                     setEditing(null);
                     void board.open(post.id);
                   }}
@@ -103,11 +108,10 @@ export function PostBoard() {
           )}
         </section>
       )}
-      <div className="post-actions">
+      <div className={styles.postActions}>
         <button
           disabled={board.busy || board.loading || board.page <= 1}
           onClick={() => {
-            /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
             board.setPage(board.page - 1);
             board.setSelected(null);
           }}
@@ -123,7 +127,6 @@ export function PostBoard() {
             board.page * board.data.page_size >= board.data.total
           }
           onClick={() => {
-            /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
             board.setPage(board.page + 1);
             board.setSelected(null);
           }}
@@ -132,20 +135,21 @@ export function PostBoard() {
         </button>
       </div>
       {selected && editing === null && (
-        <article className="panel">
+        <article
+          className={sharedStyles.panel}
+          data-ui="panel"
+        >
           <h2>{selected.title}</h2>
           <small>
             {selected.username} · {postDate(selected.create_at)}
           </small>
-          <div className="post-content">{selected.content}</div>
+          <div className={sharedStyles.postContent}>{selected.content}</div>
           {game.account && (canManage || own) && (
-            <div className="post-actions">
+            <div className={styles.postActions}>
               <button
                 disabled={board.busy}
                 onClick={() => {
-                  /* 입력값에 따른 상태 변경이나 반환값을 처리한다. */ return setEditing(
-                    selected,
-                  );
+                  return setEditing(selected);
                 }}
               >
                 수정
@@ -153,7 +157,6 @@ export function PostBoard() {
               <button
                 disabled={board.busy}
                 onClick={() => {
-                  /* 화면 변화나 사용자 선택에 따른 처리를 실행한다. */
                   if (window.confirm("이 글을 삭제할까?"))
                     void board.remove(selected.id);
                 }}

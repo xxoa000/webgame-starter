@@ -5,12 +5,18 @@ import pytest
 import sqlalchemy as sa
 from alembic import command
 from alembic.config import Config
+from alembic.script import ScriptDirectory
 from alembic.runtime.migration import MigrationContext
 from alembic.autogenerate import compare_metadata
 from app.database.metadata import target_metadata
 from app.database import checks
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def latest_revision():
+    """현재 코드의 단일 최신 리비전을 읽어 오래된 버전 번호에 의존하지 않는다."""
+    return ScriptDirectory.from_config(Config(str(ROOT / 'alembic.ini'))).get_current_head()
 
 
 def config_for(connection):
@@ -71,7 +77,7 @@ def test_fresh_database_and_startup_check(tmp_path, monkeypatch):
         command.upgrade(config_for(db),'head')
         assert compare_metadata(MigrationContext.configure(db),target_metadata) == []
     checks.assert_schema_current()
-    assert head(engine) == '0011_personality_scripts'
+    assert head(engine) == latest_revision()
     assert 'posts' in sa.inspect(engine).get_table_names()
     engine.dispose()
 
@@ -105,7 +111,9 @@ def test_adopt_existing_database_preserves_data(tmp_path,stage):
         else:
             assert row['age'] is None
         assert db.execute(sa.text('SELECT password_hash FROM users')).scalar_one()=='preserve_hash'
-        assert db.execute(sa.text('SELECT COUNT(*) FROM login_session')).scalar_one()==1
+        # JWT 전환에서는 기존 로그인 세션만 폐기하고 계정 버전을 초기화한다.
+        assert 'login_session' not in sa.inspect(db).get_table_names()
+        assert db.execute(sa.text('SELECT token_version FROM users')).scalar_one() == 0
         count=db.execute(sa.text('SELECT COUNT(*) FROM deleted_character')).scalar_one()
         assert count==(2 if stage==3 else 0)
         inventory=db.execute(sa.text('SELECT character_id,slot_capacity,max_weight_grams FROM inventory')).one()
@@ -115,7 +123,7 @@ def test_adopt_existing_database_preserves_data(tmp_path,stage):
         command.upgrade(config_for(db),'head')
     with engine.connect() as db:
         assert db.execute(sa.select(character.c.stats)).scalar_one()==before
-    assert head(engine)=='0011_personality_scripts'
+    assert head(engine) == latest_revision()
     engine.dispose()
 
 
@@ -135,7 +143,7 @@ def test_duplicate_names_stop_and_resume(tmp_path):
         db.execute(sa.text("UPDATE character SET name='다른이름' WHERE id=78"))
     with engine.connect() as db:
         command.upgrade(config_for(db),'head')
-    assert head(engine)=='0011_personality_scripts'
+    assert head(engine) == latest_revision()
     engine.dispose()
 
 
@@ -149,4 +157,4 @@ def test_revision_generation_template(tmp_path):
     revision=command.revision(config,message='add post fields')
     assert Path(revision.path).is_file()
     compile(Path(revision.path).read_text(),revision.path,'exec')
-    assert revision.down_revision=='0011_personality_scripts'
+    assert revision.down_revision == latest_revision()

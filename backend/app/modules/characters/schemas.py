@@ -30,9 +30,9 @@ def character_data(c):
     """캐릭터 프로필과 능력치·자원을 응답 형식으로 구성한다."""
     if not c:
         return None
-    return {"id": c.id, "name": c.name, "gender": c.gender, "age": c.age, "bio": c.bio,
+    return {"downed": c.downed, "id": c.id, "name": c.name, "gender": c.gender, "age": c.age, "bio": c.bio,
             "personality": snapshot(c), "name_changes_remaining": 1-c.name_changes, "age_changes_remaining": 1-c.age_changes,
-            "appearance": Appearance.model_validate(c.appearance or {}).model_dump(), "stats": c.stats, "status": c.status, "rerolls_used": MAX_REROLLS-c.rerolls,
+            "stat_points": c.stat_points, "stat_version": c.stat_version, "appearance": Appearance.model_validate(c.appearance or {}).model_dump(), "stats": c.stats, "status": c.status, "rerolls_used": MAX_REROLLS-c.rerolls,
             "rerolls_remaining": c.rerolls, "vitals": vitals_data(c)}
 
 

@@ -1,5 +1,6 @@
 /* 일반 게시판과 운영 권한에 따른 게시글 관리 화면을 연다. */
 "use client";
+
 import { useGame } from "../../hooks/useGame";
 import { AppShell } from "../../components/layout/AppShell";
 import { PostBoard } from "../../components/posts/PostBoard";

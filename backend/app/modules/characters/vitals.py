@@ -38,6 +38,7 @@ def sync(character):
 def spend_stamina(character):
     """행동 가능 여부를 검사하고 탐색 스태미나를 소비한다."""
     from fastapi import HTTPException
+    require_mobile(character)
     sync(character)
     if character.status == 'dead' or character.hp_current == 0:
         raise HTTPException(409, '사망한 피계약자는 행동할 수 없어.')
@@ -50,6 +51,7 @@ def spend_stamina(character):
 
 def recover(character, hp_percent, mp_percent):
     """지정한 최대치 비율만큼 HP와 MP를 회복한다."""
+    require_mobile(character)
     if character.status == 'dead' or character.hp_current == 0:
         from fastapi import HTTPException
         raise HTTPException(409, '사망한 피계약자는 회복할 수 없어.')
@@ -71,7 +73,7 @@ def data(character):
     missing = maximum - current
     elapsed = max(0, (current_time - (character.stamina_updated_at or current_time)).total_seconds())
     next_seconds = max(0, math.ceil(STAMINA_INTERVAL_SECONDS - elapsed)) if missing else 0
-    return {'condition': '사망' if character.status == 'dead' else '부상' if (character.hp_current or 0) * 100 <= hp * 30 else '정상', 'hp_current': min(hp,max(0,character.hp_current or 0)), 'hp_max': hp,
+    return {'condition': '사망' if character.status == 'dead' else '빈사' if character.downed else '부상' if (character.hp_current or 0) * 100 <= hp * 30 else '정상', 'hp_current': min(hp,max(0,character.hp_current or 0)), 'hp_max': hp,
             'hp_percent': round(min(hp,max(0,character.hp_current or 0))/hp*100,2),
             'mp_current': min(mp,max(0,character.mp_current or 0)), 'mp_max': mp,
             'mp_percent': round(min(mp,max(0,character.mp_current or 0))/mp*100,2),
@@ -90,6 +92,7 @@ def apply_damage(character, hp_amount=0, mp_amount=0):
 
 def restore_points(character, hp_amount=0, mp_amount=0):
     """향후 아이템 효과에서 호출. 최대치 초과 회복과 스태미나 회복은 하지 않는다."""
+    require_mobile(character)
     if character.status == 'dead' or character.hp_current == 0:
         from fastapi import HTTPException
         raise HTTPException(409, '사망한 피계약자는 회복할 수 없어.')
@@ -97,3 +100,12 @@ def restore_points(character, hp_amount=0, mp_amount=0):
     hp,mp,_=limits(character)
     character.hp_current=min(hp,character.hp_current+max(0,int(hp_amount)))
     character.mp_current=min(mp,character.mp_current+max(0,int(mp_amount)))
+
+
+def require_mobile(character):
+    """빈사·사망 캐릭터의 이동과 소모품 사용을 차단한다."""
+    from fastapi import HTTPException
+    if character is None:
+        raise HTTPException(409, '등록된 피계약자가 필요해.')
+    if character.status != 'ready' or character.downed or character.hp_current == 0:
+        raise HTTPException(409, '빈사 상태에서는 구조를 기다리거나 구조를 포기해야 해.' if character.downed else '행동할 수 없는 피계약자야.')

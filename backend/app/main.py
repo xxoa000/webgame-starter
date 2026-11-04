@@ -18,6 +18,7 @@ logger = logging.getLogger("uvicorn.error")
 @asynccontextmanager
 async def lifespan(app):
     """기동 시 DB 상태를 확인하고 주기 작업의 수명을 관리한다."""
+    settings.signing_key()
     assert_schema_current()
     from .modules.users.maintenance import daily_loop
     task = asyncio.create_task(daily_loop())
@@ -73,3 +74,7 @@ app.include_router(encyclopedia_router)
 
 from .modules.personality.router import router as personality_router
 app.include_router(personality_router)
+from .modules.rescue.router import router as rescue_router
+from .modules.shop.router import router as shop_router
+app.include_router(rescue_router)
+app.include_router(shop_router)

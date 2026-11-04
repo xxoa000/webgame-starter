@@ -45,16 +45,17 @@ def test_search_cost_and_rest_percent_bounds(world,clock,monkeypatch):
     assert searched['vitals']['stamina_current']==2
     rested=act(c,searched,'rest').json()
     assert rested['vitals']['hp_current']==3 and rested['vitals']['mp_current']==2  # 5% of 40
-    assert rested['vitals']['stamina_current']==2
+    assert rested['vitals']['stamina_current']==1
     force_draw(monkeypatch,25)
     rested2=act(c,rested,'rest').json()
     assert rested2['vitals']['hp_current']==15 and rested2['vitals']['mp_current']==14  # +30%
-    assert rested2['vitals']['stamina_current']==2
+    assert rested2['vitals']['stamina_current']==0
     for _ in range(4):
+        clock[0]+=timedelta(minutes=5)
         rested2=act(c,rested2,'rest').json()
     assert rested2['vitals']['hp_current']==40 and rested2['vitals']['hp_percent']==100
     assert rested2['vitals']['mp_current']==40 and rested2['vitals']['mp_percent']==100
-    assert rested2['vitals']['stamina_current']==2
+    assert rested2['vitals']['stamina_current']==0
 
 
 def test_zero_stamina_rejects_search_without_advancing(world,clock,monkeypatch):
@@ -67,7 +68,8 @@ def test_zero_stamina_rejects_search_without_advancing(world,clock,monkeypatch):
     assert response.status_code==409
     assert core_state(c.get('/exploration/state').json())==core_state(state)
     rested=act(c,state,'rest')
-    assert rested.status_code==200 and rested.json()['vitals']['stamina_current']==0
+    assert rested.status_code==409
+    assert core_state(c.get('/exploration/state').json())==core_state(state)
 
 
 def test_offline_stamina_ticks_countdowns_and_no_banked_recovery(world,clock,monkeypatch):

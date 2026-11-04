@@ -6,7 +6,11 @@
     "dev": "next dev -p 5174",
     "build": "next build",
     "start": "next start -p 5174",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:styles": "node scripts/checkStyles.mjs",
+    "cleanup:styles": "node scripts/removeLegacyStyles.mjs"
   },
   "dependencies": {
     "next": "^16.0.0",
@@ -14,9 +18,10 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "typescript": "^5.9.0",
     "@types/node": "^24.0.0",
     "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0"
+    "@types/react-dom": "^19.2.0",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.0"
   }
 }

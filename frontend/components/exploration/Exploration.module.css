@@ -1,0 +1,1383 @@
+/* 지도·탐색 결과·전투·구조·인벤토리·도감.
+ * :global([data-ui~=...])는 다른 모듈의 부모 배치를 확인한다.
+ * 클래스는 이 파일 안에서만 유효하며, 조건부 규칙은 원래 순서를 유지한다.
+ */
+.explorationPage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 250px;
+  gap: 24px;
+  align-items: start;
+}
+.mainColumn {
+  min-width: 0;
+}
+.mapLootSection {
+  border: 1px solid #2f4e4c;
+  background: #172624;
+  border-radius: 6px;
+  padding: 15px 18px;
+  margin-bottom: 21px;
+}
+.mapLootSection > :global([data-ui~="smallLabel"]) {
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0;
+  color: #b8b196;
+}
+.itemProbabilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.itemProbabilities > span {
+  padding: 5px 10px;
+  font-size: 11px;
+  color: #d1cdbc;
+  border: 1px solid #3d524e;
+  border-radius: 4px;
+  background: #1d302f;
+}
+.itemProbabilities b {
+  color: #ccc7b3;
+  margin-left: 8px;
+  font: 10px var(--font-mono);
+}
+.startPanel h2 {
+  font-size: 22px;
+  margin: 10px 0;
+}
+
+.actionPanel h2 {
+  font-size: 22px;
+  margin: 10px 0;
+}
+.startPanel > p {
+  font-size: 12px;
+}
+.turnMessage {
+  font-size: 14px;
+  color: #dfdccf;
+  line-height: 1.9;
+  margin: 5px 0 24px;
+}
+.explorationActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  border-top: 1px solid #30514e;
+  padding-top: 22px;
+  margin-top: 24px;
+}
+.explorationActions button {
+  font-size: 12px;
+  padding: 12px 8px;
+}
+.explorationActions button:last-child {
+  font-size: 11px;
+  color: #c6c1ac;
+}
+.discoveredItem {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  background: #1f3432;
+  border: 1px solid #4a625e;
+  border-radius: 7px;
+  padding: 20px;
+}
+.itemSymbol {
+  font-size: 32px;
+  color: #cbc6b3;
+}
+.discoveredItem h3 {
+  margin: 0;
+  font-size: 15px;
+}
+.discoveredItem p {
+  font-size: 12px;
+  margin: 6px 0;
+}
+.discoveredItem small {
+  font-size: 11px;
+  color: #c9c4af;
+}
+.discoveryActions {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+.explorationHistory {
+  margin: 28px 0;
+  background: #142120;
+  border: 1px solid #2c4a47;
+  border-radius: 7px;
+  padding: 20px;
+}
+.explorationHistory ol {
+  list-style: none;
+  margin: 15px 0 0;
+  padding: 0;
+  max-height: 260px;
+  overflow: auto;
+}
+.explorationHistory li {
+  display: flex;
+  gap: 15px;
+  padding: 11px 0;
+  border-top: 1px solid #284341;
+  align-items: baseline;
+}
+.explorationHistory li > span {
+  font: 10px var(--font-mono);
+  color: #7b9b96;
+  flex-shrink: 0;
+}
+.explorationHistory li p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #c8c3ae;
+  margin: 0;
+}
+.explorerAvatar {
+  width: 58px;
+  height: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #5f7f79;
+  background: linear-gradient(140deg, #405451, #233b39);
+  border-radius: 5px;
+  color: #d9d5c6;
+  font: 18px var(--font-mono);
+}
+.droneInfo {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 7px 0 0;
+  border-bottom: 1px solid #30504d;
+}
+.droneInfo strong {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  color: #ccc7b3;
+}
+.droneInfo small {
+  display: block;
+  font-size: 9px;
+  color: #789a94;
+  margin-top: 3px;
+}
+.exploreSubwindow {
+  background: #172625;
+  color: var(--text-color);
+  border: 1px solid #5c7974;
+  border-radius: 10px;
+  padding: 28px;
+  width: min(740px, calc(100% - 32px));
+  max-height: 88dvh;
+  overflow: auto;
+}
+.exploreSubwindow::backdrop {
+  background: #080e0dc9;
+  backdrop-filter: blur(4px);
+}
+.subwindowHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+.subwindowHeader h2 {
+  font-size: 22px;
+  margin: 10px 0;
+}
+.subwindowHeader button {
+  padding: 8px 12px;
+}
+.subwindowNote {
+  font-size: 11px;
+  border-bottom: 1px solid #345653;
+  padding-bottom: 17px;
+  margin: 8px 0 22px;
+}
+.subwindowReturn {
+  width: 100%;
+  margin-top: 22px;
+  border-color: #57736e;
+  background: #27403e;
+  color: #d9d5c6;
+}
+.inventoryWindow {
+  position: fixed;
+  inset: auto 0 0;
+  margin: 0 auto;
+  width: min(1100px, 100%);
+  border-radius: 12px 12px 0 0;
+  max-height: 78dvh;
+}
+.explorerProfileIdentity {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin: 20px 0;
+}
+.explorerProfileIdentity h2 {
+  margin: 0;
+}
+.explorerProfileIdentity p {
+  font-size: 12px;
+  margin: 6px 0 0;
+}
+.explorerBio {
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+.exploreHomeLink {
+  display: inline-block;
+  padding: 11px 18px;
+  background: #cbc6b3;
+  color: #192a29;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+}
+@media (min-width: 1550px) {
+  .explorationPage {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+}
+@media (max-width: 1200px) {
+  .explorationPage {
+    grid-template-columns: minmax(0, 1fr) 218px;
+    gap: 18px;
+  }
+  .explorationActions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .explorationActions button:last-child {
+    grid-column: 1/-1;
+  }
+}
+@media (max-width: 950px) {
+  .explorationPage {
+    grid-template-columns: 1fr;
+  }
+  .mainColumn {
+    order: 1;
+  }
+  .droneInfo {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .explorationPage {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mainColumn {
+    width: 100%;
+  }
+}
+@media (max-width: 680px) {
+  .mapLootSection {
+    padding: 14px;
+  }
+  .itemProbabilities > span {
+    font-size: 10px;
+  }
+  .actionPanel h2 {
+    font-size: 20px;
+  }
+
+  .startPanel h2 {
+    font-size: 20px;
+  }
+  .turnMessage {
+    font-size: 13px;
+  }
+  .droneInfo {
+    padding: 0 0 8px;
+  }
+  .droneInfo strong {
+    font-size: 9px;
+  }
+  .droneInfo small {
+    font-size: 8px;
+  }
+  .exploreSubwindow {
+    padding: 21px;
+  }
+  .subwindowHeader h2 {
+    font-size: 20px;
+  }
+  .subwindowNote {
+    font-size: 10px;
+  }
+  .inventoryWindow {
+    max-height: 84dvh;
+  }
+  .explorationHistory {
+    padding: 17px;
+  }
+  .explorationHistory li {
+    gap: 10px;
+  }
+  .explorationHistory li p {
+    font-size: 11px;
+  }
+  .discoveryActions button {
+    font-size: 11px;
+  }
+  .discoveredItem {
+    padding: 16px;
+    gap: 12px;
+  }
+  .discoveredItem h3 {
+    font-size: 14px;
+  }
+}
+:global([data-ui~="explorationTheme"]) .exploreHomeLink {
+  background: #e9979f;
+  border-color: #e9979f;
+  color: #281217;
+}
+:global([data-ui~="explorationTheme"]) .itemProbabilities b {
+  color: #efb0ba;
+}
+:global([data-ui~="explorationTheme"]) .discoveredItem {
+  background: #301d27;
+  border-color: #81505d;
+}
+:global([data-ui~="explorationTheme"]) .itemSymbol {
+  color: #efadb9;
+}
+:global([data-ui~="explorationTheme"]) .explorationActions {
+  border-color: #563643;
+}
+:global([data-ui~="explorationTheme"]) .explorerAvatar {
+  background: linear-gradient(140deg, #583341, #2e1b27);
+  border-color: #8a5b6b;
+}
+:global([data-ui~="explorationTheme"]) .exploreSubwindow {
+  border-color: #825564;
+}
+:global([data-ui~="explorationTheme"]) .mapLootSection {
+  background: #201a13;
+  border-color: #70573a;
+}
+:global([data-ui~="explorationTheme"]) .itemProbabilities > span {
+  background: #302319;
+  border-color: #80603e;
+  color: #dbc6a2;
+}
+:global([data-ui~="explorationTheme"]) .exploreSubwindow {
+  background: #162423;
+  border: 6px solid #4c6460;
+  border-bottom-color: #759791;
+  border-radius: 5px;
+  box-shadow:
+    0 0 0 2px #203634,
+    0 12px 60px #000b;
+}
+:global([data-ui~="explorationTheme"]) .subwindowReturn {
+  background: #355956;
+  border-color: #7e9e99;
+  color: #dad7c9;
+}
+:global([data-ui~="explorationTheme"]) .explorationHistory {
+  background: #1b1711;
+  border-color: #685139;
+}
+:global([data-ui~="explorationTheme"]) .explorationHistory li {
+  border-color: #4a3b2b;
+}
+:global([data-ui~="explorationTheme"]) .explorationHistory li p {
+  color: #c9b59b;
+}
+:global([data-ui~="subConsoleContent"]) .explorerAvatar {
+  width: 45px;
+  height: 52px;
+  border-color: #6f938d;
+  background: linear-gradient(140deg, #3f5350, #1e3331);
+  color: #d0cbb9;
+}
+:global([data-ui~="subConsoleContent"]) .droneInfo {
+  margin-top: 0px;
+  border-color: #3d524e;
+}
+:global([data-ui~="subConsoleContent"]) .droneInfo strong {
+  color: #beb8a0;
+}
+:global([data-ui~="subConsoleContent"]) .droneInfo small {
+  color: #809f9a;
+}
+:global([data-ui~="dualConsole"]) .explorationPage {
+  display: block;
+}
+:global([data-ui~="dualConsole"]) .exploreSubwindow {
+  background: #162423;
+  border: 6px solid #4c6460;
+  border-bottom-color: #759791;
+  border-radius: 5px;
+  box-shadow:
+    0 0 0 2px #203634,
+    0 12px 60px #000b;
+}
+:global([data-ui~="dualConsole"]) .subwindowReturn {
+  background: #355956;
+  border-color: #7e9e99;
+  color: #dad7c9;
+}
+.traySummary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+  font: 9px/1.5 var(--font-mono);
+  color: #d0c5af;
+  margin-bottom: 5px;
+}
+.storageLayout {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.storageCells {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 52px);
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.itemSlot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 52px;
+  height: 56px;
+  min-width: 0;
+  padding: 4px;
+  background: #4b464c;
+  border: 2px solid #625c61;
+  border-top-color: #253e3c;
+  border-left-color: #253e3c;
+  border-radius: 3px;
+  box-shadow: inset 1px 2px 4px #1b2d2c55;
+  color: #d2cdbc;
+}
+button.itemSlot:hover:not(:disabled) {
+  background: #5b5158;
+  border-color: #bd9d79;
+}
+button.itemSlot:global([data-ui~="selected"]) {
+  border-color: #d58a77;
+  background: #5b484c;
+}
+.storageIcon {
+  font-size: 18px;
+  line-height: 1;
+  color: #b4ad90;
+}
+.storageName {
+  display: block;
+  max-width: 100%;
+  font-size: 7px;
+  line-height: 1.2;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.storageCount {
+  position: absolute;
+  right: 2px;
+  top: 0;
+  font: 8px var(--font-mono);
+  color: #f5dec0;
+}
+.emptyCell {
+  color: #747077;
+  background: #335452;
+}
+.storageInspector {
+  width: 175px;
+  max-width: 28%;
+  border-left: 1px solid #7d6b66;
+  padding-left: 10px;
+  color: #dad1be;
+}
+.storageInspector strong {
+  display: block;
+  font-size: 10px;
+}
+.storageInspector span {
+  display: block;
+  font: 9px var(--font-mono);
+  margin-top: 3px;
+}
+.storageInspector p {
+  color: #c1b9a9;
+  font-size: 9px;
+  line-height: 1.5;
+  margin: 4px 0;
+}
+.trayMessage {
+  color: #c1b9a9;
+  font-size: 9px;
+  line-height: 1.5;
+  margin: 4px 0;
+}
+.catalogMapLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9px;
+  margin: 0;
+  color: inherit;
+}
+.catalogMapLabel select {
+  width: auto;
+  max-width: 180px;
+  margin: 0;
+  padding: 1px 6px;
+  background: #284341;
+  border-color: #81746a;
+  font-size: 9px;
+  color: #e0d3b8;
+}
+.catalogChance {
+  font: 8px var(--font-mono);
+  color: #e0bb83;
+}
+.catalogSlot.unknown .storageIcon {
+  color: #9e97a2;
+}
+.catalogSlot.unknown .storageName {
+  letter-spacing: 1px;
+}
+@media (max-width: 760px) {
+  .storageInspector {
+    width: 125px;
+    max-width: 32%;
+  }
+  .storageCells {
+    grid-template-columns: repeat(auto-fill, 48px);
+  }
+  .itemSlot {
+    width: 48px;
+    height: 52px;
+  }
+}
+.combatPanel {
+  border-top: 1px solid #8a5954;
+  padding: 14px 0;
+}
+.combatPanel h2 {
+  color: #df8c7e;
+}
+.combatHp {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0;
+}
+.combatHp progress {
+  width: 100%;
+  height: 12px;
+  accent-color: #b94e4e;
+}
+.scriptLines {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0;
+  border-left: 2px solid #5e7c77;
+  padding-left: 12px;
+}
+.scriptLines p {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.scriptLines small {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-right: 8px;
+}
+.thought {
+  color: #b5ae93;
+  font-style: italic;
+}
+.narration {
+  opacity: 0.8;
+}
+:global([data-ui~="explorationTheme"]) .mapViewport {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  height: clamp(620px, 72vh, 960px);
+  border: 8px solid #5e7c77;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #1b2e2c;
+  box-shadow:
+    0 0 0 1px #b19a72,
+    inset 0 0 0 2px #13201f;
+  color: #d9d6c8;
+}
+.droneMapLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.droneMapSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.droneMapMarkers {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.droneMapSvg {
+  display: block;
+}
+.droneMapLayer {
+  z-index: -2;
+}
+.droneMapMarkers {
+  pointer-events: none;
+}
+.droneScanlines {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 3px,
+    #0c141322 3px 4px
+  );
+  box-shadow: inset 0 0 90px #0c1514e0;
+}
+.mapStatus {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 15px 20px;
+  font-family: monospace;
+  background: linear-gradient(#101a19e0, #101a1940);
+  position: relative;
+  z-index: 3;
+}
+.droneLink {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #b9b399;
+}
+.droneLink i {
+  background: #b8754b;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.onlinePlayers {
+  margin-left: auto;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.onlinePlayers i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c5bfa9;
+  box-shadow: 0 0 7px #c5bfa980;
+}
+.turnCount {
+  padding-left: 14px;
+  border-left: 1px solid #5b7974;
+  color: #d7af86;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.turnCount strong {
+  font-size: 26px;
+  padding-left: 6px;
+}
+.mapHeading {
+  position: absolute;
+  top: 80px;
+  right: 22px;
+  width: min(340px, 35%);
+  padding: 18px;
+  background: #111d1ce8;
+  border: 1px solid #658680;
+  box-shadow: 3px 3px #0c131366;
+  pointer-events: none;
+}
+:global([data-ui~="explorationTheme"]) .mapHeading h2 {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #a4704d;
+  color: #d9d6c8;
+}
+:global([data-ui~="explorationTheme"]) .mapHeading p {
+  color: #ccc7b4;
+}
+:global([data-ui~="explorationTheme"]) .droneMapMarker {
+  position: absolute;
+  transform: translate(-25%, -50%);
+  padding: 4px 8px 4px 3px;
+  width: max-content;
+  max-width: 210px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: #0f1a19d9;
+  box-shadow: none;
+  min-height: 0;
+  font-size: 12px;
+  color: #d9c493;
+  text-align: left;
+}
+.droneMapMarker b {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border: 1px solid #b59b59;
+  border-radius: 50%;
+  font-family: monospace;
+  background: #2e4c4a;
+}
+:global([data-ui~="explorationTheme"]) .droneMapMarker.isSelected {
+  border-color: #8aa6a2;
+  background: #31524f;
+  outline: 2px solid #8aa6a244;
+  outline-offset: 3px;
+}
+:global([data-ui~="explorationTheme"]) .droneMapMarker:hover {
+  border-color: #8aa6a2;
+  background: #31524f;
+  outline: 2px solid #8aa6a244;
+  outline-offset: 3px;
+}
+:global([data-ui~="explorationTheme"]) .droneMapMarker:focus-visible {
+  border-color: #8aa6a2;
+  background: #31524f;
+  outline: 2px solid #8aa6a244;
+  outline-offset: 3px;
+}
+.droneMapMarker:disabled {
+  opacity: 0.6;
+}
+.mapBlockLabel {
+  fill: #b7b196;
+  font: 14px monospace;
+  opacity: 0.8;
+}
+.mapItemPanel {
+  position: absolute;
+  bottom: 24px;
+  left: 20px;
+  max-width: min(68%, 600px);
+  background: #142120eb;
+  border: 1px solid #658680;
+  padding: 12px 14px;
+}
+:global([data-ui~="explorationTheme"]) .mapItemPanel .mapLootSection {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+:global([data-ui~="explorationTheme"])
+  .mapItemPanel
+  :global([data-ui~="smallLabel"]) {
+  font-size: 12px;
+  margin-bottom: 8px;
+  color: #d6b98e;
+}
+:global([data-ui~="explorationTheme"]) .mapItemPanel .itemProbabilities {
+  gap: 7px;
+}
+:global([data-ui~="explorationTheme"]) .mapItemPanel .itemProbabilities span {
+  padding: 5px 8px;
+  font-size: 12px;
+  border-color: #4c6460;
+  background: #213635;
+}
+.droneThreats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 10px;
+  color: #bf9584;
+  margin-top: 8px;
+}
+.droneScale {
+  position: absolute;
+  right: 24px;
+  bottom: 23px;
+  color: #b9b297;
+  font: 11px monospace;
+}
+.droneScale span {
+  margin-left: 18px;
+}
+.droneCorner {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.cornerNw {
+  top: 23%;
+  left: 11%;
+  border-top: 2px solid #d9d5c6;
+  border-left: 2px solid #d9d5c6;
+}
+.cornerSe {
+  bottom: 23%;
+  right: 11%;
+  border-right: 2px solid #d9d5c6;
+  border-bottom: 2px solid #d9d5c6;
+}
+.radarWave {
+  fill: #bdb79f0a;
+  stroke: #c5c0aa;
+  stroke-width: 1;
+  animation: radar-pulse 2.8s ease-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.radarWaveSecond {
+  animation-delay: -1.4s;
+}
+@keyframes radar-pulse {
+  from {
+    opacity: 0.7;
+    transform: scale(0.65);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .radarWave {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+@media (max-width: 900px) {
+  :global([data-ui~="explorationTheme"]) .mapViewport {
+    height: 700px;
+  }
+  .mapStatus {
+    gap: 8px;
+    padding: 12px 10px;
+  }
+  .mapHeading {
+    top: 70px;
+    right: 12px;
+    width: 36%;
+    padding: 10px;
+  }
+  :global([data-ui~="explorationTheme"]) .droneMapMarker {
+    font-size: 10px;
+    gap: 3px;
+    max-width: 155px;
+  }
+  .droneMapMarker b {
+    width: 21px;
+    height: 21px;
+  }
+  .droneLink {
+    display: none;
+  }
+}
+@media (max-width: 580px) {
+  :global([data-ui~="explorationTheme"]) .mapViewport {
+    height: 760px;
+    border-width: 5px;
+  }
+  .mapHeading {
+    top: 65px;
+    width: 65%;
+  }
+  .mapHeading p {
+    font-size: 11px;
+  }
+  .onlinePlayers {
+    font-size: 10px;
+  }
+  .turnCount strong {
+    font-size: 20px;
+  }
+  .droneMapLayer {
+    top: 170px;
+    height: calc(100% - 330px);
+  }
+  .mapItemPanel {
+    left: 10px;
+    right: 10px;
+    bottom: 22px;
+    max-width: none;
+    padding: 10px;
+  }
+  .droneScale {
+    display: none;
+  }
+  :global([data-ui~="explorationTheme"]) .droneMapMarker {
+    max-width: 130px;
+  }
+}
+:global([data-ui~="explorationTheme"]) .mapHeading {
+  position: absolute;
+  top: 20px;
+  left: 22px;
+  right: 260px;
+  bottom: auto;
+
+  width: auto;
+  max-width: none;
+  padding: 10px 14px;
+  box-sizing: border-box;
+  z-index: 4;
+
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+:global([data-ui~="explorationTheme"]) .mapHeading h2 {
+  margin: 0 0 8px;
+  padding: 0;
+  border: 0;
+  font-size: 28px;
+  line-height: 1.3;
+}
+
+:global([data-ui~="explorationTheme"]) .mapHeading p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (max-width: 580px) {
+  :global([data-ui~="explorationTheme"]) .mapHeading {
+    top: 55px;
+    left: 12px;
+    right: 12px;
+    padding: 8px;
+  }
+
+  :global([data-ui~="explorationTheme"]) .mapHeading h2 {
+    font-size: 20px;
+  }
+}
+:global([data-ui~="subEquipmentBody"]) .storageLayout {
+  display: block;
+}
+:global([data-ui~="subEquipmentBody"]) .storageCells {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(46px, 1fr));
+  gap: 5px;
+  overflow: visible;
+}
+:global([data-ui~="subEquipmentBody"]) .itemSlot {
+  width: 100%;
+  min-width: 0;
+  height: 58px;
+}
+:global([data-ui~="subEquipmentBody"]) .storageInspector {
+  padding: 10px 0;
+  min-width: 0;
+  max-width: none;
+}
+:global([data-ui~="subEquipmentBody"]) .storageInspector button {
+  padding: 5px 12px;
+  font-size: 12px;
+  margin: 6px 4px 0 0;
+}
+:global([data-ui~="subEquipmentBody"]) .compactInventory > .traySummary {
+  display: none;
+}
+.itemEffects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: #cfcbb9;
+}
+.discardQuantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  font-size: 11px;
+}
+.discardQuantity input {
+  width: 65px;
+  padding: 5px;
+}
+.encounterLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  margin: 18px 0;
+}
+.encounterLayout > div:only-child {
+  grid-column: 1 / -1;
+}
+.encounterCard {
+  background: #1d302e;
+  border: 1px solid #56736e;
+  padding: 18px;
+  margin: 0;
+  min-width: 0;
+}
+.encounterLayout .discoveredItem {
+  background: #1d302e;
+  border: 1px solid #56736e;
+  padding: 18px;
+  margin: 0;
+  min-width: 0;
+}
+.encounterCard h3 {
+  margin: 0 0 10px;
+  color: #dab590;
+}
+.encounterCard p {
+  font-size: 13px;
+}
+.explorationEndRow {
+  margin-top: 10px;
+}
+.explorationEndRow button {
+  width: 100%;
+}
+.rescuePanel {
+  border-color: #b27d51;
+}
+.rescuePanel button {
+  margin: 8px 12px 0 0;
+}
+.rescueBoard > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+}
+.deathDebrief li {
+  margin-bottom: 12px;
+  color: #c7c2ad;
+}
+@media (max-width: 700px) {
+  .encounterLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+:global([data-ui~="subEquipmentBody"]) .catalogMapLabel select {
+  width: 100%;
+  max-width: 100%;
+  font-size: 11px;
+  padding: 5px;
+}
+:global([data-ui~="subEquipmentBody"]) .compactEncyclopedia .traySummary {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  font-size: 10px;
+}
+:global([data-ui~="explorationTheme"]) .actionArea {
+  position: relative;
+}
+
+:global([data-ui~="explorationTheme"]) .actionArea > .actionHeader {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 32px;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
+
+:global([data-ui~="explorationTheme"]) .actionHeader .explorationStatus {
+  position: static;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+}
+
+:global([data-ui~="explorationTheme"]) .actionHeader h2 {
+  margin: 0;
+}
+
+:global([data-ui~="explorationTheme"]) .actionHeader .droneLink {
+  display: flex;
+}
+
+:global([data-ui~="explorationTheme"]) .actionHeader .companionDrone {
+  position: static;
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+:global([data-ui~="explorationTheme"]) .companionDrone small {
+  margin: 0;
+}
+
+:global([data-ui~="explorationTheme"])
+  .actionArea
+  > :global([data-ui~="panel"]) {
+  padding-top: 120px;
+}
+
+@media (max-width: 580px) {
+  :global([data-ui~="explorationTheme"]) .actionArea > .actionHeader {
+    left: 16px;
+    right: 16px;
+    gap: 16px;
+  }
+
+  :global([data-ui~="explorationTheme"]) .actionHeader h2 {
+    font-size: 20px;
+  }
+
+  :global([data-ui~="explorationTheme"]) .companionDrone small {
+    display: none;
+  }
+}
+
+/* 지도와 명령 영역을 같은 화면에 보이도록 관측 높이를 제한한다. */
+:global([data-ui~="explorationTheme"]) .mapViewport {
+  height: clamp(245px, 42dvh, 440px);
+  border-color: var(--frame-color);
+  margin-bottom: 12px;
+}
+:global([data-ui~="explorationTheme"]) .mapHeading {
+  top: 8px;
+  left: 12px;
+  right: 230px;
+  padding: 7px;
+}
+:global([data-ui~="explorationTheme"]) .mapHeading h2 {
+  font-size: 21px;
+  margin-bottom: 4px;
+}
+:global([data-ui~="explorationTheme"]) .mapHeading p {
+  font-size: 11px;
+}
+.mapStatus {
+  padding: 12px;
+}
+.mapItemPanel {
+  bottom: 12px;
+  left: 12px;
+  padding: 7px 10px;
+  max-width: 70%;
+}
+.mapItemPanel .itemProbabilities {
+  margin-top: 5px;
+}
+.droneScale {
+  bottom: 13px;
+  right: 12px;
+}
+:global([data-ui~="explorationTheme"]) .actionArea > .actionHeader {
+  position: relative;
+  inset: auto;
+  padding: 8px 16px;
+  gap: 24px;
+  border: 1px solid var(--border-color);
+  border-bottom: 0;
+  background: var(--panel-background);
+}
+:global([data-ui~="explorationTheme"]) .actionHeader .explorationStatus {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+:global([data-ui~="explorationTheme"]) .actionHeader h2 {
+  font-size: 18px;
+}
+:global([data-ui~="explorationTheme"])
+  .actionArea
+  > :global([data-ui~="panel"]) {
+  padding: 14px 16px;
+  margin: 0;
+  background: var(--panel-background);
+}
+.startPanel > p {
+  margin: 0 0 8px;
+}
+.startPanel label {
+  margin: 8px 0;
+}
+.startPanel select {
+  padding: 8px 10px;
+  margin-top: 5px;
+}
+.startPanel button {
+  padding: 10px;
+}
+.encounterLayout {
+  margin: 4px 0 10px;
+  gap: 12px;
+}
+.turnMessage {
+  margin: 0 0 8px;
+  line-height: 1.6;
+}
+.explorationActions {
+  margin-top: 8px;
+  padding-top: 10px;
+}
+.explorationActions button {
+  padding: 9px 8px;
+}
+.explorationEndRow {
+  margin-top: 7px;
+}
+.explorationEndRow button {
+  padding: 8px;
+}
+.discoveryActions {
+  margin-top: 8px;
+}
+.discoveryActions button {
+  padding: 8px;
+}
+.discoveredItem,
+.encounterCard,
+.encounterLayout .discoveredItem {
+  padding: 10px;
+}
+/* 메인 콘솔 내부에서 열린 전투 파일. 실제 모달·브라우저 팝업이 아니다. */
+:global([data-ui~="explorationTheme"]) .actionArea > .combatWindow {
+  position: relative;
+  margin: 10px 8px 16px;
+  border: 2px solid #96afa1;
+  border-radius: 5px;
+  box-shadow: 5px 6px 0 #07181999;
+  background: #142e2e;
+}
+.combatWindowTitle {
+  display: flex;
+  justify-content: space-between;
+  margin: -14px -16px 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #96afa1;
+  background: #36514c;
+  color: #efecda;
+  font: 11px var(--font-mono);
+}
+@media (max-width: 760px) {
+  :global([data-ui~="explorationTheme"]) .mapViewport {
+    height: 370px;
+  }
+  :global([data-ui~="explorationTheme"]) .mapHeading {
+    top: 48px;
+    right: 12px;
+  }
+  .droneMapLayer {
+    top: 85px;
+    height: calc(100% - 155px);
+  }
+  :global([data-ui~="explorationTheme"]) .actionHeader .explorationStatus {
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-start;
+  }
+  .mapItemPanel {
+    max-width: none;
+  }
+}
+
+.explorationPage {
+  display: block;
+}
+.explorationActions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.explorationActions button:last-child {
+  grid-column: auto;
+}
+:global([data-ui~="explorationTheme"]) .mapItemPanel .itemProbabilities span {
+  background: #273f39;
+  border-color: #6c8275;
+}
+:global([data-ui~="explorationTheme"]) .droneMapMarker.isSelected,
+:global([data-ui~="explorationTheme"]) .droneMapMarker:hover,
+:global([data-ui~="explorationTheme"]) .droneMapMarker:focus-visible {
+  border-color: var(--selection-color);
+  background: #3b5e52;
+  outline-color: #83b4a455;
+}
+/* 긴 결과는 명령 영역 안에서 스크롤하고 관측 지도는 계속 보존한다. */
+@media (min-width: 761px) {
+  .mainColumn {
+    --observation-height: clamp(220px, 38dvh, 410px);
+  }
+  :global([data-ui~="explorationTheme"]) .mapViewport {
+    height: var(--observation-height);
+  }
+  :global([data-ui~="explorationTheme"]) .actionArea {
+    max-height: calc(100dvh - var(--observation-height) - 165px);
+    min-height: 180px;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #71877f #152c2c;
+  }
+  :global([data-ui~="explorationTheme"]) .actionArea > .actionHeader {
+    position: sticky;
+    top: 0;
+    z-index: 6;
+  }
+}

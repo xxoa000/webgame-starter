@@ -1,12 +1,12 @@
 """현재·삭제된 피계약자의 저장 모델. 외형 JSON은 능력치와 별도로 보관한다."""
 from datetime import datetime
-from sqlalchemy import String, Integer, ForeignKey, JSON, DateTime, CheckConstraint
+from sqlalchemy import Boolean, String, Integer, ForeignKey, JSON, DateTime, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from ...database.base import Base
 
 class Character(Base):
     __tablename__ = "character"
-    __table_args__ = (CheckConstraint("rerolls >= 0 AND rerolls <= 10"),
+    __table_args__ = (CheckConstraint("stat_points >= 0 AND stat_version >= 0", name="ck_character_stat_points"), CheckConstraint("rerolls >= 0 AND rerolls <= 10"),
                       CheckConstraint("gender IN ('male','female','other')"),
                       CheckConstraint("name_changes BETWEEN 0 AND 1 AND age_changes BETWEEN 0 AND 1", name="ck_character_profile_changes"))
     id: Mapped[int] = mapped_column(primary_key=True, comment='고유 ID')
@@ -17,12 +17,15 @@ class Character(Base):
     age: Mapped[int | None] = mapped_column(Integer, nullable=True, comment='나이(세)')
     bio: Mapped[str] = mapped_column(String(500), default="", comment='프로필 소개')
     appearance: Mapped[dict | None] = mapped_column(JSON, nullable=True, comment='프로필 프리셋 정보')
+    stat_points: Mapped[int] = mapped_column(Integer, default=0, server_default='0', comment='미분배 스탯 포인트')
+    stat_version: Mapped[int] = mapped_column(Integer, default=0, server_default='0', comment='스탯 분배 변경 버전')
     stats: Mapped[dict] = mapped_column(JSON, comment='능력치 정보')
     rerolls: Mapped[int] = mapped_column(Integer, default=10, comment='남은 능력치 재추첨 횟수')
     hp_current: Mapped[int | None] = mapped_column(Integer, nullable=True, comment='현재 HP')
     mp_current: Mapped[int | None] = mapped_column(Integer, nullable=True, comment='현재 MP')
     stamina_current: Mapped[int | None] = mapped_column(Integer, nullable=True, comment='현재 스태미나')
     stamina_updated_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True, comment='스태미나 회복 기준 시각(UTC)')
+    downed: Mapped[bool] = mapped_column(Boolean, default=False, server_default="0", comment="빈사 상태 여부")
     status: Mapped[str] = mapped_column(String(12), default="draft", comment='진행 상태')
     name_changes: Mapped[int] = mapped_column(Integer, default=0, server_default='0', comment='생성 후 이름 변경 횟수')
     age_changes: Mapped[int] = mapped_column(Integer, default=0, server_default='0', comment='생성 후 나이 변경 횟수')

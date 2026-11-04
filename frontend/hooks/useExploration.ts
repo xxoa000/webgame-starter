@@ -10,6 +10,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { usePathname } from "next/navigation";
+import styles from "../components/console/Console.module.css";
 import { useGame } from "./useGame";
 import { api } from "../lib/api";
 import type {
@@ -35,14 +37,18 @@ function useExplorationState() {
     const [maps, state, inventory] = await Promise.all([
       api<WorldMap[]>("/maps"),
       api<ExplorationState | null>("/exploration/state"),
-      api<InventoryData>("/inventory"),
+      api<InventoryData>("/inventory").catch((error: unknown) => {
+        /* 사망 기록 조회에서만 인벤토리 부재를 허용한다. */
+        if (accountGame.account?.character?.status === "dead") return null;
+        throw error;
+      }),
     ]);
     if (alive.current) {
       setMaps(maps);
       setState(state);
       setInventory(inventory);
     }
-  }, []);
+  }, [accountGame.account?.character?.status]);
 
   useEffect(() => {
     alive.current = true;
@@ -71,7 +77,11 @@ function useExplorationState() {
         return;
       }
       const [inventory, maps] = await Promise.all([
-        api<InventoryData>("/inventory"),
+        api<InventoryData>("/inventory").catch((error: unknown) => {
+          /* 사망 기록 조회에서만 인벤토리 부재를 허용한다. */
+          if (accountGame.account?.character?.status === "dead") return null;
+          throw error;
+        }),
         api<WorldMap[]>("/maps"),
       ]);
       if (alive.current) {
@@ -91,6 +101,39 @@ function useExplorationState() {
       if (alive.current) setBusy(false);
     }
   }
+  async function leaveExploration() {
+    /* 진행 중 요청이 끝난 뒤 최신 버전으로 확정 도망·종료를 순서대로 처리한다. */
+    if (inFlight.current) return false;
+    inFlight.current = true;
+    setBusy(true);
+    try {
+      let current = await api<ExplorationState | null>("/exploration/state");
+      if (!current || current.status !== "active") return true;
+      // 빈사 상태는 이동으로 해제하지 않는다. 구조 요청/포기 규칙을 보존한다.
+      if (current.downed) return true;
+      if (current.combat) {
+        current = await api<ExplorationState>("/exploration/action", {
+          action: "flee",
+          exploration_id: current.id,
+          version: current.version,
+        });
+      }
+      const ended = await api<ExplorationState>("/exploration/action", {
+        action: "end",
+        exploration_id: current.id,
+        version: current.version,
+      });
+      if (alive.current) setState(ended);
+      await reload();
+      return true;
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "탐색 종료 실패");
+      return true;
+    } finally {
+      inFlight.current = false;
+      if (alive.current) setBusy(false);
+    }
+  }
   function start(mapId: number) {
     return mutate("/exploration/start", { map_id: mapId });
   }
@@ -103,7 +146,63 @@ function useExplorationState() {
       version: state.version,
     });
   }
-  return { maps, state, inventory, loading, busy, error, start, act, reload };
+  async function inventoryAction(
+    action: "use" | "discard",
+    itemId: number,
+    quantity = 1,
+  ) {
+    /* 소지품 변경 후 계정·자원·탐색 기록을 함께 새로 읽는다. */
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      await api<InventoryData>(`/inventory/${action}`, {
+        item_id: itemId,
+        quantity,
+      });
+      await reload();
+      await accountGame.reloadAccount();
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "물품 처리 실패");
+    } finally {
+      inFlight.current = false;
+      setBusy(false);
+    }
+  }
+  function rescueAction(action: "request" | "abandon") {
+    /* 빈사 상태의 구조 요청·포기를 서버에서 처리한다. */
+    return mutate(`/rescue/${action}`, {});
+  }
+  useEffect(() => {
+    /* 구조 대기 중에도 서버 기한과 구조 결과를 계속 확인한다. */
+    if (!state?.downed) return;
+    const timer = setInterval(() => {
+      /* NPC·플레이어 구조로 바뀐 상태를 동기화한다. */
+      if (!document.hidden)
+        void reload()
+          .then(() => accountGame.reloadAccount())
+          .catch(() => {});
+    }, 5000);
+    return () => {
+      /* 구조 상태 확인 타이머를 정리한다. */ clearInterval(timer);
+    };
+  }, [state?.downed, reload]);
+  return {
+    maps,
+    state,
+    inventory,
+    clearError: () => setError(""),
+    loading,
+    busy,
+    error,
+    start,
+    act,
+    reload,
+    inventoryAction,
+    rescueAction,
+    leaveExploration,
+  };
 }
 
 type ConsoleWindow = "inventory" | "encyclopedia" | null;
@@ -115,10 +214,72 @@ const ExplorationContext = createContext<SharedExploration | null>(null);
 export function ExplorationProvider({ children }: { children: ReactNode }) {
   const game = useExplorationState();
   const [window, setWindow] = useState<ConsoleWindow>(null);
+  const pathname = usePathname();
+  const previousPath = useRef(pathname);
+  const pendingExit = useRef(false);
+  const exiting = useRef(false);
+  const [transitionMessage, setTransitionMessage] = useState("");
+  useEffect(() => {
+    /* 페이지별 보조 창은 초기화하고 상점에 들어갈 때만 인벤토리를 연다. */
+    const previous = previousPath.current;
+    previousPath.current = pathname;
+    game.clearError();
+    setWindow(pathname.startsWith("/shop") ? "inventory" : null);
+    if (previous.startsWith("/explore") && !pathname.startsWith("/explore")) {
+      pendingExit.current = true;
+      setTransitionMessage(
+        game.state?.downed
+          ? "구조 대기 상태를 유지합니다."
+          : "탐색을 종료합니다.",
+      );
+    } else if (previous.startsWith("/shop") && !pathname.startsWith("/shop")) {
+      setTransitionMessage("상점 이용을 종료합니다.");
+    }
+    if (pathname.startsWith("/explore")) pendingExit.current = false;
+  }, [pathname]);
+  useEffect(() => {
+    /* 클릭 중 이동한 경우에도 해당 요청 뒤에 종료를 한 번만 실행한다. */
+    if (!pendingExit.current || game.busy || exiting.current) return;
+    exiting.current = true;
+    void game
+      .leaveExploration()
+      .then((completed) => {
+        if (completed) pendingExit.current = false;
+      })
+      .finally(() => {
+        exiting.current = false;
+      });
+  }, [pathname, game.busy]);
+  useEffect(() => {
+    /* 짧은 이동 안내만 자동으로 지운다. */
+    if (!transitionMessage) return;
+    const timer = setTimeout(() => setTransitionMessage(""), 900);
+    return () => clearTimeout(timer);
+  }, [transitionMessage, pathname]);
   return createElement(
     ExplorationContext.Provider,
     { value: { ...game, window, setWindow } },
     children,
+    transitionMessage
+      ? createElement(
+          "div",
+          {
+            role: "status",
+            className: styles.routeToast,
+          },
+          transitionMessage,
+        )
+      : null,
+    game.error && !pathname.startsWith("/explore")
+      ? createElement(
+          "div",
+          {
+            role: "alert",
+            className: styles.routeToast,
+          },
+          game.error,
+        )
+      : null,
   );
 }
 export function useExploration() {

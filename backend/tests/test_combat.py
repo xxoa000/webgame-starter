@@ -58,16 +58,16 @@ def test_injury_and_item_consumption(battlefield):
     assert c.get('/characters/vitals').json()['condition'] == '부상'
     assert act(c, injured, 'use_item', item_id=999999).status_code == 409
     healed = act(c, injured, 'use_item', item_id=item_id).json()
-    assert healed['vitals']['hp_current'] == 9  # +10 then enemy -7
+    assert healed['vitals']['hp_current'] == 16  # +10, no turn or counterattack
     assert healed['vitals']['stamina_current'] == injured['vitals']['stamina_current']
     assert c.get('/inventory').json()['items'][0]['quantity'] == 1
     assert act(c, injured, 'use_item', item_id=item_id).status_code == 409
     escaped = act(c, healed, 'flee').json()
     restored = act(c, escaped, 'use_item', item_id=item_id).json()
-    assert restored['vitals']['hp_current'] == 19 and restored['vitals']['condition'] == '정상'
+    assert restored['vitals']['hp_current'] == 26 and restored['vitals']['condition'] == '정상'
     assert not c.get('/inventory').json()['items']
     rested = act(c, restored, 'rest').json()
-    assert rested['vitals']['hp_current'] == 21
+    assert rested['vitals']['hp_current'] == 28
 
 
 def test_death_is_archived_once_and_new_character_possible(battlefield):
@@ -76,7 +76,9 @@ def test_death_is_archived_once_and_new_character_possible(battlefield):
     with factory() as db:
         db.get(Character, character['id']).hp_current = 1
         db.commit()
-    dead = act(c, state, 'fight').json()
+    downed = act(c, state, 'fight').json()
+    assert downed['downed'] and downed['vitals']['hp_current']==1
+    dead = c.post('/rescue/abandon',json={}).json()
     assert dead['dead'] and dead['status'] == 'ended' and dead['combat'] is None
     assert dead['vitals']['hp_current'] == 0 and dead['vitals']['condition'] == '사망'
     for action in ['rest', 'use_item', 'fight', 'flee', 'search']:

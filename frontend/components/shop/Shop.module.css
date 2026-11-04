@@ -1,0 +1,112 @@
+/* 보급 NPC·상품 목록·구매와 판매 화면.
+ * :global([data-ui~=...])는 다른 모듈의 부모 배치를 확인한다.
+ * 클래스는 이 파일 안에서만 유효하며, 조건부 규칙은 원래 순서를 유지한다.
+ */
+
+.shopWorkspace {
+  display: grid;
+  gap: 24px;
+}
+.shopNpc {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 320px;
+  padding: 0 28px;
+  background: linear-gradient(100deg, #182927, #1d302e);
+  border: 1px solid #5f7d78;
+  overflow: hidden;
+}
+.shopNpc > div {
+  align-self: center;
+  padding: 20px 0;
+}
+.shopNpc h1 {
+  margin: 12px 0;
+}
+.shopNpc strong {
+  color: #c8b68c;
+}
+.shopNpc img {
+  width: 300px;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  image-rendering: pixelated;
+  display: block;
+  margin: 0;
+  max-width: 48%;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+.shopToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.shopToolbar button {
+  margin-right: 8px;
+}
+.shopToolbar label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.shopToolbar input {
+  width: 75px;
+  padding: 8px;
+}
+.shopProducts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.shopProducts article {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px;
+  border: 1px solid #4c6460;
+  background: #142120;
+}
+.shopProducts h3 {
+  margin: 0 0 8px;
+}
+.shopProducts p {
+  font-size: 13px;
+  color: #bfb9a0;
+}
+.shopProducts article > div:last-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+}
+.shopProducts button {
+  padding: 8px 18px;
+}
+@media (max-width: 700px) {
+  .shopProducts {
+    grid-template-columns: 1fr;
+  }
+  .shopNpc {
+    height: 260px;
+    padding: 0 15px;
+  }
+  .shopNpc img {
+    width: 45%;
+    height: 100%;
+  }
+}
+
+/* 일반 상품 등급과 겹치지 않는 영구 확장 상품 구분. */
+.shopProducts .upgradeProduct {
+  border-color: #a6bfa3;
+  background: #254139;
+}
+.shopProducts .itemProduct {
+  padding-top: 24px;
+}

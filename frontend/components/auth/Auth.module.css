@@ -1,0 +1,167 @@
+/* 로그인·회원가입 입력 폼과 인증 피드백.
+ * :global([data-ui~=...])는 다른 모듈의 부모 배치를 확인한다.
+ * 클래스는 이 파일 안에서만 유효하며, 조건부 규칙은 원래 순서를 유지한다.
+ */
+
+.auth {
+  padding: 30px;
+}
+.auth h2 {
+  font-size: 23px;
+  margin: 27px 0 10px;
+}
+.tabs {
+  display: flex;
+  gap: 26px;
+  border-bottom: 1px solid #2e4c4a;
+}
+.tabs button {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0 4px 14px;
+  font-size: 13px;
+}
+.tabs button:global([data-ui~="selected"]) {
+  border-bottom: 2px solid var(--accent-color);
+}
+.auth form {
+  margin-top: 28px;
+}
+.auth :global([data-ui~="primaryButton"]) {
+  margin-top: 10px;
+}
+.secure {
+  font-size: 10px;
+  text-align: center;
+  margin-top: 22px;
+}
+@media (max-width: 680px) {
+  .auth {
+    padding: 24px;
+  }
+  .auth h2 {
+    font-size: 22px;
+  }
+}
+.authClassification {
+  font: 9px/1.8 var(--font-mono);
+  border: 1px solid #64553c;
+  padding: 9px 12px;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+}
+.classifiedAuth {
+  border-top: 3px solid #bfb9a0;
+}
+.classifiedAuth .secure {
+  line-height: 1.8;
+}
+.authModal {
+  width: min(440px, calc(100% - 32px));
+  padding: 22px;
+  border: 1px solid #587470;
+  color: var(--text-color);
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+.authModal::backdrop {
+  backdrop-filter: blur(4px);
+}
+.authModalHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.authModalHeading h2 {
+  font-size: 17px;
+  margin: 0;
+}
+.authModalHeading button {
+  padding: 5px 9px;
+  font-size: 11px;
+}
+.authModal .auth {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.authModal .authClassification {
+  font-size: 8px;
+  padding: 7px 9px;
+  margin-bottom: 15px;
+}
+.authModal .auth h2 {
+  font-size: 18px;
+}
+.authModal label {
+  margin: 13px 0;
+}
+.authModal .secure {
+  margin-top: 16px;
+  font-size: 10px;
+}
+.authModal :global([data-ui~="message"]) {
+  padding: 10px 12px;
+  font-size: 12px;
+}
+.tabs {
+  border-color: #485f5b;
+}
+.tabs button {
+  color: #b7b094;
+}
+.tabs button:global([data-ui~="selected"]) {
+  color: #dbd7c9;
+}
+.secure {
+  color: #8aa7a2;
+}
+.authModal {
+  border-radius: 4px;
+  background: #152322;
+  border-color: #668882;
+  border-top: 7px solid #4f6864;
+  box-shadow:
+    0 0 0 3px #1e3130,
+    0 20px 70px #000b;
+}
+.authModal::backdrop {
+  background: #070c0ccc;
+}
+.authClassification {
+  background: #1c2f2d;
+  border-color: #536f6a;
+  color: #c4bea8;
+}
+@media (max-width: 680px) {
+  .authModal {
+    padding: 18px;
+  }
+}
+:global([data-ui~="consoleAuth"]) .auth {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+:global([data-ui~="consoleAuth"]) .auth h2 {
+  font-size: 17px;
+  margin: 18px 0 8px;
+}
+:global([data-ui~="consoleAuth"]) .authClassification {
+  font-size: 8px;
+  padding: 7px;
+}
+:global([data-ui~="consoleAuth"]) .tabs {
+  gap: 17px;
+}
+:global([data-ui~="consoleAuth"]) .tabs button {
+  font-size: 12px;
+}
+:global([data-ui~="consoleAuth"]) .secure {
+  font-size: 9px;
+  line-height: 1.8;
+}

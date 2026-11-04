@@ -13,6 +13,7 @@ from ..characters.models import Character
 from ..characters.rules import REST_MIN_PERCENT, REST_MAX_PERCENT
 from ..encyclopedia.repository import discover
 from . import repository
+from ..rescue.service import rescue_data, resolve_due
 from ..combat import service as combat_service
 from ..combat.repository import monster_options
 from ..combat.items import use_item
@@ -39,17 +40,26 @@ def state_data(db, session):
         return None
     world_map = db.get(Map, session.map_id)
     pending = db.get(Item, session.pending_item_id) if session.pending_item_id else None
+    from ..items.presentation import item_traits
+    traits = item_traits(db) if pending else {}
     return {"id": session.id, "map_id": session.map_id, "map_name": world_map.name,
-            "status": session.status, "turn": session.turn, "version": session.version,
-            "pending_item": {"item_id": pending.id, "name": pending.name, "description": pending.description,
+            "downed": db.get(Character,session.character_id).downed, "rescue": rescue_data(db, session.character_id), "position_step": session.position_step, "status": session.status, "turn": session.turn, "version": session.version,
+            "pending_item": {**traits[pending.id], "item_id": pending.id, "name": pending.name, "description": pending.description,
                              "weight_grams": pending.weight_grams, "quantity": session.pending_quantity} if pending else None,
             "combat": session.combat, "dead": db.get(Character,session.character_id).status == "dead",
-            "history": session.history, "vitals": vitals_data(db.get(Character,session.character_id))}
+            "history": [{**event, "scripts": [{key:value for key,value in output.items() if key != "visibility"} for output in event.get("scripts", [])]} for event in session.history], "vitals": vitals_data(db.get(Character,session.character_id))}
 
 
 def get_state(db, user_id):
     """현재 캐릭터의 탐색 상태를 조회한다."""
-    character = ready_character(db, user_id)
+    from ..characters.repository import lock_owned
+    character=lock_owned(db,user_id)
+    if not character or character.status not in {'ready','dead'}:
+        raise HTTPException(409,'조회할 피계약자가 없어.')
+    if character.status=='ready':
+        from ..characters.vitals import sync
+        sync(character)
+    resolve_due(db, character)
     result=state_data(db, repository.get_session(db, character.id))
     db.commit()
     return result
@@ -58,6 +68,8 @@ def get_state(db, user_id):
 def start(db, user_id, map_id):
     """맵을 확인하고 탐색을 시작하거나 기존 상태를 반환한다."""
     character = ready_character(db, user_id)
+    from ..characters.vitals import require_mobile
+    require_mobile(character)
     if len(character.personality) != 3:
         raise HTTPException(409, '캐릭터 메뉴에서 성격을 먼저 선택해.')
     world_map = db.get(Map, map_id)
@@ -78,6 +90,7 @@ def start(db, user_id, map_id):
         session.map_id, session.status, session.turn = map_id, "active", 0
         session.version += 1  # Never reuse an old version after ending/restarting.
         session.pending_item_id, session.pending_quantity, session.history = None, 0, []
+        session.position_step = 0
     append_event(session, "start", f"{world_map.name}에 들어섰다. 원격 관측 연결을 확인했다.")
     db.commit()
     return state_data(db, session)
@@ -100,6 +113,8 @@ def draw(world_map, options):
 def act(db, user_id, body):
     """턴 버전과 선택지를 검사하고 탐색 행동을 실행한다."""
     character = ready_character(db, user_id)
+    from ..characters.vitals import require_mobile
+    require_mobile(character)
     if len(character.personality) != 3:
         raise HTTPException(409, '캐릭터 메뉴에서 성격을 먼저 선택해.')
     inventory = ensure_inventory(db, character.id)
@@ -114,7 +129,8 @@ def act(db, user_id, body):
     if session.combat:
         if body.action not in {'fight', 'flee', 'use_item'}:
             raise HTTPException(409, '몬스터와 대치 중이야. 전투·도망·아이템을 선택해.')
-        session.turn += 1
+        if body.action != 'use_item':
+            session.turn += 1
         if body.action == 'flee':
             session.combat = None
             append_event(session, 'flee', '도망에 성공했다. 안전 거리를 확보했다.')
@@ -124,7 +140,6 @@ def act(db, user_id, body):
             if body.item_id is None:
                 raise HTTPException(422, '사용할 아이템을 선택해.')
             append_event(session, 'item', use_item(db, character, inventory, body.item_id))
-            combat_service.counterattack(db, character, session, append_event)
         session.version += 1
         db.commit()
         return state_data(db, session)
@@ -134,6 +149,7 @@ def act(db, user_id, body):
         raise HTTPException(409, "발견한 아이템을 가져가거나 포기한 뒤 다음 턴을 진행해.")
     if body.action == "search":
         spend_stamina(character)
+        session.position_step += 1
         world_map = db.get(Map, session.map_id)
         options = farming_options(db, session.map_id)
         enemies = monster_options(db, session.map_id)
@@ -161,12 +177,12 @@ def act(db, user_id, body):
     elif body.action == 'use_item':
         if body.item_id is None:
             raise HTTPException(422, '사용할 아이템을 선택해.')
-        session.turn += 1
         append_event(session, 'item', use_item(db, character, inventory, body.item_id))
     elif body.action == "rest":
+        spend_stamina(character)
         session.turn += 1
         hp_gain,mp_gain=recover(character,secrets.randbelow(REST_MAX_PERCENT-REST_MIN_PERCENT+1)+REST_MIN_PERCENT,secrets.randbelow(REST_MAX_PERCENT-REST_MIN_PERCENT+1)+REST_MIN_PERCENT)
-        append_event(session, "rest", f"숨을 골랐다. HP +{hp_gain}, MP +{mp_gain}. 스태미나는 시간으로만 회복된다.")
+        append_event(session, "rest", f"숨을 골랐다. HP +{hp_gain}, MP +{mp_gain}.")
     elif body.action in {"take", "give_up"}:
         if session.pending_item_id is None:
             raise HTTPException(409, "아직 발견한 아이템이 없어.")
@@ -180,7 +196,7 @@ def act(db, user_id, body):
     elif body.action == "end":
         session.status = "ended"
         session.pending_item_id, session.pending_quantity = None, 0
-        append_event(session, "end", "탐색을 마쳤다. 챙긴 아이템은 인벤토리에 남는다.")
+        append_event(session, "end", "탐색을 마쳤다. 회수한 아이템은 인벤토리에 남는다.")
     session.version += 1
     db.commit()
     return state_data(db, session)
